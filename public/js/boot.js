@@ -1,14 +1,17 @@
-System.register(['angular2/platform/browser', './main.component.js', 'angular2/http', 'rxjs/add/operator/map', 'rxjs/add/operator/debounceTime', 'rxjs/add/operator/distinctUntilChanged', 'rxjs/add/operator/switchMap'], function(exports_1, context_1) {
+System.register(['@angular/platform-browser-dynamic', './main.component.js', './main.routes.js', '@angular/http', 'rxjs/add/operator/map', 'rxjs/add/operator/debounceTime', 'rxjs/add/operator/distinctUntilChanged', 'rxjs/add/operator/switchMap'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var browser_1, main_component_js_1, http_1;
+    var platform_browser_dynamic_1, main_component_js_1, main_routes_js_1, http_1;
     return {
         setters:[
-            function (browser_1_1) {
-                browser_1 = browser_1_1;
+            function (platform_browser_dynamic_1_1) {
+                platform_browser_dynamic_1 = platform_browser_dynamic_1_1;
             },
             function (main_component_js_1_1) {
                 main_component_js_1 = main_component_js_1_1;
+            },
+            function (main_routes_js_1_1) {
+                main_routes_js_1 = main_routes_js_1_1;
             },
             function (http_1_1) {
                 http_1 = http_1_1;
@@ -18,7 +21,7 @@ System.register(['angular2/platform/browser', './main.component.js', 'angular2/h
             function (_3) {},
             function (_4) {}],
         execute: function() {
-            browser_1.bootstrap(main_component_js_1.MainComponent, [http_1.HTTP_PROVIDERS]).catch(function (err) { return console.error(err); });
+            platform_browser_dynamic_1.bootstrap(main_component_js_1.MainComponent, [http_1.HTTP_PROVIDERS, main_routes_js_1.APP_ROUTER_PROVIDERS]).catch(function (err) { return console.error(err); });
         }
     }
 });

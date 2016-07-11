@@ -1,4 +1,4 @@
-import {Component, ComponentFactory, ComponentMetadata, ComponentResolver, Input, ReflectiveInjector, ViewContainerRef, TemplateRef} from 'angular2/core'
+import {Component, ComponentFactory, ComponentMetadata, ComponentResolver, Input, ReflectiveInjector, ViewContainerRef, TemplateRef} from '@angular/core'
 import{FormControl, REACTIVE_FORM_DIRECTIVES} from '@angular/forms'
 import {DataService} from './data.service.js'
 import {Observable} from 'rxjs/Observable'

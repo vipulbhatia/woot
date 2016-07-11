@@ -11,7 +11,7 @@ System.register(['@angular/core', '@angular/router'], function(exports_1, contex
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, router_1;
-    var MainComponent;
+    var AuthService;
     return {
         setters:[
             function (core_1_1) {
@@ -21,21 +21,24 @@ System.register(['@angular/core', '@angular/router'], function(exports_1, contex
                 router_1 = router_1_1;
             }],
         execute: function() {
-            MainComponent = (function () {
-                function MainComponent() {
+            AuthService = (function () {
+                function AuthService(router) {
+                    this.router = router;
+                    console.log('AuthService');
                 }
-                MainComponent = __decorate([
-                    core_1.Component({
-                        selector: 'main',
-                        template: "\n        <h1>Component Router</h1>\n        <nav>\n          <a [routerLink]=\"['/login']\">Crisis Center</a>\n        </nav>\n        <router-outlet></router-outlet>\n    ",
-                        directives: [router_1.ROUTER_DIRECTIVES]
-                    }), 
-                    __metadata('design:paramtypes', [])
-                ], MainComponent);
-                return MainComponent;
+                AuthService.prototype.canActivate = function () {
+                    this.router.navigate(['/login']);
+                    return false;
+                };
+                AuthService = __decorate([
+                    core_1.Injectable(), 
+                    __metadata('design:paramtypes', [(typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object])
+                ], AuthService);
+                return AuthService;
+                var _a;
             }());
-            exports_1("MainComponent", MainComponent);
+            exports_1("AuthService", AuthService);
         }
     }
 });
-//# sourceMappingURL=main.component.js.map
+//# sourceMappingURL=auth.service.js.map
