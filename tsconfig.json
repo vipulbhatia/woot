@@ -27,10 +27,14 @@
     "./app/boot.ts",
     "./app/data.service.ts",
     "./app/finderr.component.ts",
+    "./app/footer.component.ts",
+    "./app/header.component.ts",
     "./app/login-form.component.ts",
     "./app/main-login.component.ts",
-    "./app/main.component.ts",
     "./app/main.routes.ts",
-    "./app/registration-form.component.ts"
+    "./app/portal.component.ts",
+    "./app/registration-form.component.ts",
+    "./app/search.component.ts",
+    "./app/side-menu.component.ts"
   ]
 }

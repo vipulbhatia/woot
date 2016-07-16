@@ -1,0 +1,16 @@
+div.container-fluid.display-table
+    div.row.display-table-row
+        div.col-md-2.display-table-cell.valign#side-menu-container
+            //load side-menu here
+            side-menu
+        div.col-md-10.display-table-cell.valign
+            div.row#nav-header-container
+                //load navigation header here
+                header
+            div.row
+                div.col-md-12
+                    router-outlet
+
+            div.row#nav-footer-container
+                //load navigation footer here
+                footer

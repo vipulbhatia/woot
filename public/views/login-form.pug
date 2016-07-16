@@ -4,8 +4,6 @@ form.form-horizontal(name="loginForm")
         label.col-sm-2.col-sm-offset-2(for="email") Email:
         div.col-sm-6
             input.form-control(type="text", (blur)="_dataService.isValidEmail(loginModel.email.value)", [ngFormControl]="term", [(ngModel)]="loginModel.email.value", name="email", [ngClass]="{'ng-invalid':!loginModel.email.valid && !loginModel.email.pristine}")
-            |{{get()}}
-            |items {{items}}
             div([hidden]="loginModel.email.valid || loginModel.email.pristine", [ngClass]="{'alert':'true', 'alert-danger':'true'}") Email is required!
     div.form-group
         label.col-sm-2.col-sm-offset-2 Password:

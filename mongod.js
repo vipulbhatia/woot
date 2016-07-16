@@ -34,6 +34,36 @@ var Mongod = function(url, col) {
         });
     }
 
+    this.getAccounts = function(req, res) {
+        console.log('get accounts: ');
+        collection.distinct('Account', function(err, docs) {
+            if(err) res.json({error: 'service unavailable'});
+            console.log(docs);
+            res.json({results: docs});
+        });
+    }
+
+    this.search = function(req, res) {
+        console.log('search: ', req.query.ci);
+        collection = db.collection('dashboard');
+        var search = new RegExp(req.query.ci);
+        collection.find({Hostname:search}).toArray(function(err, docs) {
+            if(err) res.json({error: 'service unavailable'});
+            console.log(docs);
+            res.json({results: docs});
+        });
+    }
+
+    this.getMonitoringData = function(req, res) {
+        console.log('getting monitoring data: ', req.query.ci, req.query.tool);
+        collection = db.collection(req.query.tool.toLowerCase());
+        collection.find({Hostname:req.query.ci}).toArray(function(err, docs) {
+            if(err) res.json({error: 'service unavailable'});
+            console.log(docs);
+            res.json({results: docs});
+        });
+    }
+
     return this;
 }
 

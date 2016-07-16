@@ -13,3 +13,7 @@
 .glyphicon-remove {
         color: #a94442;
 }
+
+.red {
+    border: 1px solid red;
+}

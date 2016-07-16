@@ -1,0 +1,17 @@
+div#side-menu
+    h1 Side Menu
+    ul
+        li.link.active
+            a(href="#", [routerLink]="['/search']")
+                span.glyphicon.glyphicon-search
+                span Search
+        li.link
+            a(data-target="#collapse-post", data-toggle="collapse")
+                span.glyphicon.glyphicon-list-alt
+                span Article
+                span.label.label-success.pull-right 20
+                ul.collapse.collapseable#collapse-post
+                    li
+                        a(href="#") a
+                    li
+                        a(href="#") b

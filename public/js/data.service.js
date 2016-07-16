@@ -24,6 +24,14 @@ System.register(['@angular/core', '@angular/http'], function(exports_1, context_
             DataService = (function () {
                 function DataService(http) {
                     this.http = http;
+                    this.jsonToArray = function (json) {
+                        var arr = [], i = 0;
+                        for (var key in json) {
+                            arr[i] = [key, json[key]];
+                            ++i;
+                        }
+                        return arr;
+                    };
                     this.login = function (bodyq) {
                         console.log('login called');
                         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
@@ -39,6 +47,21 @@ System.register(['@angular/core', '@angular/http'], function(exports_1, context_
                         this.http.post('/api/checkEmail', JSON.stringify({ email: email }), { headers: headers })
                             .map(function (res) { return res.json(); })
                             .subscribe(function (data) { return console.log(data.status); });
+                    };
+                    this.getAccounts = function () {
+                        console.log('Data Service: getting accounts: ');
+                        return this.http.get('/api/getaccounts')
+                            .map(function (res) { return res.json(); });
+                    };
+                    this.search = function (ci) {
+                        console.log('search: ', ci);
+                        return this.http.get('/api/search?ci=' + ci)
+                            .map(function (res) { return res.json(); });
+                    };
+                    this.getMonitoringData = function (ci, tool) {
+                        console.log('getting monitoring data: ', ci);
+                        return this.http.get('/api/getmonitoringdata?ci=' + ci + '&tool=' + tool)
+                            .map(function (res) { return res.json(); });
                     };
                     this.isValidEmail = function (email) {
                         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

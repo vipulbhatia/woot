@@ -2,7 +2,7 @@ var express = require('express'),
     app = express(),
     bodyParser = require('body-parser'),
     Mongod = require('./mongod.js'),
-    mongodb = Mongod('mongodb://localhost:27017/test', 'users');
+    mongodb = Mongod('mongodb://localhost:27017/test', 'dashboard');
 
 mongodb.connect();
 
@@ -26,6 +26,9 @@ app.get('/app/:page', function(req, res) {
 
 app.post('/api/login', mongodb.login);
 app.post('/api/checkEmail', mongodb.checkEmail);
+app.get('/api/getaccounts', mongodb.getAccounts);
+app.get('/api/search', mongodb.search);
+app.get('/api/getmonitoringdata', mongodb.getMonitoringData);
 
 app.listen(8000, function() {
     console.log('server running on port 8000...');
