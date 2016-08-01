@@ -1,13 +1,13 @@
 h3 Login:
-form.form-horizontal(name="loginForm")
+form.form-horizontal(name="loginForm", #loginForm="ngForm")
     div.form-group
         label.col-sm-2.col-sm-offset-2(for="email") Email:
         div.col-sm-6
-            input.form-control(type="text", (blur)="_dataService.isValidEmail(loginModel.email.value)", [ngFormControl]="term", [(ngModel)]="loginModel.email.value", name="email", [ngClass]="{'ng-invalid':!loginModel.email.valid && !loginModel.email.pristine}")
-            div([hidden]="loginModel.email.valid || loginModel.email.pristine", [ngClass]="{'alert':'true', 'alert-danger':'true'}") Email is required!
+            input.form-control(type="email", pattern="[A-z0-9_\.]+@[A-z0-9]+\.[A-z0-9]{2,}", [(ngModel)]="loginModel.email", #email="ngModel", name="email", [ngClass]="{'ng-invalid':email.invalid && email.dirty}")
+            div([hidden]="email.value || email.pristine", [ngClass]="{'alert':'true', 'alert-danger':'true'}") Email is required!
     div.form-group
         label.col-sm-2.col-sm-offset-2 Password:
         div.col-sm-6
-            input.form-control(type="password")
+            input.form-control(type="password", [(ngModel)]="loginModel.password", name="password")
     div.form-group
-        button.btn.btn-default(type="submit", (click)="_dataService.login(loginModel)") Submit
+        button.btn.btn-default(type="submit", (click)="_dataService.login(loginModel)", [disabled]="!loginForm.form.valid || loginForm.form.pristine") Submit

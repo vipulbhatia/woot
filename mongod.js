@@ -17,7 +17,8 @@ var Mongod = function(url, col) {
 
     this.login = function(req, res) {
         console.log(req.body.email);
-        collection.find({email:req.body.email}).toArray(function(err, docs) {
+        collection = db.collection('users');
+        collection.find({email:req.body.email, password:req.body.password}).toArray(function(err, docs) {
             if(err) res.json({status: 404});
             console.log(docs);
             (docs.length > 0) ? res.json({status: 200}) : res.json({status: 400});

@@ -1,36 +1,25 @@
 import {Component} from '@angular/core'
-import {DataService} from './data.service.js';
+import {FormControl, REACTIVE_FORM_DIRECTIVES} from '@angular/forms'
+import {DataService} from './data.service.js'
+import {NgModel} from '@angular/common'
 
 @Component({
     selector: '[registration-form]',
     templateUrl: 'app/registration-form',
-    providers: [DataService]
+    providers: [REACTIVE_FORM_DIRECTIVES, DataService]
 })
 
 export class RegistrationFormComponent {
-    registerModel: Object;
-    constructor(private _dataService: DataService) {
-        this.registerModel = {
-            newemail: {
-                value: "",
-                valid: true,
-                pristine: true
-            },
-            newpassword: {
-                value: "",
-                valid: true,
-                pristine: true
-            },
-            confirmpassword: {
-                value: "",
-                valid: true,
-                pristine: true
-            }
-        }
+    registerModel = {
+        newemail: new NgModel,
+        newpassword: null,
+        confirmpassword: null
     }
-
-    isValidEmail = function(email) {
-        console.log('validating email...');
-        this.registerModel.newemail = this._dataService.isValidEmail(email);
+    newemailControl = new FormControl("");
+    constructor(private _dataService: DataService) {
+        this.newemailControl.control.valueChanges
+            .debounceTime(400)
+            .distinctUntilChanged()
+            .subscribe((value) => {console.log(value);this._dataService.checkEmail(value)});
     }
 }

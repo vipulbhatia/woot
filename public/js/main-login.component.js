@@ -30,28 +30,28 @@ System.register(['@angular/core', './login-form.component.js', './registration-f
                     this.resolver = resolver;
                     this.injectComponent = function (cmp) {
                         var _this = this;
-                        if (!document.loginForm) {
+                        if (!document.registrationForm) {
                             this.resolver.resolveComponent(cmp)
                                 .then(function (factory) {
                                 var injector = core_1.ReflectiveInjector.fromResolvedProviders([], _this.vcRef.parentInjector);
-                                _this.loginFormRef.createComponent(factory, 0, injector, []);
+                                _this.registrationFormRef.createComponent(factory, 0, injector, []);
                             });
                         }
                     };
-                    this.loadLoginForm = function () {
-                        this.injectComponent(login_form_component_js_1.LoginFormComponent);
+                    this.loadRegistrationForm = function () {
+                        this.injectComponent(registration_form_component_js_1.RegistrationFormComponent);
                     };
                     this.authenticated = false;
                 }
                 __decorate([
-                    core_1.ViewChild('loginForm', { read: core_1.ViewContainerRef }), 
+                    core_1.ViewChild('registrationForm', { read: core_1.ViewContainerRef }), 
                     __metadata('design:type', Object)
-                ], MainLoginComponent.prototype, "loginFormRef", void 0);
+                ], MainLoginComponent.prototype, "registrationFormRef", void 0);
                 MainLoginComponent = __decorate([
                     core_1.Component({
                         selector: 'main',
-                        templateUrl: 'app/main',
-                        directives: [registration_form_component_js_1.RegistrationFormComponent]
+                        templateUrl: 'app/main-login',
+                        directives: [login_form_component_js_1.LoginFormComponent]
                     }), 
                     __metadata('design:paramtypes', [(typeof (_a = typeof core_1.ViewContainerRef !== 'undefined' && core_1.ViewContainerRef) === 'function' && _a) || Object, (typeof (_b = typeof core_1.ComponentResolver !== 'undefined' && core_1.ComponentResolver) === 'function' && _b) || Object])
                 ], MainLoginComponent);

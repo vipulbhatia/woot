@@ -29,10 +29,11 @@ System.register(['@angular/core', './data.service.js'], function(exports_1, cont
                     this.results = [];
                     this.temp = [];
                     this.pages = [];
-                    this.noofresults = 1;
+                    this.noofresults = 5;
                     this.currpage = 0;
                     this.serverName = '';
                     this.show = true;
+                    this.formInline = false;
                     this.selectPage = function (page) {
                         for (var i = 0; i < this.pages.length; i++) {
                             this.pages[i] = (i == page) ? true : false;
@@ -49,6 +50,7 @@ System.register(['@angular/core', './data.service.js'], function(exports_1, cont
                             _this.monitoringData = _this._dataService.jsonToArray(data.results[0]);
                             _this.serverName = result.Hostname;
                             _this.show = false;
+                            _this.formInline = true;
                         }, function (err) { return console.error(err); }, function () { return console.log('finished getting monitoring data...'); });
                     };
                     this.search = function () {
@@ -63,6 +65,7 @@ System.register(['@angular/core', './data.service.js'], function(exports_1, cont
                             (_this.results.length <= _this.noofresults) ? _this.temp = _this.results : _this.temp = _this.results.slice(0, _this.noofresults);
                             console.log(_this.pages);
                             _this.show = true;
+                            _this.formInline = false;
                         }, function (err) { return console.error(err); }, function () { return console.log('finished searching...'); });
                     };
                     this._dataService.getAccounts()

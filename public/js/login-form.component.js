@@ -1,4 +1,4 @@
-System.register(['@angular/core', '@angular/forms', './data.service.js'], function(exports_1, context_1) {
+System.register(['@angular/core', './data.service.js'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,15 +10,12 @@ System.register(['@angular/core', '@angular/forms', './data.service.js'], functi
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, forms_1, data_service_js_1;
+    var core_1, data_service_js_1;
     var LoginFormComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
-            },
-            function (forms_1_1) {
-                forms_1 = forms_1_1;
             },
             function (data_service_js_1_1) {
                 data_service_js_1 = data_service_js_1_1;
@@ -26,27 +23,25 @@ System.register(['@angular/core', '@angular/forms', './data.service.js'], functi
         execute: function() {
             LoginFormComponent = (function () {
                 function LoginFormComponent(_dataService) {
-                    var _this = this;
                     this._dataService = _dataService;
                     this.loginModel = {
-                        email: {}
+                        email: null,
+                        password: null
                     };
-                    this.term = new forms_1.FormControl("");
                     this.get = function () {
                         return JSON.stringify(this.loginModel);
                     };
-                    this.loginModel.email.value = '';
-                    this.loginModel.email.valid = this.loginModel.email.pristine = true;
-                    this.term.valueChanges
-                        .debounceTime(400)
-                        .distinctUntilChanged()
-                        .subscribe(function (value) { console.log(value); _this._dataService.checkEmail(value); });
+                    this.login = this._dataService.login;
                 }
+                __decorate([
+                    core_1.ViewChild('email'), 
+                    __metadata('design:type', Object)
+                ], LoginFormComponent.prototype, "emailRef", void 0);
                 LoginFormComponent = __decorate([
                     core_1.Component({
                         selector: '[login-form]',
                         templateUrl: 'app/login-form',
-                        providers: [data_service_js_1.DataService, forms_1.REACTIVE_FORM_DIRECTIVES]
+                        providers: [data_service_js_1.DataService]
                     }), 
                     __metadata('design:paramtypes', [(typeof (_a = typeof data_service_js_1.DataService !== 'undefined' && data_service_js_1.DataService) === 'function' && _a) || Object])
                 ], LoginFormComponent);

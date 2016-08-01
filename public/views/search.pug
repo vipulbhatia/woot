@@ -1,24 +1,44 @@
-h3 Find Device
-form.form-horizontal
-    div.form-group
-        label.col-md-2.col-md-offset-2(for="ci") CI Name:
-        div.col-md-4
+div.container(*ngIf="!formInline")
+    h3 Find Device
+    form.form-horizontal
+        div.form-group
+            label.col-md-2.col-md-offset-2(for="ci") CI Name:
+            div.col-md-4
+                input.form-control(type="text", name="ci", [(ngModel)]="ci")
+        div.form-group
+            label.col-md-2.col-md-offset-2(for="account") Account:
+            div.col-md-2
+                select.form-control(name="account")
+                    option(value="all") select account
+                    option(*ngFor="let account of accounts", [value]="account")
+                        |{{account}}
+        div.form-group
+            label.col-md-2.col-md-offset-2(for="tool") Tool:
+            div.col-md-2
+                select.form-control(name="account")
+                    option(value="all") select tool
+                    option(*ngFor="let tool of tools", [value]="tool")
+                        |{{tool}}
+        button.col-md-offset-4.btn.btn-default((click)="search()") search
+
+div.container.center_div(*ngIf="formInline")
+    form.form-inline
+        div.form-group
+            label(for="ci") CI Name:
             input.form-control(type="text", name="ci", [(ngModel)]="ci")
-    div.form-group
-        label.col-md-2.col-md-offset-2(for="account") Account:
-        div.col-md-2
+        div.form-group
+            label(for="account") Account:
             select.form-control(name="account")
                 option(value="all") select account
                 option(*ngFor="let account of accounts", [value]="account")
                     |{{account}}
-    div.form-group
-        label.col-md-2.col-md-offset-2(for="tool") Tool:
-        div.col-md-2
+        div.form-group
+            label(for="tool") Tool:
             select.form-control(name="account")
                 option(value="all") select tool
                 option(*ngFor="let tool of tools", [value]="tool")
                     |{{tool}}
-    button.col-md-offset-4.btn.btn-default((click)="search()") search
+        button.btn.btn-default.glyphicon.glyphicon-search((click)="search()")
 
 //navigator: tabs for switching b/w result and server info
 ul.breadcrumb

@@ -12,12 +12,13 @@ export class SearchComponent {
     results = [];
     temp = [];
     pages = [];
-    noofresults = 1;
+    noofresults = 5;
     currpage = 0;
     monitoringData;
     serverName = '';
     monitoringDataKeys;
     show = true;
+    formInline = false;
     constructor(private _dataService: DataService) {
         this._dataService.getAccounts()
             .subscribe(
@@ -44,6 +45,7 @@ export class SearchComponent {
                     this.monitoringData = this._dataService.jsonToArray(data.results[0]);
                     this.serverName = result.Hostname;
                     this.show = false;
+                    this.formInline = true;
                 },
                 err => console.error(err),
                 () => console.log('finished getting monitoring data...')
@@ -62,6 +64,7 @@ export class SearchComponent {
                     (this.results.length <= this.noofresults) ? this.temp=this.results : this.temp=this.results.slice(0, this.noofresults);
                     console.log(this.pages);
                     this.show = true;
+                    this.formInline = false;
                 },
                 err => console.error(err),
                 () => console.log('finished searching...')

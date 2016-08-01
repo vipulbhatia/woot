@@ -1,4 +1,4 @@
-System.register(['@angular/core', '@angular/router'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/router', './factory.service.js'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', '@angular/router'], function(exports_1, contex
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, router_1;
+    var core_1, router_1, factory_service_js_1;
     var AuthService;
     return {
         setters:[
@@ -19,23 +19,29 @@ System.register(['@angular/core', '@angular/router'], function(exports_1, contex
             },
             function (router_1_1) {
                 router_1 = router_1_1;
+            },
+            function (factory_service_js_1_1) {
+                factory_service_js_1 = factory_service_js_1_1;
             }],
         execute: function() {
             AuthService = (function () {
-                function AuthService(router) {
+                function AuthService(router, _factoryService) {
                     this.router = router;
+                    this._factoryService = _factoryService;
                     console.log('AuthService');
                 }
                 AuthService.prototype.canActivate = function () {
+                    if (this._factoryService.isAuthenticated())
+                        return true;
                     this.router.navigate(['/login']);
                     return false;
                 };
                 AuthService = __decorate([
                     core_1.Injectable(), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object])
+                    __metadata('design:paramtypes', [(typeof (_a = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _a) || Object, (typeof (_b = typeof factory_service_js_1.FactoryService !== 'undefined' && factory_service_js_1.FactoryService) === 'function' && _b) || Object])
                 ], AuthService);
                 return AuthService;
-                var _a;
+                var _a, _b;
             }());
             exports_1("AuthService", AuthService);
         }

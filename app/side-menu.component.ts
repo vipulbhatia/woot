@@ -1,5 +1,6 @@
 import {Component} from '@angular/core'
-import {ROUTER_DIRECTIVES} from '@angular/router'
+import {RouteConfig, ROUTER_DIRECTIVES} from '@angular/router'
+import {SearchComponent} from './search.component.js'
 
 @Component({
     selector: 'side-menu',

@@ -4,29 +4,29 @@ import {RegistrationFormComponent} from './registration-form.component.js'
 
 @Component({
     selector: 'main',
-    templateUrl: 'app/main',
-        directives: [RegistrationFormComponent]
+    templateUrl: 'app/main-login',
+    directives: [LoginFormComponent]
 })
 
 export class MainLoginComponent {
-    @ViewChild('loginForm', {read: ViewContainerRef}) loginFormRef;
+    @ViewChild('registrationForm', {read: ViewContainerRef}) registrationFormRef;
     private authenticated;
     constructor(private vcRef: ViewContainerRef, private resolver: ComponentResolver) {
         this.authenticated = false;
     }
 
     private injectComponent = function(cmp) {
-        if(!document.loginForm) {
+        if(!document.registrationForm) {
             this.resolver.resolveComponent(cmp)
               .then(factory => {
                 const injector = ReflectiveInjector.fromResolvedProviders([], this.vcRef.parentInjector);
-                this.loginFormRef.createComponent(factory, 0, injector, []);
+                this.registrationFormRef.createComponent(factory, 0, injector, []);
             });
         }
     }
 
-    loadLoginForm = function() {
-        this.injectComponent(LoginFormComponent);
+    loadRegistrationForm = function() {
+        this.injectComponent(RegistrationFormComponent);
     }
 
 }

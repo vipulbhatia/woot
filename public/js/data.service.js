@@ -1,4 +1,4 @@
-System.register(['@angular/core', '@angular/http'], function(exports_1, context_1) {
+System.register(['@angular/core', '@angular/http', './factory.service.js', '@angular/router'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,7 +10,7 @@ System.register(['@angular/core', '@angular/http'], function(exports_1, context_
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1;
+    var core_1, http_1, factory_service_js_1, router_1;
     var DataService;
     return {
         setters:[
@@ -19,11 +19,19 @@ System.register(['@angular/core', '@angular/http'], function(exports_1, context_
             },
             function (http_1_1) {
                 http_1 = http_1_1;
+            },
+            function (factory_service_js_1_1) {
+                factory_service_js_1 = factory_service_js_1_1;
+            },
+            function (router_1_1) {
+                router_1 = router_1_1;
             }],
         execute: function() {
             DataService = (function () {
-                function DataService(http) {
+                function DataService(http, _factoryService, router) {
                     this.http = http;
+                    this._factoryService = _factoryService;
+                    this.router = router;
                     this.jsonToArray = function (json) {
                         var arr = [], i = 0;
                         for (var key in json) {
@@ -33,12 +41,22 @@ System.register(['@angular/core', '@angular/http'], function(exports_1, context_
                         return arr;
                     };
                     this.login = function (bodyq) {
+                        var _this = this;
                         console.log('login called');
                         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
-                        var body = JSON.stringify({ email: bodyq.email.value });
-                        this.http.post('/api/login', JSON.stringify({ email: bodyq.email.value }), { headers: headers })
+                        var body = JSON.stringify({ email: bodyq.email });
+                        this.http.post('/api/login', JSON.stringify({ email: bodyq.email, password: bodyq.password }), { headers: headers })
                             .map(function (res) { return res.json(); })
-                            .subscribe(function (data) { return console.log(data.status); });
+                            .subscribe(function (data) {
+                            if (data.status === 200) {
+                                _this._factoryService.setAuthenicated(true);
+                                _this.router.navigate(['/portal/']);
+                            }
+                            else {
+                                _this._factoryService.setAuthenicated(false);
+                            }
+                            return;
+                        });
                     };
                     this.checkEmail = function (email) {
                         console.log('checking email...');
@@ -76,10 +94,10 @@ System.register(['@angular/core', '@angular/http'], function(exports_1, context_
                 }
                 DataService = __decorate([
                     core_1.Injectable(), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _a) || Object])
+                    __metadata('design:paramtypes', [(typeof (_a = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _a) || Object, (typeof (_b = typeof factory_service_js_1.FactoryService !== 'undefined' && factory_service_js_1.FactoryService) === 'function' && _b) || Object, (typeof (_c = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _c) || Object])
                 ], DataService);
                 return DataService;
-                var _a;
+                var _a, _b, _c;
             }());
             exports_1("DataService", DataService);
         }

@@ -1,7 +1,7 @@
-System.register(['@angular/router', './auth.service.js', './main-login.component.js', './search.component.js'], function(exports_1, context_1) {
+System.register(['@angular/router', './auth.service.js', './main-login.component.js', './portal.component.js', './search.component.js'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
-    var router_1, auth_service_js_1, main_login_component_js_1, search_component_js_1;
+    var router_1, auth_service_js_1, main_login_component_js_1, portal_component_js_1, search_component_js_1;
     var routes, APP_ROUTER_PROVIDERS;
     return {
         setters:[
@@ -14,18 +14,24 @@ System.register(['@angular/router', './auth.service.js', './main-login.component
             function (main_login_component_js_1_1) {
                 main_login_component_js_1 = main_login_component_js_1_1;
             },
+            function (portal_component_js_1_1) {
+                portal_component_js_1 = portal_component_js_1_1;
+            },
             function (search_component_js_1_1) {
                 search_component_js_1 = search_component_js_1_1;
             }],
         execute: function() {
             exports_1("routes", routes = [
-                { path: '', component: search_component_js_1.SearchComponent },
+                { path: '', redirectTo: 'portal', pathMatch: 'full' },
                 { path: 'login', component: main_login_component_js_1.MainLoginComponent },
-                { path: 'search', component: search_component_js_1.SearchComponent }
+                { path: 'portal', component: portal_component_js_1.PortalComponent, canActivate: [auth_service_js_1.AuthService], children: [
+                        { path: '', redirectTo: 'search' },
+                        { path: 'search', component: search_component_js_1.SearchComponent }
+                    ] }
             ]);
             exports_1("APP_ROUTER_PROVIDERS", APP_ROUTER_PROVIDERS = [
                 router_1.provideRouter(routes),
-                auth_service_js_1.AuthService
+                auth_service_js_1.AuthService,
             ]);
         }
     }

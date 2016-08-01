@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core'
 import {Http, Headers, Response, RequestOptions} from '@angular/http'
+import {FactoryService} from './factory.service.js'
+import {Router} from '@angular/router'
 
 @Injectable()
 
 export class DataService {
-    constructor(private http: Http) {
-
-    }
+    constructor(private http: Http, private _factoryService: FactoryService, private router: Router) { }
 
     jsonToArray = function(json) {
         var arr = [],
@@ -21,11 +21,19 @@ export class DataService {
     login = function(bodyq) {
         console.log('login called');
         var headers = new Headers({ 'Content-Type': 'application/json' });
-        var body: any = JSON.stringify({email:bodyq.email.value});
-        this.http.post('/api/login', JSON.stringify({email:bodyq.email.value}), {headers: headers})
+        var body: any = JSON.stringify({email:bodyq.email});
+        this.http.post('/api/login', JSON.stringify({email:bodyq.email, password:bodyq.password}), {headers: headers})
             .map(res => res.json())
             .subscribe(
-                data => console.log(data.status)
+                data => {
+                    if(data.status === 200) {
+                        this._factoryService.setAuthenicated(true);
+                        this.router.navigate(['/portal/']);
+                    } else {
+                        this._factoryService.setAuthenicated(false);
+                    }
+                    return;
+                }
             )
     }
 

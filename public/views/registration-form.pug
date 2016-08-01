@@ -1,17 +1,16 @@
 h4 Register Here:
-form.form-horizontal
+form.form-horizontal(name="registrationForm")
     div.form-group
         label.col-sm-2.col-sm-offset-2(for="email") Email:
         div.col-sm-4
-            input.form-control(type="email", [(ngModel)]="registerModel.newemail.value", (keyup)="isValidEmail(registerModel.newemail.value)", [ngClass]="{'ng-invalid': !registerModel.newemail.valid && !registerModel.newemail.pristine, 'ng-valid': registerModel.newemail.valid && !registerModel.newemail.pristine}")
-        span.glyphicon([hidden]="registerModel.newemail.pristine", [ngClass]="{'glyphicon-ok': registerModel.newemail.valid, 'glyphicon-remove': !registerModel.newemail.valid}")
+            input.form-control(type="email", formControlName="newemailControl", [(ngModel)]="registerModel.newemail", #newemail="ngModel", name="newemail", pattern="[A-z0-9_\.]+@[A-z0-9]+\.[A-z0-9]{2,}", [ngClass]="{'ng-invalid': !newemail.valid && !newemail.pristine, 'ng-valid': newemail.valid || newemail.pristine}")
+        span.glyphicon([hidden]="newemail.pristine", [ngClass]="{'glyphicon-ok': newemail.valid, 'glyphicon-remove': !newemail.valid}")
     div.form-group
         label.col-sm-2.col-sm-offset-2(for="newpassword") New Password:
         div.col-sm-4
-            input.form-control(type="password", [(ngModel)]="registerModel.newpassword.value")
-            |{{registerModel.newpassword.value}}
+            input.form-control(type="password", [(ngModel)]="registerModel.newpassword", name="newpassword")
     div.form-group
         label.col-sm-2.col-sm-offset-2(for="confirmpassword") Confirm Password:
         div.col-sm-4
-            input.form-control(type="password", pattern="[A-z]+", [(ngModel)]="registerModel.confirmpassword.value")
-            div.alert.alert-danger([hidden]="registerModel.newpassword.value==registerModel.confirmpassword.value") Passwords do not match
+            input.form-control(type="password", [(ngModel)]="registerModel.confirmpassword", name="confirmpassword")
+            div.alert.alert-danger([hidden]="registerModel.newpassword==registerModel.confirmpassword || confirmpassword.pristine || newpassword.pristine") Passwords do not match
