@@ -1,0 +1,11 @@
+div.container
+    ul.nav.nav-pills.col-sm-offset-5
+        li.active
+            a(href="#login", data-toggle="pill") Login
+        li
+            a(href="#register", data-toggle="pill", (click)="loadRegistrationForm()") Register
+
+    div.tab-content
+        div#login.tab-pane.fade.in.active(login-form)
+        div#register.tab-pane
+            span(#registrationForm="")

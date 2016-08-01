@@ -37,7 +37,6 @@
     "./app/portal.component.ts",
     "./app/registration-form.component.ts",
     "./app/search.component.ts",
-    "./app/side-menu.component.ts",
-    "./app/sidemenu.routes.ts"
+    "./app/side-menu.component.ts"
   ]
 }
