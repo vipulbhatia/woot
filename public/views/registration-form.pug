@@ -3,7 +3,7 @@ form.form-horizontal(name="registrationForm")
     div.form-group
         label.col-sm-2.col-sm-offset-2(for="email") Email:
         div.col-sm-4
-            input.form-control(type="email", formControlName="newemailControl", [(ngModel)]="registerModel.newemail", #newemail="ngModel", name="newemail", pattern="[A-z0-9_\.]+@[A-z0-9]+\.[A-z0-9]{2,}", [ngClass]="{'ng-invalid': !newemail.valid && !newemail.pristine, 'ng-valid': newemail.valid || newemail.pristine}")
+            input.form-control(type="email", (keyup)="newemailControl.emit($event.target.value)", [(ngModel)]="registerModel.newemail", #newemail="ngModel", name="newemail", pattern="[A-z0-9_\.]+@[A-z0-9]+\.[A-z0-9]{2,}", [ngClass]="{'ng-invalid': !newemail.valid && !newemail.pristine, 'ng-valid': newemail.valid || newemail.pristine}")
         span.glyphicon([hidden]="newemail.pristine", [ngClass]="{'glyphicon-ok': newemail.valid, 'glyphicon-remove': !newemail.valid}")
     div.form-group
         label.col-sm-2.col-sm-offset-2(for="newpassword") New Password:

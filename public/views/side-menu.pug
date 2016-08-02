@@ -2,9 +2,13 @@ div#side-menu
     h1 Side Menu
     ul
         li.link.active
-            a(href="#", [routerLink]="['/search']")
+            a(href="#", [routerLink]="['/portal/search']")
                 span.glyphicon.glyphicon-search
                 span Search
+        li.link
+            a(href="#", [routerLink]=['/portal/rsms'])
+                span.glyphicon.glyphicon-list-alt
+                span RSMs
         li.link
             a(data-target="#collapse-post", data-toggle="collapse")
                 span.glyphicon.glyphicon-list-alt

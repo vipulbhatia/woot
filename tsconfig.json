@@ -36,6 +36,7 @@
     "./app/main.routes.ts",
     "./app/portal.component.ts",
     "./app/registration-form.component.ts",
+    "./app/rsms.component.ts",
     "./app/search.component.ts",
     "./app/side-menu.component.ts"
   ]

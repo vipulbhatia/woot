@@ -28,6 +28,7 @@ var Mongod = function(url, col) {
     this.checkEmail = function(req, res) {
         console.log('checking email...', req.body.email);
         var search = new RegExp(req.body.email);
+        collection = db.collection('users');
         collection.find({email:search}).toArray(function(err, docs) {
             if(err) res.json({status: 404});
             console.log(docs);
@@ -37,6 +38,7 @@ var Mongod = function(url, col) {
 
     this.getAccounts = function(req, res) {
         console.log('get accounts: ');
+        collection = db.collection('dashboard');
         collection.distinct('Account', function(err, docs) {
             if(err) res.json({error: 'service unavailable'});
             console.log(docs);
@@ -49,6 +51,16 @@ var Mongod = function(url, col) {
         collection = db.collection('dashboard');
         var search = new RegExp(req.query.ci);
         collection.find({Hostname:search}).toArray(function(err, docs) {
+            if(err) res.json({error: 'service unavailable'});
+            console.log(docs);
+            res.json({results: docs});
+        });
+    }
+
+    this.getRsms = function(req, res) {
+        console.log('getting rsms: ');
+        collection = db.collection('dashboard');
+        collection.distinct('RSM', function(err, docs) {
             if(err) res.json({error: 'service unavailable'});
             console.log(docs);
             res.json({results: docs});

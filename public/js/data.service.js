@@ -81,6 +81,11 @@ System.register(['@angular/core', '@angular/http', './factory.service.js', '@ang
                         return this.http.get('/api/getmonitoringdata?ci=' + ci + '&tool=' + tool)
                             .map(function (res) { return res.json(); });
                     };
+                    this.getRsms = function () {
+                        console.log('getting rsms: ');
+                        return this.http.get('/api/getrsms')
+                            .map(function (res) { return res.json(); });
+                    };
                     this.isValidEmail = function (email) {
                         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                         var valid = re.test(email) ? true : false;

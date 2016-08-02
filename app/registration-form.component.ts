@@ -1,25 +1,22 @@
-import {Component} from '@angular/core'
-import {FormControl, REACTIVE_FORM_DIRECTIVES} from '@angular/forms'
+import {Component, EventEmitter} from '@angular/core'
 import {DataService} from './data.service.js'
-import {NgModel} from '@angular/common'
 
 @Component({
     selector: '[registration-form]',
     templateUrl: 'app/registration-form',
-    providers: [REACTIVE_FORM_DIRECTIVES, DataService]
+    providers: [DataService]
 })
 
 export class RegistrationFormComponent {
     registerModel = {
-        newemail: new NgModel,
+        newemail: null,
         newpassword: null,
         confirmpassword: null
     }
-    newemailControl = new FormControl("");
+    newemailControl = new EventEmitter();
     constructor(private _dataService: DataService) {
-        this.newemailControl.control.valueChanges
-            .debounceTime(400)
-            .distinctUntilChanged()
-            .subscribe((value) => {console.log(value);this._dataService.checkEmail(value)});
+        this.newemailControl.debounceTime(400)
+        .distinctUntilChanged()
+        .subscribe((value) => {console.log(value);this._dataService.checkEmail(value)});
     }
 }

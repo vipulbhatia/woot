@@ -11,7 +11,7 @@ System.register(['@angular/core', './data.service.js'], function(exports_1, cont
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var core_1, data_service_js_1;
-    var RegistrationFormComponent;
+    var RSMsComponent;
     return {
         setters:[
             function (core_1_1) {
@@ -21,33 +21,36 @@ System.register(['@angular/core', './data.service.js'], function(exports_1, cont
                 data_service_js_1 = data_service_js_1_1;
             }],
         execute: function() {
-            RegistrationFormComponent = (function () {
-                function RegistrationFormComponent(_dataService) {
+            RSMsComponent = (function () {
+                function RSMsComponent(_dataService) {
                     var _this = this;
                     this._dataService = _dataService;
-                    this.registerModel = {
-                        newemail: null,
-                        newpassword: null,
-                        confirmpassword: null
-                    };
-                    this.newemailControl = new core_1.EventEmitter();
-                    this.newemailControl.debounceTime(400)
-                        .distinctUntilChanged()
-                        .subscribe(function (value) { console.log(value); _this._dataService.checkEmail(value); });
+                    this.rsms = ['DSUSFGLTAPP05', 'DSUSAMMRSM09'];
+                    this.rsmSearch = new core_1.EventEmitter();
+                    this._dataService.getRsms().subscribe(function (data) { _this.rsms = data.results; _this.temp = _this.rsms; });
+                    this.rsmSearch.distinctUntilChanged()
+                        .subscribe(function (value) {
+                        _this.temp = [];
+                        var exp = new RegExp(value, 'i');
+                        for (var r in _this.rsms) {
+                            if (exp.test(_this.rsms[r])) {
+                                _this.temp.push(_this.rsms[r]);
+                            }
+                        }
+                    });
                 }
-                RegistrationFormComponent = __decorate([
+                RSMsComponent = __decorate([
                     core_1.Component({
-                        selector: '[registration-form]',
-                        templateUrl: 'app/registration-form',
+                        templateUrl: 'app/rsms',
                         providers: [data_service_js_1.DataService]
                     }), 
                     __metadata('design:paramtypes', [(typeof (_a = typeof data_service_js_1.DataService !== 'undefined' && data_service_js_1.DataService) === 'function' && _a) || Object])
-                ], RegistrationFormComponent);
-                return RegistrationFormComponent;
+                ], RSMsComponent);
+                return RSMsComponent;
                 var _a;
             }());
-            exports_1("RegistrationFormComponent", RegistrationFormComponent);
+            exports_1("RSMsComponent", RSMsComponent);
         }
     }
 });
-//# sourceMappingURL=registration-form.component.js.map
+//# sourceMappingURL=rsms.component.js.map

@@ -1,0 +1,10 @@
+div.container.center_div
+    h3 Search for RSM server here
+    form.form-inline
+        div.form-group
+            div
+                input.form-control(type="text", (keyup)="rsmSearch.emit($event.target.value)")
+    div#result
+        ul
+            li(*ngFor="let rsm of temp")
+                |{{rsm}}

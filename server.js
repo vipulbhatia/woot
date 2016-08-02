@@ -29,6 +29,7 @@ app.post('/api/checkEmail', mongodb.checkEmail);
 app.get('/api/getaccounts', mongodb.getAccounts);
 app.get('/api/search', mongodb.search);
 app.get('/api/getmonitoringdata', mongodb.getMonitoringData);
+app.get('/api/getRsms', mongodb.getRsms);
 
 app.listen(8000, function() {
     console.log('server running on port 8000...');
