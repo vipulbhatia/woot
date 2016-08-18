@@ -1,4 +1,4 @@
-System.register(['@angular/core', './data.service.js'], function(exports_1, context_1) {
+System.register(['@angular/core', './terminals.component.js', './data.service.js'], function(exports_1, context_1) {
     "use strict";
     var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -10,12 +10,15 @@ System.register(['@angular/core', './data.service.js'], function(exports_1, cont
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, data_service_js_1;
+    var core_1, terminals_component_js_1, data_service_js_1;
     var RSMsComponent;
     return {
         setters:[
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (terminals_component_js_1_1) {
+                terminals_component_js_1 = terminals_component_js_1_1;
             },
             function (data_service_js_1_1) {
                 data_service_js_1 = data_service_js_1_1;
@@ -25,9 +28,16 @@ System.register(['@angular/core', './data.service.js'], function(exports_1, cont
                 function RSMsComponent(_dataService) {
                     var _this = this;
                     this._dataService = _dataService;
-                    this.rsms = ['DSUSFGLTAPP05', 'DSUSAMMRSM09'];
+                    this.rsms = ['DSUSFGLTAPP05', 'room-tVhGvF3O1Mf5FVBgAAAB', 'room-eldOucH2mwSjSb8cAAAA'];
                     this.rsmSearch = new core_1.EventEmitter();
-                    this._dataService.getRsms().subscribe(function (data) { _this.rsms = data.results; _this.temp = _this.rsms; });
+                    this.loadTerminal = function (roomId) {
+                        console.log('joining room:', roomId);
+                        this.roomId = roomId;
+                    };
+                    this._dataService.getRsms().subscribe(function (data) {
+                        //this.rsms = data.results;
+                        _this.temp = _this.rsms;
+                    });
                     this.rsmSearch.distinctUntilChanged()
                         .subscribe(function (value) {
                         _this.temp = [];
@@ -42,12 +52,12 @@ System.register(['@angular/core', './data.service.js'], function(exports_1, cont
                 RSMsComponent = __decorate([
                     core_1.Component({
                         templateUrl: 'app/rsms',
-                        providers: [data_service_js_1.DataService]
+                        providers: [data_service_js_1.DataService],
+                        directives: [terminals_component_js_1.TerminalsComponent]
                     }), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof data_service_js_1.DataService !== 'undefined' && data_service_js_1.DataService) === 'function' && _a) || Object])
+                    __metadata('design:paramtypes', [data_service_js_1.DataService])
                 ], RSMsComponent);
                 return RSMsComponent;
-                var _a;
             }());
             exports_1("RSMsComponent", RSMsComponent);
         }

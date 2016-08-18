@@ -6,5 +6,9 @@ div.container.center_div
                 input.form-control(type="text", (keyup)="rsmSearch.emit($event.target.value)")
     div#result
         ul
-            li(*ngFor="let rsm of temp")
+            li(*ngFor="let rsm of temp", (click)="loadTerminal($event.target.innerHTML)")
                 |{{rsm}}
+
+    div
+      h3 terminal loads here
+      terminals([roomId]="roomId")

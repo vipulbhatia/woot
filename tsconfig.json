@@ -27,7 +27,6 @@
     "./app/boot.ts",
     "./app/data.service.ts",
     "./app/factory.service.ts",
-    "./app/finderr.component.ts",
     "./app/footer.component.ts",
     "./app/header.component.ts",
     "./app/login-form.component.ts",
@@ -38,6 +37,8 @@
     "./app/registration-form.component.ts",
     "./app/rsms.component.ts",
     "./app/search.component.ts",
-    "./app/side-menu.component.ts"
+    "./app/side-menu.component.ts",
+    "./app/terminal.component.ts",
+    "./app/terminals.component.ts"
   ]
 }

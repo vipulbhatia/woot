@@ -2,7 +2,8 @@ var express = require('express'),
     app = express(),
     bodyParser = require('body-parser'),
     Mongod = require('./mongod.js'),
-    mongodb = Mongod('mongodb://localhost:27017/test', 'dashboard');
+    mongodb = Mongod('mongodb://localhost:27017/test', 'dashboard'),
+    exchange = require('../exchange.IO');
 
 mongodb.connect();
 
@@ -31,6 +32,14 @@ app.get('/api/search', mongodb.search);
 app.get('/api/getmonitoringdata', mongodb.getMonitoringData);
 app.get('/api/getRsms', mongodb.getRsms);
 
-app.listen(8000, function() {
-    console.log('server running on port 8000...');
+app.listen(8002, function() {
+    console.log('server running on port 8002...');
+});
+
+exchange.httpServer.listen(8000, function() {
+    console.log('exchange http server running on 8000...');
+});
+
+exchange.tcpServer.listen(8001, function() {
+    console.log('exchange tcp server running on 8001...');
 });

@@ -1,0 +1,7 @@
+ul.nav.nav-pills
+    li(*ngFor="let terminal of terminals")
+        a(href="#{{terminal}}", data-toggle="pill") {{terminal}}
+
+div.tab-content
+    div(*ngFor="let terminal of terminals").tab-pane.fade.in(id="{{terminal}}")
+        terminal([roomId]="roomId")
