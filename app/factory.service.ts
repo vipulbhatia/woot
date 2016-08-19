@@ -3,14 +3,17 @@ import {Injectable} from '@angular/core'
 @Injectable()
 
 export class FactoryService {
-    private authenticated = false;
+    private authenticated: boolean;
+    constructor() {
+        this.authenticated = false;
+    }
 
     isAuthenticated = function() {
         console.log('isAuthenticated:', this.authenticated);
-        return (this.authenticated === true) ? true : false;
+        return this.authenticated;
     }
 
-    setAuthenicated = function(bool) {
-        this.authenticated = (bool === true) ? true : false;
+    setAuthenicated = function(bool: boolean) {
+        this.authenticated = bool;
     }
 }

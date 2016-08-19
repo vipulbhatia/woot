@@ -23,7 +23,21 @@ System.register(['@angular/core', '@angular/router'], function(exports_1, contex
         execute: function() {
             SideMenuComponent = (function () {
                 function SideMenuComponent() {
+                    this.activate = function (ele) {
+                        console.log('activate:', ele);
+                        for (var i in this.li) {
+                            if (i == ele)
+                                this.li[i] = true;
+                            else
+                                this.li[i] = false;
+                        }
+                    };
+                    this.li = [true, false, false];
                 }
+                __decorate([
+                    core_1.ViewChild('sidemenu'), 
+                    __metadata('design:type', Object)
+                ], SideMenuComponent.prototype, "sidemenu", void 0);
                 SideMenuComponent = __decorate([
                     core_1.Component({
                         selector: 'side-menu',

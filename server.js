@@ -17,7 +17,8 @@ app.use('/css', express.static(__dirname + '/public/css'));
 app.set('views', __dirname + '/public/views');
 app.set('view engine', 'pug');
 
-app.get('/', function(req, res) {
+app.get(/^\/(?!api|app)/, function(req, res) {
+    console.log('non api url called...serving index');
     res.render('index');
 });
 

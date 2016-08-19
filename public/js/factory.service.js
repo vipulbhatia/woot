@@ -20,14 +20,14 @@ System.register(['@angular/core'], function(exports_1, context_1) {
         execute: function() {
             FactoryService = (function () {
                 function FactoryService() {
-                    this.authenticated = false;
                     this.isAuthenticated = function () {
                         console.log('isAuthenticated:', this.authenticated);
-                        return (this.authenticated === true) ? true : false;
+                        return this.authenticated;
                     };
                     this.setAuthenicated = function (bool) {
-                        this.authenticated = (bool === true) ? true : false;
+                        this.authenticated = bool;
                     };
+                    this.authenticated = false;
                 }
                 FactoryService = __decorate([
                     core_1.Injectable(), 

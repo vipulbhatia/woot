@@ -7,10 +7,10 @@ import {SearchComponent} from './search.component.js'
 import {RSMsComponent} from './rsms.component.js'
 
 export const routes: RouterConfig = [
-    {path: '', redirectTo: 'portal', pathMatch: 'full'},
+    {path: '', redirectTo: 'login', pathMatch: 'full'},
     {path: 'login', component: MainLoginComponent},
-    {path: 'portal', component: PortalComponent, children: [
-        {path: '', redirectTo: 'rsms'},
+    {path: 'portal', component: PortalComponent, canActivate: [AuthService], children: [
+        {path: '', redirectTo: 'search'},
         {path: 'search', component: SearchComponent},
         {path: 'rsms', component: RSMsComponent}
     ]}

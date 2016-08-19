@@ -25,10 +25,10 @@ System.register(['@angular/router', './auth.service.js', './main-login.component
             }],
         execute: function() {
             exports_1("routes", routes = [
-                { path: '', redirectTo: 'portal', pathMatch: 'full' },
+                { path: '', redirectTo: 'login', pathMatch: 'full' },
                 { path: 'login', component: main_login_component_js_1.MainLoginComponent },
-                { path: 'portal', component: portal_component_js_1.PortalComponent, children: [
-                        { path: '', redirectTo: 'rsms' },
+                { path: 'portal', component: portal_component_js_1.PortalComponent, canActivate: [auth_service_js_1.AuthService], children: [
+                        { path: '', redirectTo: 'search' },
                         { path: 'search', component: search_component_js_1.SearchComponent },
                         { path: 'rsms', component: rsms_component_js_1.RSMsComponent }
                     ] }

@@ -26,6 +26,7 @@ export class DataService {
             .map(res => res.json())
             .subscribe(
                 data => {
+                    console.log('data service: got reponse:', data);
                     if(data.status === 200) {
                         this._factoryService.setAuthenicated(true);
                         this.router.navigate(['/portal/']);

@@ -48,6 +48,7 @@ System.register(['@angular/core', '@angular/http', './factory.service.js', '@ang
                         this.http.post('/api/login', JSON.stringify({ email: bodyq.email, password: bodyq.password }), { headers: headers })
                             .map(function (res) { return res.json(); })
                             .subscribe(function (data) {
+                            console.log('data service: got reponse:', data);
                             if (data.status === 200) {
                                 _this._factoryService.setAuthenicated(true);
                                 _this.router.navigate(['/portal/']);
@@ -99,10 +100,10 @@ System.register(['@angular/core', '@angular/http', './factory.service.js', '@ang
                 }
                 DataService = __decorate([
                     core_1.Injectable(), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _a) || Object, (typeof (_b = typeof factory_service_js_1.FactoryService !== 'undefined' && factory_service_js_1.FactoryService) === 'function' && _b) || Object, (typeof (_c = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _c) || Object])
+                    __metadata('design:paramtypes', [(typeof (_a = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _a) || Object, factory_service_js_1.FactoryService, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object])
                 ], DataService);
                 return DataService;
-                var _a, _b, _c;
+                var _a, _b;
             }());
             exports_1("DataService", DataService);
         }

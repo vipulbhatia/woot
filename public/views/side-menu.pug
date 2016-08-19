@@ -1,15 +1,15 @@
 div#side-menu
     h1 Side Menu
-    ul
-        li.link.active
+    ul(#sidemenu="")
+        li.link((click)="activate(0)", [class.active]="li[0]")
             a(href="#", [routerLink]="['/portal/search']")
                 span.glyphicon.glyphicon-search
                 span Search
-        li.link
+        li.link((click)="activate(1)", [class.active]="li[1]")
             a(href="#", [routerLink]=['/portal/rsms'])
                 span.glyphicon.glyphicon-list-alt
                 span RSMs
-        li.link
+        li.link((click)="activate(2)", [class.active]="li[2]")
             a(data-target="#collapse-post", data-toggle="collapse")
                 span.glyphicon.glyphicon-list-alt
                 span Article
