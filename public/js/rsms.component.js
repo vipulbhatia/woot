@@ -28,15 +28,18 @@ System.register(['@angular/core', './terminals.component.js', './data.service.js
                 function RSMsComponent(_dataService) {
                     var _this = this;
                     this._dataService = _dataService;
-                    this.rsms = ['DSUSFGLTAPP05', 'room-tVhGvF3O1Mf5FVBgAAAB', 'room-eldOucH2mwSjSb8cAAAA'];
+                    this.rsms = [];
+                    this.temp = [];
                     this.rsmSearch = new core_1.EventEmitter();
                     this.loadTerminal = function (roomId) {
                         console.log('joining room:', roomId);
                         this.roomId = roomId;
                     };
-                    this._dataService.getRsms().subscribe(function (data) {
-                        //this.rsms = data.results;
-                        _this.temp = _this.rsms;
+                    this._dataService.getRooms().subscribe(function (data) {
+                        _this.rsms = data.results;
+                        for (var i in _this.rsms) {
+                            _this.temp.push(_this.rsms[i].replace(/^room-/, ''));
+                        }
                     });
                     this.rsmSearch.distinctUntilChanged()
                         .subscribe(function (value) {

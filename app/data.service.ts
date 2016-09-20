@@ -29,6 +29,7 @@ export class DataService {
                     console.log('data service: got reponse:', data);
                     if(data.status === 200) {
                         this._factoryService.setAuthenicated(true);
+                        this._factoryService.setToken(data.token);
                         this.router.navigate(['/portal/']);
                     } else {
                         this._factoryService.setAuthenicated(false);
@@ -51,13 +52,13 @@ export class DataService {
 
     getAccounts = function() {
         console.log('Data Service: getting accounts: ');
-        return this.http.get('/api/getaccounts')
+        return this.http.get('/api/getaccounts?token='+this._factoryService.getToken())
             .map(res => res.json());
     }
 
     search = function(ci) {
         console.log('search: ', ci);
-        return this.http.get('/api/search?ci='+ci)
+        return this.http.get('/api/search?ci='+ci+'&token='+this._factoryService.getToken())
                     .map(res => res.json());
     }
 
@@ -69,7 +70,13 @@ export class DataService {
 
     getRsms = function() {
         console.log('getting rsms: ');
-        return this.http.get('/api/getrsms')
+        return this.http.get('/api/getrsms?token='+this._factoryService.getToken())
+                    .map(res => res.json());
+    }
+
+    getRooms = function() {
+        console.log('getting rsm rooms from exchange: ');
+        return this.http.get('http://localhost:8000/api/getrooms')
                     .map(res => res.json());
     }
 

@@ -51,6 +51,7 @@ System.register(['@angular/core', '@angular/http', './factory.service.js', '@ang
                             console.log('data service: got reponse:', data);
                             if (data.status === 200) {
                                 _this._factoryService.setAuthenicated(true);
+                                _this._factoryService.setToken(data.token);
                                 _this.router.navigate(['/portal/']);
                             }
                             else {
@@ -69,12 +70,12 @@ System.register(['@angular/core', '@angular/http', './factory.service.js', '@ang
                     };
                     this.getAccounts = function () {
                         console.log('Data Service: getting accounts: ');
-                        return this.http.get('/api/getaccounts')
+                        return this.http.get('/api/getaccounts?token=' + this._factoryService.getToken())
                             .map(function (res) { return res.json(); });
                     };
                     this.search = function (ci) {
                         console.log('search: ', ci);
-                        return this.http.get('/api/search?ci=' + ci)
+                        return this.http.get('/api/search?ci=' + ci + '&token=' + this._factoryService.getToken())
                             .map(function (res) { return res.json(); });
                     };
                     this.getMonitoringData = function (ci, tool) {
@@ -84,7 +85,12 @@ System.register(['@angular/core', '@angular/http', './factory.service.js', '@ang
                     };
                     this.getRsms = function () {
                         console.log('getting rsms: ');
-                        return this.http.get('/api/getrsms')
+                        return this.http.get('/api/getrsms?token=' + this._factoryService.getToken())
+                            .map(function (res) { return res.json(); });
+                    };
+                    this.getRooms = function () {
+                        console.log('getting rsm rooms from exchange: ');
+                        return this.http.get('http://localhost:8000/api/getrooms')
                             .map(function (res) { return res.json(); });
                     };
                     this.isValidEmail = function (email) {

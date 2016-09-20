@@ -4,6 +4,7 @@ import {Injectable} from '@angular/core'
 
 export class FactoryService {
     private authenticated: boolean;
+    private token;
     constructor() {
         this.authenticated = false;
     }
@@ -15,5 +16,13 @@ export class FactoryService {
 
     setAuthenicated = function(bool: boolean) {
         this.authenticated = bool;
+    }
+
+    setToken = function(token) {
+        this.token = token;
+    }
+
+    getToken = function() {
+        return this.token;
     }
 }

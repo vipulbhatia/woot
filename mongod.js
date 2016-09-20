@@ -1,4 +1,6 @@
-var mongodb = require('mongodb').MongoClient;
+var mongodb = require('mongodb').MongoClient,
+    jwt = require('jsonwebtoken'),
+    config = require('./config');
 
 var Mongod = function(url, col) {
     var mongoUrl = url,
@@ -21,7 +23,8 @@ var Mongod = function(url, col) {
         collection.find({email:req.body.email, password:req.body.password}).toArray(function(err, docs) {
             if(err) res.json({status: 404});
             console.log(docs);
-            (docs.length > 0) ? res.json({status: 200}) : res.json({status: 400});
+            var token = jwt.sign({email: req.body.email}, config.secret);
+            (docs.length > 0) ? res.json({status: 200, token: token}) : res.json({status: 400});
         });
     }
 
@@ -38,8 +41,8 @@ var Mongod = function(url, col) {
 
     this.getAccounts = function(req, res) {
         console.log('get accounts: ');
-        collection = db.collection('dashboard');
-        collection.distinct('Account', function(err, docs) {
+        collection = db.collection('findhost');
+        collection.distinct('account', function(err, docs) {
             if(err) res.json({error: 'service unavailable'});
             console.log(docs);
             res.json({results: docs});
@@ -48,9 +51,9 @@ var Mongod = function(url, col) {
 
     this.search = function(req, res) {
         console.log('search: ', req.query.ci);
-        collection = db.collection('dashboard');
+        collection = db.collection('findhost');
         var search = new RegExp(req.query.ci);
-        collection.find({Hostname:search}).toArray(function(err, docs) {
+        collection.find({esm_name:search}).toArray(function(err, docs) {
             if(err) res.json({error: 'service unavailable'});
             console.log(docs);
             res.json({results: docs});
@@ -59,7 +62,7 @@ var Mongod = function(url, col) {
 
     this.getRsms = function(req, res) {
         console.log('getting rsms: ');
-        collection = db.collection('dashboard');
+        collection = db.collection('findhost');
         collection.distinct('RSM', function(err, docs) {
             if(err) res.json({error: 'service unavailable'});
             console.log(docs);

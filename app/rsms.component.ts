@@ -9,15 +9,17 @@ import {DataService} from './data.service.js'
 })
 
 export class RSMsComponent {
-    private rsms = ['DSUSFGLTAPP05', 'room-tVhGvF3O1Mf5FVBgAAAB', 'room-eldOucH2mwSjSb8cAAAA'];
-    private temp;
+    private rsms = [];
+    private temp = [];
     private roomId;
     private rsmSearch = new EventEmitter();
     constructor(private _dataService: DataService) {
-        this._dataService.getRsms().subscribe(
+        this._dataService.getRooms().subscribe(
                 (data) => {
-                    //this.rsms = data.results;
-                    this.temp = this.rsms;
+                    this.rsms = data.results;
+                    for(var i in this.rsms) {
+                        this.temp.push(this.rsms[i].replace(/^room-/, ''));
+                    }
                 }
         );
 

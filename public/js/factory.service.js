@@ -27,6 +27,12 @@ System.register(['@angular/core'], function(exports_1, context_1) {
                     this.setAuthenicated = function (bool) {
                         this.authenticated = bool;
                     };
+                    this.setToken = function (token) {
+                        this.token = token;
+                    };
+                    this.getToken = function () {
+                        return this.token;
+                    };
                     this.authenticated = false;
                 }
                 FactoryService = __decorate([

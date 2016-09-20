@@ -2,7 +2,9 @@ var express = require('express'),
     app = express(),
     bodyParser = require('body-parser'),
     Mongod = require('./mongod.js'),
-    mongodb = Mongod('mongodb://localhost:27017/test', 'dashboard'),
+    jwt = require('jsonwebtoken'),
+    config = require('./config'),
+    mongodb = Mongod('mongodb://165.136.136.13:27017/monitoring', 'findhost'),
     exchange = require('../exchange.IO');
 
 mongodb.connect();
@@ -27,6 +29,23 @@ app.get('/app/:page', function(req, res) {
 });
 
 app.post('/api/login', mongodb.login);
+
+app.use(function(req, res, next) {
+    var token = req.body.token || req.params.token || req.query.token;
+    console.log('got jwt token:', token);
+    if(token) {
+            jwt.verify(token, config.secret, function(err, decoded) {
+                if(err) {
+                    return res.status(403).json({err: 'illegal jwt'});
+                } else {
+                    next();
+                }
+            })
+    } else {
+        return res.status(403).json({err: 'no jwt found'});
+    }
+});
+
 app.post('/api/checkEmail', mongodb.checkEmail);
 app.get('/api/getaccounts', mongodb.getAccounts);
 app.get('/api/search', mongodb.search);
