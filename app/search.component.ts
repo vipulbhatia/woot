@@ -1,25 +1,39 @@
 import {Component} from '@angular/core'
 import {DataService} from './data.service.js'
+import {InfoCardComponent} from './info-card.component.js'
+import {ChartComponent} from './chart.component.js'
 
 @Component({
     selector: 'search',
     templateUrl: 'app/search',
-    providers: [DataService]
+    providers: [DataService],
+    directives: [InfoCardComponent, ChartComponent]
 })
 
 export class SearchComponent {
+    charts = [];
     accounts = [];
     results = [];
     temp = [];
     pages = [];
-    noofresults = 5;
+    noofresults = 50;
     currpage = 0;
     monitoringData;
     serverName = '';
     monitoringDataKeys;
     show = true;
     formInline = false;
+    chartData = [];
     constructor(private _dataService: DataService) {
+        this.chartData = [
+          { label: '2008', value: 20 },
+          { label: '2009', value: 10 },
+          { label: '2010', value: 5 },
+          { label: '2011', value: 5 },
+          { label: '2012', value: 20 }
+      ];
+        this.charts.push({chartId: 'search-chart-1', title: 'Donut 1', type: 'Donut', chartData: this.chartData});
+
         this._dataService.getAccounts()
             .subscribe(
                 data => this.accounts = data.results,
@@ -38,12 +52,11 @@ export class SearchComponent {
     }
 
     getMonitoringData = function(result) {
-        this._dataService.getMonitoringData(result.Hostname, result.Tool)
+        this._dataService.getMonitoringData(result.esm_name, result.accounted_by)
             .subscribe(
                 data => {
-                    console.log(data.results[0]);
-                    this.monitoringData = this._dataService.jsonToArray(data.results[0]);
-                    this.serverName = result.Hostname;
+                    this.monitoringData = data.results[0];//this._dataService.jsonToArray(data.results[0]);
+                    this.serverName = result.esm_name;
                     this.show = false;
                     this.formInline = true;
                 },
@@ -56,6 +69,8 @@ export class SearchComponent {
         this._dataService.search(this.ci)
             .subscribe(
                 data => {
+                    console.log(data);
+                    console.log(data.results[0]);
                     this.results = data.results;
                     this.pages = [];
                     for(var i=0; i<Math.ceil(this.results.length/this.noofresults); i++) {
@@ -66,7 +81,7 @@ export class SearchComponent {
                     this.show = true;
                     this.formInline = false;
                 },
-                err => console.error(err),
+                err => console.error('error: ', err),
                 () => console.log('finished searching...')
             )
     }

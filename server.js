@@ -1,20 +1,23 @@
 var express = require('express'),
     app = express(),
     bodyParser = require('body-parser'),
+    morgan = require('morgan'),
     Mongod = require('./mongod.js'),
     jwt = require('jsonwebtoken'),
     config = require('./config'),
-    mongodb = Mongod('mongodb://165.136.136.13:27017/monitoring', 'findhost'),
-    exchange = require('../exchange.IO');
+    //mongodb = Mongod('mongodb://127.0.0.1:27017/monitoring', 'findhost'),
+    exchange = require('./exchange.IO');
 
-mongodb.connect();
+//mongodb.connect();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
+app.use(morgan('combined'));
 
 app.use('/js', express.static(__dirname + '/public/js'));
 app.use('/node_modules', express.static(__dirname + '/node_modules'));
 app.use('/css', express.static(__dirname + '/public/css'));
+app.use('/fonts', express.static(__dirname + '/public/fonts'));
 
 app.set('views', __dirname + '/public/views');
 app.set('view engine', 'pug');
@@ -28,9 +31,12 @@ app.get('/app/:page', function(req, res) {
     res.render(req.params.page);
 });
 
-app.post('/api/login', mongodb.login);
+//app.post('/api/login', mongodb.login);
+app.post('/api/login', function(req, res) {
+    res.json({status: 200});
+});
 
-app.use(function(req, res, next) {
+/*app.use(function(req, res, next) {
     var token = req.body.token || req.params.token || req.query.token;
     console.log('got jwt token:', token);
     if(token) {
@@ -45,21 +51,21 @@ app.use(function(req, res, next) {
         return res.status(403).json({err: 'no jwt found'});
     }
 });
+*/
+//app.post('/api/checkEmail', mongodb.checkEmail);
+//app.get('/api/getaccounts', mongodb.getAccounts);
+//app.get('/api/search', mongodb.search);
+//app.get('/api/getmonitoringdata', mongodb.getMonitoringData);
+//app.get('/api/getRsms', mongodb.getRsms);
 
-app.post('/api/checkEmail', mongodb.checkEmail);
-app.get('/api/getaccounts', mongodb.getAccounts);
-app.get('/api/search', mongodb.search);
-app.get('/api/getmonitoringdata', mongodb.getMonitoringData);
-app.get('/api/getRsms', mongodb.getRsms);
-
-app.listen(8002, function() {
-    console.log('server running on port 8002...');
+app.listen(8082, function() {
+    console.log('server running on port 8082...');
 });
 
 exchange.httpServer.listen(8000, function() {
     console.log('exchange http server running on 8000...');
 });
 
-exchange.tcpServer.listen(8001, function() {
-    console.log('exchange tcp server running on 8001...');
+exchange.tcpServer.listen(8081, function() {
+    console.log('exchange tcp server running on 8081...');
 });

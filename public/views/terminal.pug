@@ -1,8 +1,21 @@
-div
+//
 	input(type="text", #message="")
 	input(type="button", value="send", (click)="send()")
 	br
 	div(style="display:table")
 		div(style="display:table-row")
 			textarea(style="display:table-cell;width:500px;height:500px", #chat="")
-			div(id="terminal", style="display:table-cell;width:800px;height:500px")
+			div(class="terminal", style="display:table-cell;width:800px;height:500px")
+
+div.row
+	div.col-md-3
+		textarea.chat(#chat="")
+	div.col-md-9
+		div.terminal
+
+div.row
+	form
+		div.col-md-10.form-group
+			input(type="text", #message="", style="width:100%")
+		div.col-md-2.btn-group
+			button.btn.btn-primary((click)="send()") Send

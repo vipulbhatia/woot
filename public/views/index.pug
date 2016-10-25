@@ -1,7 +1,12 @@
+doctype html
 html
     head
         title Angular 2 App
         base(href="/")
+        link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet")
+        link(rel="stylesheet" href="css/bootcards-desktop.min.css")
+        link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css")    
+        link(href="css/main.css" rel="stylesheet")
         script(src="node_modules/angular2/bundles/angular2-polyfills.js")
         script(src="node_modules/systemjs/dist/system.src.js")
         script(src="node_modules/rxjs/bundles/Rx.js")
@@ -10,10 +15,11 @@ html
         script(src="node_modules/angular2/bundles/http.dev.js")
         script(src="https://code.jquery.com/jquery-2.2.0.min.js")
         script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js")
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/bootcards/1.0.0/js/bootcards.min.js")
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js")
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js")
         script(src="js/hterm_all.js")
         script(src="js/socket.io.js")
-        link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet")
-        link(href="css/main.css" rel="stylesheet")
         script.
             var ngVer = '@2.0.0-rc.4'; // lock in the angular package version; do not let it float to current!
             var routerVer = '@3.0.0-beta.2'; // lock router version
@@ -23,7 +29,7 @@ html
             var  map = {
              'app':                        'app',
 
-             '@angular':                   'https://npmcdn.com/@angular', // sufficient if we didn't pin the version
+             '@angular':                   'https://npmcdn.com/@angular' + ngVer, // sufficient if we didn't pin the version
              '@angular/router':            'https://npmcdn.com/@angular/router' + routerVer,
              '@angular/forms':             'https://npmcdn.com/@angular/forms' + formsVer,
              'angular2-in-memory-web-api': 'https://npmcdn.com/angular2-in-memory-web-api', // get latest
@@ -96,4 +102,4 @@ html
             System.import('js/boot.js')
                 .then(null, console.error.bind(console));
     body
-        main
+        app

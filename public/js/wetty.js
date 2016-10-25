@@ -35,7 +35,9 @@ tty.on('connect', function() {
         hterm.defaultStorage = new lib.Storage.Local();
         term = new hterm.Terminal();
         window.term = term;
-        term.decorate(document.getElementById('terminal'));
+        var allTerms = document.getElementsByClassName('terminal');
+        console.log(allTerms.length);
+        term.decorate(allTerms[allTerms.length-1]);
 
         term.setCursorPosition(0, 0);
         term.setCursorVisible(true);

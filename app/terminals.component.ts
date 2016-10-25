@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, ComponentResolver, ViewContainerRef, ReflectiveInjector} from '@angular/core'
+import {Component, Directive, Input, OnChanges, ComponentResolver, ViewContainerRef, ReflectiveInjector, AfterContentInit} from '@angular/core'
 import {TerminalComponent} from './terminal.component.js'
 
 @Component({
@@ -7,11 +7,13 @@ import {TerminalComponent} from './terminal.component.js'
     directives: [TerminalComponent]
 })
 
-export class TerminalsComponent implements OnChanges {
+export class TerminalsComponent implements OnChanges, AfterContentInit {
     @Input('roomId') roomId;
     private terminals;
+    private close;
     constructor() {
         this.terminals = [];
+        this.close = false;
     }
 
     ngOnChanges(value) {
@@ -24,6 +26,15 @@ export class TerminalsComponent implements OnChanges {
             } else {
                 console.log('Terminals Component: roomId already exists');
             }
+        }
+    }
+
+    removeRoom = (id) => {
+        console.log('remove called:', id);
+        var index = this.terminals.indexOf(id);
+        if(index > -1) {
+            //this.terminals[index]
+            this.terminals.splice(index, 1);
         }
     }
 }

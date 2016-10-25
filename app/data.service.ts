@@ -6,7 +6,36 @@ import {Router} from '@angular/router'
 @Injectable()
 
 export class DataService {
-    constructor(private http: Http, private _factoryService: FactoryService, private router: Router) { }
+    private host;
+    public rsms;
+    public temp;
+    private socket;
+    constructor(private http: Http, public _factoryService: FactoryService, private router: Router) {
+        this.host = 'http://165.136.136.14:8081';
+        this.rsms = [];
+        this.temp = [];
+        this.socket = io.connect('127.0.0.1:8000');
+
+        this.socket.on('connect', () => {
+            this.socket.emit('message', 'join room getRooms');
+        });
+
+        this.socket.on('message', (data) => {
+            data = JSON.parse(data);
+            if(data.sender == 'server') {
+                this.temp = [];
+                this.rsms = [];
+                data.message = data.message.split(',');
+                for(var i in data.message) {
+                    console.log(data.message[i]);
+                    if(/-TTY$|-SSH$|-WIN$/.test(data.message[i])) {
+                        this.rsms.push(data.message[i].replace(/^room-/, ''));
+                        this.temp = this.rsms;
+                    }
+                }
+            }
+        });
+    }
 
     jsonToArray = function(json) {
         var arr = [],
@@ -58,13 +87,17 @@ export class DataService {
 
     search = function(ci) {
         console.log('search: ', ci);
-        return this.http.get('/api/search?ci='+ci+'&token='+this._factoryService.getToken())
+        return this.http.get(this.host+'/findhost/'+ci+'/10')
                     .map(res => res.json());
     }
 
     getMonitoringData = function(ci, tool) {
+        var db;
+        switch(tool.toUpperCase()) {
+            case 'MLM': db = 'portal';break;
+        }
         console.log('getting monitoring data: ', ci);
-        return this.http.get('/api/getmonitoringdata?ci='+ci+'&tool='+tool)
+        return this.http.get(this.host+'/'+db+'/'+ci)
                     .map(res => res.json());
     }
 
@@ -76,7 +109,7 @@ export class DataService {
 
     getRooms = function() {
         console.log('getting rsm rooms from exchange: ');
-        return this.http.get('http://localhost:8000/api/getrooms')
+        return this.http.get('http://127.0.0.1:8000/api/getrooms')
                     .map(res => res.json());
     }
 

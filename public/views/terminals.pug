@@ -1,7 +1,9 @@
 ul.nav.nav-pills
     li(*ngFor="let terminal of terminals")
         a(href="#{{terminal}}", data-toggle="pill") {{terminal}}
+            span
+                i.glyphicon.glyphicon-remove.tab-close((click)="removeRoom(terminal)")
 
 div.tab-content
     div(*ngFor="let terminal of terminals").tab-pane.fade.in(id="{{terminal}}")
-        terminal([roomId]="roomId")
+        terminal([roomId]="roomId", (remove)="removeRoom($event)")

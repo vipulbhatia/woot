@@ -1,0 +1,40 @@
+div.container.bootcards-container(*ngIf="!formInline")
+    div.row
+        div.col-sm-6.bootcards-list
+            div.panel.panel-default
+                div.panel-body
+                    form
+                        div.row
+                            div.col-xs-9
+                                div.form-group
+                                    input.form-control(type="text", name="ci", placeholder="search...", [(ngModel)]="ci", (keyup)="ciSearchControl.emit($event.target.value)")
+                                    i.fa.fa-search            
+
+                div.list-group
+                    a.list-group-item(*ngFor="let i of temp", (click)="showServerInfo(i)")
+                        div.row
+                            div.col-sm-4
+                                i.fa.fa-3x.fa-building-o.pull-left
+                                h4.list-group-item-heading
+                                    |{{i.esm_name}}
+                                p.list-group-item-text
+                                    |{{i.account}}
+                            div.col-sm-4(*ngIf="i.data.MLM")
+                                h5.list-group-item-heading
+                                    |{{i.data.MLM.originating_source}}
+                                p.list-group-item-text
+                                    a(data-toggle="modal", data-target="#editConfigModal", (click)="getMonitoringData(i)") config&nbsp;
+                                    a(data-toggle="modal", data-target="#rsmsModal", (click)="_dataService._factoryService.getRoomIdAsEmitter().next(i.data.MLM.originating_source)") connect
+        div.col-sm-6
+            info-card(*ngIf="serverInfo", [data]="serverInfo", [type]="'information'")
+        div#editConfigModal.modal.fade.in
+            div.modal-dialog
+                div.modal-content
+                    div.modal-header
+                        div.btn-group.pull-left
+                            button.btn.btn-danger(data-dismiss="modal") Hide
+                        div.btn-group.pull-right
+                            button.btn.btn-success Save
+                        h3.modal-title Edit Configuration
+                    div.modal-body
+                        info-card(*ngIf="monitoringData", [data]="monitoringData", [type]="'configurable'")

@@ -1,6 +1,5 @@
-System.register(['@angular/core', './terminal.component.js'], function(exports_1, context_1) {
+System.register(["@angular/core", "./terminal.component.js"], function (exports_1, context_1) {
     "use strict";
-    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,20 +9,31 @@ System.register(['@angular/core', './terminal.component.js'], function(exports_1
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, terminal_component_js_1;
-    var TerminalsComponent;
+    var __moduleName = context_1 && context_1.id;
+    var core_1, terminal_component_js_1, TerminalsComponent;
     return {
-        setters:[
+        setters: [
             function (core_1_1) {
                 core_1 = core_1_1;
             },
             function (terminal_component_js_1_1) {
                 terminal_component_js_1 = terminal_component_js_1_1;
-            }],
-        execute: function() {
+            }
+        ],
+        execute: function () {
             TerminalsComponent = (function () {
                 function TerminalsComponent() {
+                    var _this = this;
+                    this.removeRoom = function (id) {
+                        console.log('remove called:', id);
+                        var index = _this.terminals.indexOf(id);
+                        if (index > -1) {
+                            //this.terminals[index]
+                            _this.terminals.splice(index, 1);
+                        }
+                    };
                     this.terminals = [];
+                    this.close = false;
                 }
                 TerminalsComponent.prototype.ngOnChanges = function (value) {
                     console.log(value);
@@ -38,22 +48,22 @@ System.register(['@angular/core', './terminal.component.js'], function(exports_1
                         }
                     }
                 };
-                __decorate([
-                    core_1.Input('roomId'), 
-                    __metadata('design:type', Object)
-                ], TerminalsComponent.prototype, "roomId", void 0);
-                TerminalsComponent = __decorate([
-                    core_1.Component({
-                        selector: 'terminals',
-                        templateUrl: 'app/terminals',
-                        directives: [terminal_component_js_1.TerminalComponent]
-                    }), 
-                    __metadata('design:paramtypes', [])
-                ], TerminalsComponent);
                 return TerminalsComponent;
             }());
+            __decorate([
+                core_1.Input('roomId'),
+                __metadata("design:type", Object)
+            ], TerminalsComponent.prototype, "roomId", void 0);
+            TerminalsComponent = __decorate([
+                core_1.Component({
+                    selector: 'terminals',
+                    templateUrl: 'app/terminals',
+                    directives: [terminal_component_js_1.TerminalComponent]
+                }),
+                __metadata("design:paramtypes", [])
+            ], TerminalsComponent);
             exports_1("TerminalsComponent", TerminalsComponent);
         }
-    }
+    };
 });
 //# sourceMappingURL=terminals.component.js.map

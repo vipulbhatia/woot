@@ -1,11 +1,13 @@
 import {Component} from '@angular/core'
 import {FactoryService} from './factory.service.js'
 import {Router} from '@angular/router'
+import {RSMsComponent} from './rsms.component.js'
 
 @Component({
     selector: 'header',
     templateUrl: 'app/header',
-    styleUrls: ['css/header.css']
+    styleUrls: ['css/header.css'],
+    directives: [RSMsComponent]
 })
 
 export class HeaderComponent {

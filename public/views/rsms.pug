@@ -1,14 +1,18 @@
-div.container.center_div
-    h3 Search for RSM server here
-    form.form-inline
-        div.form-group
-            div
-                input.form-control(type="text", (keyup)="rsmSearch.emit($event.target.value)")
-    div#result
-        ul
-            li(*ngFor="let rsm of temp", (click)="loadTerminal($event.target.innerHTML)")
-                |{{rsm}}
+div#rsmsModal.modal.fade.in
+    div.modal-dialog(style="width:60%")
+        div.modal-content
+            div.modal-header
+                div.btn-group.pull-left
+                    button.btn.btn-danger(data-dismiss="modal") Hide
+            div.modal-body
+                form.form-inline
+                    div.form-group
+                        div
+                            input.form-control(type="text", (keyup)="rsmSearch.emit($event.target.value)")
+                div#result
+                    ul
+                        li(*ngFor="let rsm of _dataService.temp", (click)="loadTerminal($event.target.innerHTML)")
+                            |{{rsm}}
 
-    div
-      h3 terminal loads here
-      terminals([roomId]="roomId")
+                div
+                  terminals([roomId]="roomId")

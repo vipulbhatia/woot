@@ -1,6 +1,5 @@
-System.register(['@angular/core', '@angular/http', './factory.service.js', '@angular/router'], function(exports_1, context_1) {
+System.register(["@angular/core", "@angular/http", "./factory.service.js", "@angular/router"], function (exports_1, context_1) {
     "use strict";
-    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,10 +9,10 @@ System.register(['@angular/core', '@angular/http', './factory.service.js', '@ang
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, http_1, factory_service_js_1, router_1;
-    var DataService;
+    var __moduleName = context_1 && context_1.id;
+    var core_1, http_1, factory_service_js_1, router_1, DataService, _a, _b;
     return {
-        setters:[
+        setters: [
             function (core_1_1) {
                 core_1 = core_1_1;
             },
@@ -25,10 +24,12 @@ System.register(['@angular/core', '@angular/http', './factory.service.js', '@ang
             },
             function (router_1_1) {
                 router_1 = router_1_1;
-            }],
-        execute: function() {
+            }
+        ],
+        execute: function () {
             DataService = (function () {
                 function DataService(http, _factoryService, router) {
+                    var _this = this;
                     this.http = http;
                     this._factoryService = _factoryService;
                     this.router = router;
@@ -75,12 +76,18 @@ System.register(['@angular/core', '@angular/http', './factory.service.js', '@ang
                     };
                     this.search = function (ci) {
                         console.log('search: ', ci);
-                        return this.http.get('/api/search?ci=' + ci + '&token=' + this._factoryService.getToken())
+                        return this.http.get(this.host + '/findhost/' + ci + '/10')
                             .map(function (res) { return res.json(); });
                     };
                     this.getMonitoringData = function (ci, tool) {
+                        var db;
+                        switch (tool.toUpperCase()) {
+                            case 'MLM':
+                                db = 'portal';
+                                break;
+                        }
                         console.log('getting monitoring data: ', ci);
-                        return this.http.get('/api/getmonitoringdata?ci=' + ci + '&tool=' + tool)
+                        return this.http.get(this.host + '/' + db + '/' + ci)
                             .map(function (res) { return res.json(); });
                     };
                     this.getRsms = function () {
@@ -90,7 +97,7 @@ System.register(['@angular/core', '@angular/http', './factory.service.js', '@ang
                     };
                     this.getRooms = function () {
                         console.log('getting rsm rooms from exchange: ');
-                        return this.http.get('http://localhost:8000/api/getrooms')
+                        return this.http.get('http://127.0.0.1:8000/api/getrooms')
                             .map(function (res) { return res.json(); });
                     };
                     this.isValidEmail = function (email) {
@@ -103,16 +110,37 @@ System.register(['@angular/core', '@angular/http', './factory.service.js', '@ang
                             pristine: pristine
                         };
                     };
+                    this.host = 'http://165.136.136.14:8081';
+                    this.rsms = [];
+                    this.temp = [];
+                    this.socket = io.connect('127.0.0.1:8000');
+                    this.socket.on('connect', function () {
+                        _this.socket.emit('message', 'join room getRooms');
+                    });
+                    this.socket.on('message', function (data) {
+                        data = JSON.parse(data);
+                        if (data.sender == 'server') {
+                            _this.temp = [];
+                            _this.rsms = [];
+                            data.message = data.message.split(',');
+                            for (var i in data.message) {
+                                console.log(data.message[i]);
+                                if (/-TTY$|-SSH$|-WIN$/.test(data.message[i])) {
+                                    _this.rsms.push(data.message[i].replace(/^room-/, ''));
+                                    _this.temp = _this.rsms;
+                                }
+                            }
+                        }
+                    });
                 }
-                DataService = __decorate([
-                    core_1.Injectable(), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof http_1.Http !== 'undefined' && http_1.Http) === 'function' && _a) || Object, factory_service_js_1.FactoryService, (typeof (_b = typeof router_1.Router !== 'undefined' && router_1.Router) === 'function' && _b) || Object])
-                ], DataService);
                 return DataService;
-                var _a, _b;
             }());
+            DataService = __decorate([
+                core_1.Injectable(),
+                __metadata("design:paramtypes", [typeof (_a = typeof http_1.Http !== "undefined" && http_1.Http) === "function" && _a || Object, factory_service_js_1.FactoryService, typeof (_b = typeof router_1.Router !== "undefined" && router_1.Router) === "function" && _b || Object])
+            ], DataService);
             exports_1("DataService", DataService);
         }
-    }
+    };
 });
 //# sourceMappingURL=data.service.js.map

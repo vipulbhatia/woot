@@ -39,7 +39,8 @@ div.container.center_div(*ngIf="formInline")
                 option(*ngFor="let tool of tools", [value]="tool")
                     |{{tool}}
         button.btn.btn-default.glyphicon.glyphicon-search((click)="search()")
-
+//remove this
+chart([type]="charts[0].type", [title]="charts[0].title", [chartData]="charts[0].chartData", [chartId]="charts[0].chartId", #{{charts[0].chartId}}="")
 //navigator: tabs for switching b/w result and server info
 ul.breadcrumb
     li([class.active]="show")
@@ -53,21 +54,20 @@ div.tab-content
         table.table.table-striped
             thead
                 tr
-                    th Hostname
+                    th ESM Name
                     th Tool
                     th Account
             tbody
                 tr(*ngFor="let result of temp")
                     td
-                        |{{result.Hostname}}
+                        |{{result.esm_name}}
                     td((click)="getMonitoringData(result)")
-                        |{{result.Tool}}
+                        |{{result.accounted_by}}
                     td
-                        |{{result.Account}}
+                        |{{result.account}}
         ul.pagination
             li(*ngFor="let page of pages; let i=index", [class.active]="page", (click)="selectPage(i)")
                 a
                     |{{i}}
     div.clearfix.tab-pane#serverInfo([class.active]="!show")
-        div(*ngFor="let key of monitoringData")
-            |{{key[0]}}:{{key[1]}}
+        info-card(*ngIf="!show", [monitoringData]="monitoringData")

@@ -26,7 +26,7 @@ System.register(['@angular/core', '@angular/router'], function(exports_1, contex
                 }
                 MainComponent = __decorate([
                     core_1.Component({
-                        selector: 'main',
+                        selector: 'app',
                         template: "\n        <router-outlet></router-outlet>\n    ",
                         directives: [router_1.ROUTER_DIRECTIVES]
                     }), 

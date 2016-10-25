@@ -1,36 +1,37 @@
-import {Component, EventEmitter} from '@angular/core'
+import {Component, EventEmitter, Directive, ContentChildren} from '@angular/core'
 import {TerminalsComponent} from './terminals.component.js'
 import {DataService} from './data.service.js'
 
 @Component({
+    selector: 'rsms',
     templateUrl: 'app/rsms',
     providers: [DataService],
     directives: [TerminalsComponent]
 })
 
 export class RSMsComponent {
-    private rsms = [];
-    private temp = [];
+    //private rsms = [];
+    //private temp = [];
     private roomId;
     private rsmSearch = new EventEmitter();
-    constructor(private _dataService: DataService) {
-        this._dataService.getRooms().subscribe(
-                (data) => {
-                    this.rsms = data.results;
-                    for(var i in this.rsms) {
-                        this.temp.push(this.rsms[i].replace(/^room-/, ''));
-                    }
-                }
-        );
-
+    private socket;
+    constructor(public _dataService: DataService) {
+        this._dataService._factoryService.getRoomIdAsObservable()
+        .distinctUntilChanged()    
+        .subscribe(
+            val => {
+                console.log('rsms component got:', val);
+                if(val != '' && val != undefined) this.loadTerminal(val);
+            }
+        )
         this.rsmSearch.distinctUntilChanged()
         .subscribe(
             (value) => {
-                this.temp = [];
+                this._dataService.temp = [];
                 var exp = new RegExp(value, 'i');
-                for(var r in this.rsms) {
-                    if(exp.test(this.rsms[r])) {
-                        this.temp.push(this.rsms[r]);
+                for(var r in this._dataService.rsms) {
+                    if(exp.test(this._dataService.rsms[r])) {
+                        this._dataService.temp.push(this._dataService.rsms[r].replace(/^room-/, ''));
                     }
                 }
             }

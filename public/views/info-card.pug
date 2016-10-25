@@ -1,0 +1,50 @@
+div.panel.panel-default
+    div.panel-heading.clearfix
+        div.panel-title.pull-left
+            |{{data.esm_name}}
+        div.pull-right(*ngIf="types.configurable")
+            a.btn.btn-primary((click)="makeEditable()")
+                i.glyphicon.glyphicon-pencil
+                span Edit
+    div.table-responsive
+        table.table.table-hover
+            thead(*ngIf="types.configurable")
+                tr.active
+                    th Parameter Name
+            tbody
+                tr(*ngFor="let config of data.config;let i=index")
+                    td
+                        a(data-toggle="collapse", [attr.data-target]="'#'+i") {{config.instance_name}}
+                        div.collapse.collapseable([attr.id]="i")
+                            div.table-responsive
+                                table.table.table-hover
+                                    tbody(*ngIf="config.param_thresh")
+                                        tr(*ngFor="let param of config.param_thresh")
+                                            td
+                                                |{{param.parameter_name}}
+                                            td(*ngIf="!editable")
+                                                |{{param.sev3}}
+                                            td(*ngIf="!editable")
+                                                |{{param.sev4}}
+                                            td(*ngIf="editable")
+                                                input(type="text", [attr.value]="param.sev3")
+                                            td(*ngIf="editable")
+                                                input(type="text", [attr.value]="param.sev4")
+
+            tbody(*ngIf="types.information")
+                tr
+                    td ESM Name
+                    td
+                        |{{data.esm_name}}
+                tr
+                    td Account
+                    td
+                        |{{data.account}}
+                tr
+                    td IP Address
+                    td
+                        |{{data.data.MLM.ip}}
+                tr
+                    td Cost
+                    td
+                        |{{data.cost}}

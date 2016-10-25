@@ -4,6 +4,7 @@ import {AuthService} from './auth.service.js'
 import {MainLoginComponent} from './main-login.component.js'
 import {PortalComponent} from './portal.component.js'
 import {SearchComponent} from './search.component.js'
+import {SearchCardComponent} from './search-card.component.js'
 import {RSMsComponent} from './rsms.component.js'
 
 export const routes: RouterConfig = [
@@ -11,8 +12,9 @@ export const routes: RouterConfig = [
     {path: 'login', component: MainLoginComponent},
     {path: 'portal', component: PortalComponent, canActivate: [AuthService], children: [
         {path: '', redirectTo: 'search'},
-        {path: 'search', component: SearchComponent},
-        {path: 'rsms', component: RSMsComponent}
+        //{path: 'search', component: SearchComponent},
+        {path: 'search', component: SearchCardComponent}
+        //{path: 'rsms', component: RSMsComponent}
     ]}
 ];
 
