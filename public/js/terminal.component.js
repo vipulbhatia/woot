@@ -1,4 +1,4 @@
-System.register(["@angular/core"], function (exports_1, context_1) {
+System.register(["@angular/core", "./factory.service.js"], function (exports_1, context_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -10,22 +10,27 @@ System.register(["@angular/core"], function (exports_1, context_1) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var __moduleName = context_1 && context_1.id;
-    var core_1, TerminalComponent, _a, _b;
+    var core_1, factory_service_js_1, TerminalComponent, _a, _b;
     return {
         setters: [
             function (core_1_1) {
                 core_1 = core_1_1;
+            },
+            function (factory_service_js_1_1) {
+                factory_service_js_1 = factory_service_js_1_1;
             }
         ],
         execute: function () {
             TerminalComponent = (function () {
-                function TerminalComponent() {
+                function TerminalComponent(_factoryService) {
                     var _this = this;
+                    this._factoryService = _factoryService;
                     this.remove = new core_1.EventEmitter();
                     this.send = function () {
                         console.log(this.message.nativeElement.value);
-                        this.chat.nativeElement.value += '\n' + this.message.nativeElement.value;
-                        this.socket.emit('message', this.message.nativeElement.value);
+                        this.chat.nativeElement.value += '\nYou: ' + this.message.nativeElement.value;
+                        this.tty.emit('chat', this.message.nativeElement.value);
+                        this.message.nativeElement.value = '';
                     };
                     this.setActive = function (value) {
                         this.active = value;
@@ -51,40 +56,31 @@ System.register(["@angular/core"], function (exports_1, context_1) {
                             _this.tty.emit('message', str);
                         };
                         that.onTerminalResize = function (col, row) {
-                            _this.tty.emit('message', { col: col, row: row });
+                            _this.tty.emit('resize', { col: col, row: row });
                         };
                         return that;
                     };
                     this.message = "";
                     this.active = false;
-                    this.tty = io.connect('127.0.0.1:8000');
+                    this.tty = io.connect(this._factoryService.getServerUrl() + '/' + this._factoryService.getNsp());
                     this.buf = '';
-                    this.socket = io.connect('127.0.0.1:8000');
-                    this.socket.on('connect', function () {
-                        console.log('chat connected to exchange...');
-                        _this.socket.emit('message', 'join room ' + _this.roomId + '-CHAT');
-                    });
-                    this.socket.on('message', function (data) {
-                        console.log('got message:', data);
-                        data = JSON.parse(data);
-                        _this.chat.nativeElement.value += '\n' + data.sender + ': ' + data.message;
-                    });
                 }
                 TerminalComponent.prototype.ngOnDestroy = function () {
                     console.log('component destroyed...');
-                    this.socket.disconnect();
                     this.tty.disconnect();
                 };
                 TerminalComponent.prototype.ngAfterViewInit = function () {
                     var _this = this;
                     this.tty.on('connect', function () {
                         console.log('tty connected to exchange...');
+                        _this.tty.emit('auth', _this._factoryService.getToken());
                         if (!/-TTY$/.test(_this.roomId)) {
-                            _this.tty.emit('message', 'connect ' + _this.roomId);
+                            _this.tty.emit('join', _this.roomId);
+                            _this.tty.emit('connect-back', _this._factoryService.getUsername());
                             _this.remove.next(_this.roomId);
                         }
                         else {
-                            _this.tty.emit('message', 'join room ' + _this.roomId);
+                            _this.tty.emit('join', _this.roomId);
                             //tty.emit('message', 'set response-type json');
                             //tty.emit('message', 'connect vipul-Dell-Precision-M3800');
                             lib.init(function () {
@@ -102,7 +98,7 @@ System.register(["@angular/core"], function (exports_1, context_1) {
                                 _this.term.prefs_.set('use-default-window-copy', true);
                                 _this.term.runCommandClass(_this.Wetty, document.location.hash.substr(1));
                                 console.log('resizing...');
-                                _this.tty.emit('message', {
+                                _this.tty.emit('resize', {
                                     col: _this.term.screenSize.width,
                                     row: _this.term.screenSize.height
                                 });
@@ -113,20 +109,22 @@ System.register(["@angular/core"], function (exports_1, context_1) {
                             });
                         }
                     });
-                    this.tty.on('message', function (data) {
-                        data = JSON.parse(data);
-                        if (data.sender == 'server') {
-                            _this.chat.nativeElement.value += '\n' + data.message;
-                            console.log('received:', data);
-                        }
-                        //data = JSON.parse(data);
-                        if (data.sender == '') {
+                    this.tty.on('tty', function (data) {
+                        if (data.sender != '') {
                             if (!_this.term) {
                                 _this.buf += data.message;
                                 return;
                             }
                             _this.term.io.writeUTF16(data.message);
                         }
+                    });
+                    this.tty.on('chat', function (data) {
+                        _this.chat.nativeElement.value += '\n' + data.sender + ': ' + data.message;
+                    });
+                    ['joined', 'left'].forEach(function (val) {
+                        _this.tty.on(val, function (data) {
+                            _this.chat.nativeElement.value += '\n' + data + ' ' + val;
+                        });
                     });
                 };
                 return TerminalComponent;
@@ -152,7 +150,7 @@ System.register(["@angular/core"], function (exports_1, context_1) {
                     selector: 'terminal',
                     templateUrl: 'app/terminal'
                 }),
-                __metadata("design:paramtypes", [])
+                __metadata("design:paramtypes", [factory_service_js_1.FactoryService])
             ], TerminalComponent);
             exports_1("TerminalComponent", TerminalComponent);
         }

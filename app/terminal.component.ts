@@ -1,4 +1,5 @@
 import {Component, Input, ViewChild, ElementRef, AfterViewInit, string, EventEmitter, Output, OnDestroy} from '@angular/core'
+import {FactoryService} from './factory.service.js';
 //import * as IO from 'socket.io-client'
 //import * as wetty from 'wetty'
 //import * as hterm_all from 'hterm_all'
@@ -14,45 +15,32 @@ export class TerminalComponent implements AfterViewInit, OnDestroy {
     @ViewChild('message') message: ElementRef;
     @ViewChild('chat') chat: ElementRef;
     private active;
-    private socket;
     private term;
     private tty;
     private buf;
-    constructor() {
+    constructor(public _factoryService: FactoryService) {
         this.message = "";
         this.active = false;
-        this.tty = io.connect('127.0.0.1:8000');
+        this.tty = io.connect(this._factoryService.getServerUrl() + '/' + this._factoryService.getNsp());
         this.buf = '';
-
-        this.socket = io.connect('127.0.0.1:8000');
-
-        this.socket.on('connect', () => {
-            console.log('chat connected to exchange...');
-            this.socket.emit('message', 'join room ' + this.roomId + '-CHAT');
-        });
-        this.socket.on('message', (data) => {
-            console.log('got message:', data);
-            data = JSON.parse(data);
-            this.chat.nativeElement.value += '\n' + data.sender + ': ' + data.message;
-        });
-
     }
 
     ngOnDestroy() {
         console.log('component destroyed...');
-        this.socket.disconnect();
         this.tty.disconnect();
     }
 
     ngAfterViewInit() {
             this.tty.on('connect', () => {
                 console.log('tty connected to exchange...');
+                this.tty.emit('auth', this._factoryService.getToken());
                 if(!/-TTY$/.test(this.roomId)) {
-                    this.tty.emit('message', 'connect ' + this.roomId);
+                    this.tty.emit('join', this.roomId);
+                    this.tty.emit('connect-back', this._factoryService.getUsername());
                     this.remove.next(this.roomId);
                 }
                 else {
-                    this.tty.emit('message', 'join room ' + this.roomId);
+                    this.tty.emit('join', this.roomId);
                 //tty.emit('message', 'set response-type json');
                 //tty.emit('message', 'connect vipul-Dell-Precision-M3800');
 
@@ -73,7 +61,7 @@ export class TerminalComponent implements AfterViewInit, OnDestroy {
 
                         this.term.runCommandClass(this.Wetty, document.location.hash.substr(1));
                         console.log('resizing...');
-                        this.tty.emit('message', {
+                        this.tty.emit('resize', {
                             col: this.term.screenSize.width,
                             row: this.term.screenSize.height
                         });
@@ -87,14 +75,8 @@ export class TerminalComponent implements AfterViewInit, OnDestroy {
                 }
             });
 
-            this.tty.on('message', (data) => {
-                data = JSON.parse(data);
-                if(data.sender == 'server') {
-                    this.chat.nativeElement.value += '\n' + data.message;
-                    console.log('received:', data);
-                }
-                //data = JSON.parse(data);
-                if(data.sender == '') {
+            this.tty.on('tty', (data) => {
+                if(data.sender != '') {
                     if (!this.term) {
                         this.buf += data.message;
                         return;
@@ -102,12 +84,23 @@ export class TerminalComponent implements AfterViewInit, OnDestroy {
                     this.term.io.writeUTF16(data.message);
                 }
             });
+
+            this.tty.on('chat', (data) => {
+                this.chat.nativeElement.value += '\n' + data.sender + ': ' + data.message;
+            });
+
+            ['joined', 'left'].forEach((val) => {
+                this.tty.on(val, (data) => {
+                    this.chat.nativeElement.value += '\n' + data + ' ' + val;
+                });
+            });
     }
 
     send = function() {
         console.log(this.message.nativeElement.value);
-        this.chat.nativeElement.value += '\n' + this.message.nativeElement.value;
-        this.socket.emit('message', this.message.nativeElement.value);
+        this.chat.nativeElement.value += '\nYou: ' + this.message.nativeElement.value;
+        this.tty.emit('chat', this.message.nativeElement.value);
+        this.message.nativeElement.value = '';
     }
 
     setActive = function(value: boolean) {
@@ -141,7 +134,7 @@ export class TerminalComponent implements AfterViewInit, OnDestroy {
         };
 
         that.onTerminalResize = (col, row) => {
-            this.tty.emit('message', { col: col, row: row });
+            this.tty.emit('resize', { col: col, row: row });
         };
         return that;
     }

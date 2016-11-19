@@ -53,6 +53,8 @@ System.register(["@angular/core", "@angular/http", "./factory.service.js", "@ang
                             if (data.status === 200) {
                                 _this._factoryService.setAuthenicated(true);
                                 _this._factoryService.setToken(data.token);
+                                _this._factoryService.setUsername(data.username);
+                                _this._factoryService.setNsp(data.nsp);
                                 _this.router.navigate(['/portal/']);
                             }
                             else {
@@ -110,16 +112,29 @@ System.register(["@angular/core", "@angular/http", "./factory.service.js", "@ang
                             pristine: pristine
                         };
                     };
-                    this.host = 'http://165.136.136.14:8081';
+                    this.host = this._factoryService.getMongodbUrl();
                     this.rsms = [];
                     this.temp = [];
-                    this.socket = io.connect('127.0.0.1:8000');
+                    this.socket = io.connect(this._factoryService.getServerUrl() + '/' + this._factoryService.getNsp());
                     this.socket.on('connect', function () {
-                        _this.socket.emit('message', 'join room getRooms');
+                        _this.socket.emit('auth', _this._factoryService.getToken());
+                    });
+                    this.socket.on('all-rooms', function (rooms) {
+                        console.log('all-rooms:', rooms);
+                        _this.temp = [];
+                        _this.rsms = [];
+                        //rooms = rooms.split(',');
+                        for (var i in rooms) {
+                            console.log(rooms[i]);
+                            if (/-TTY$|-SSH$|-WIN$/.test(rooms[i])) {
+                                _this.rsms.push(rooms[i]);
+                                _this.temp = _this.rsms;
+                            }
+                        }
                     });
                     this.socket.on('message', function (data) {
                         data = JSON.parse(data);
-                        if (data.sender == 'server') {
+                        if (data.sender != '') {
                             _this.temp = [];
                             _this.rsms = [];
                             data.message = data.message.split(',');

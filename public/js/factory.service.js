@@ -25,6 +25,11 @@ System.register(["@angular/core", "rxjs/BehaviorSubject"], function (exports_1, 
                 function FactoryService() {
                     var _this = this;
                     this.roomId = new BehaviorSubject_1.BehaviorSubject('');
+                    this.config = {
+                        serverUrl: '',
+                        nsp: '',
+                        mongodbUrl: ''
+                    };
                     this.getRoomIdAsObservable = function () {
                         return _this.roomId.asObservable();
                     };
@@ -41,19 +46,40 @@ System.register(["@angular/core", "rxjs/BehaviorSubject"], function (exports_1, 
                         _this.temp.a.push(val);
                     };
                     this.isAuthenticated = function () {
-                        console.log('isAuthenticated:', this.authenticated);
-                        return this.authenticated;
+                        console.log('isAuthenticated:', _this.authenticated);
+                        return _this.authenticated;
                     };
                     this.setAuthenicated = function (bool) {
-                        this.authenticated = bool;
+                        _this.authenticated = bool;
                     };
                     this.setToken = function (token) {
-                        this.token = token;
+                        _this.token = token;
                     };
                     this.getToken = function () {
-                        return this.token;
+                        return _this.token;
+                    };
+                    this.setUsername = function (username) {
+                        _this.username = username;
+                    };
+                    this.getUsername = function () {
+                        return _this.username;
+                    };
+                    this.setNsp = function (nsp) {
+                        _this.config.nsp = nsp;
+                    };
+                    this.getNsp = function () {
+                        return _this.config.nsp;
+                    };
+                    this.getServerUrl = function () {
+                        return _this.config.serverUrl;
+                    };
+                    this.getMongodbUrl = function () {
+                        return _this.config.mongodbUrl;
                     };
                     this.authenticated = false;
+                    this.config.serverUrl = 'http://127.0.0.1:8082';
+                    this.config.nsp = '';
+                    this.config.mongodbUrl = 'http://127.0.0.1:8083';
                 }
                 return FactoryService;
             }());

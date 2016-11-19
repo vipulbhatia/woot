@@ -11,18 +11,32 @@ export class DataService {
     public temp;
     private socket;
     constructor(private http: Http, public _factoryService: FactoryService, private router: Router) {
-        this.host = 'http://165.136.136.14:8081';
+        this.host = this._factoryService.getMongodbUrl();
         this.rsms = [];
         this.temp = [];
-        this.socket = io.connect('127.0.0.1:8000');
+        this.socket = io.connect(this._factoryService.getServerUrl() + '/' + this._factoryService.getNsp());
 
         this.socket.on('connect', () => {
-            this.socket.emit('message', 'join room getRooms');
+            this.socket.emit('auth', this._factoryService.getToken());
+        });
+
+        this.socket.on('all-rooms', (rooms) => {
+            console.log('all-rooms:', rooms);
+            this.temp = [];
+            this.rsms = [];
+            //rooms = rooms.split(',');
+            for(var i in rooms) {
+                console.log(rooms[i]);
+                if(/-TTY$|-SSH$|-WIN$/.test(rooms[i])) {
+                    this.rsms.push(rooms[i]);
+                    this.temp = this.rsms;
+                }
+            }
         });
 
         this.socket.on('message', (data) => {
             data = JSON.parse(data);
-            if(data.sender == 'server') {
+            if(data.sender != '') {
                 this.temp = [];
                 this.rsms = [];
                 data.message = data.message.split(',');
@@ -59,6 +73,8 @@ export class DataService {
                     if(data.status === 200) {
                         this._factoryService.setAuthenicated(true);
                         this._factoryService.setToken(data.token);
+                        this._factoryService.setUsername(data.username);
+                        this._factoryService.setNsp(data.nsp);
                         this.router.navigate(['/portal/']);
                     } else {
                         this._factoryService.setAuthenicated(false);

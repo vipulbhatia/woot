@@ -7,9 +7,18 @@ export class FactoryService {
     private authenticated: boolean;
     private token;
     private temp;
+    private username;
     private roomId = new BehaviorSubject('');
+    private config = {
+        serverUrl: '',
+        nsp: '',
+        mongodbUrl: ''
+    }
     constructor() {
         this.authenticated = false;
+        this.config.serverUrl = 'http://127.0.0.1:8082';
+        this.config.nsp = '';
+        this.config.mongodbUrl = 'http://127.0.0.1:8083';
     }
 
     getRoomIdAsObservable = () => {
@@ -32,20 +41,44 @@ export class FactoryService {
         this.temp.a.push(val);
     }
 
-    isAuthenticated = function() {
+    isAuthenticated = () => {
         console.log('isAuthenticated:', this.authenticated);
         return this.authenticated;
     }
 
-    setAuthenicated = function(bool: boolean) {
+    setAuthenicated = (bool: boolean) => {
         this.authenticated = bool;
     }
 
-    setToken = function(token) {
+    setToken = (token) => {
         this.token = token;
     }
 
-    getToken = function() {
+    getToken = () => {
         return this.token;
+    }
+
+    setUsername = (username) => {
+        this.username = username;
+    }
+
+    getUsername = () => {
+        return this.username;
+    }
+
+    setNsp = (nsp) => {
+        this.config.nsp = nsp;
+    }
+
+    getNsp = () => {
+        return this.config.nsp;
+    }
+
+    getServerUrl = () => {
+        return this.config.serverUrl;
+    }
+
+    getMongodbUrl = () => {
+        return this.config.mongodbUrl;
     }
 }
