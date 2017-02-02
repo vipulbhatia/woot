@@ -8,7 +8,7 @@ div.container.bootcards-container(*ngIf="!formInline")
                             div.col-xs-9
                                 div.form-group
                                     input.form-control(type="text", name="ci", placeholder="search...", [(ngModel)]="ci", (keyup)="ciSearchControl.emit($event.target.value)")
-                                    i.fa.fa-search            
+                                    i.fa.fa-search
 
                 div.list-group
                     a.list-group-item(*ngFor="let i of temp", (click)="showServerInfo(i)")
@@ -37,4 +37,4 @@ div.container.bootcards-container(*ngIf="!formInline")
                             button.btn.btn-success Save
                         h3.modal-title Edit Configuration
                     div.modal-body
-                        info-card(*ngIf="monitoringData", [data]="monitoringData", [type]="'configurable'")
+                        //info-card(*ngIf="monitoringData", [data]="monitoringData", [type]="'configurable'")

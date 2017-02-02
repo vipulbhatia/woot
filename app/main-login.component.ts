@@ -1,27 +1,24 @@
-import {Component, ComponentResolver, ReflectiveInjector, ViewContainerRef, Directive, ViewChild} from '@angular/core'
-import {LoginFormComponent} from './login-form.component.js'
-import {RegistrationFormComponent} from './registration-form.component.js'
+import {Component, ComponentFactoryResolver, ReflectiveInjector, ViewContainerRef, Directive, ViewChild} from '@angular/core'
+import {RegistrationFormComponent} from './registration-form.component.js';
 
 @Component({
     selector: 'main',
-    templateUrl: 'app/main-login',
-    directives: [LoginFormComponent]
+    templateUrl: 'app/main-login'
 })
 
 export class MainLoginComponent {
     @ViewChild('registrationForm', {read: ViewContainerRef}) registrationFormRef;
     private authenticated;
-    constructor(private vcRef: ViewContainerRef, private resolver: ComponentResolver) {
+    constructor(private vcRef: ViewContainerRef, private resolver: ComponentFactoryResolver) {
         this.authenticated = false;
     }
 
     private injectComponent = function(cmp) {
         if(!document.registrationForm) {
-            this.resolver.resolveComponent(cmp)
-              .then(factory => {
-                const injector = ReflectiveInjector.fromResolvedProviders([], this.vcRef.parentInjector);
-                this.registrationFormRef.createComponent(factory, 0, injector, []);
-            });
+            const factory = this.resolver.resolveComponentFactory(cmp);
+            const injector = ReflectiveInjector.fromResolvedProviders([], this.vcRef.parentInjector);
+            const ref = this.registrationFormRef.createComponent(factory, 0, injector, []);
+
         }
     }
 

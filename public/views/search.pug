@@ -40,7 +40,7 @@ div.container.center_div(*ngIf="formInline")
                     |{{tool}}
         button.btn.btn-default.glyphicon.glyphicon-search((click)="search()")
 //remove this
-chart([type]="charts[0].type", [title]="charts[0].title", [chartData]="charts[0].chartData", [chartId]="charts[0].chartId", #{{charts[0].chartId}}="")
+//chart([type]="charts[0].type", [title]="charts[0].title", [chartData]="charts[0].chartData", [chartId]="charts[0].chartId", #{{charts[0].chartId}}="")
 //navigator: tabs for switching b/w result and server info
 ul.breadcrumb
     li([class.active]="show")
@@ -70,4 +70,4 @@ div.tab-content
                 a
                     |{{i}}
     div.clearfix.tab-pane#serverInfo([class.active]="!show")
-        info-card(*ngIf="!show", [monitoringData]="monitoringData")
+        //info-card(*ngIf="!show", [monitoringData]="monitoringData")

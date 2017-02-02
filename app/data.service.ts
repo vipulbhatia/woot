@@ -129,6 +129,20 @@ export class DataService {
                     .map(res => res.json());
     }
 
+    getUsers = () => {
+        console.log('getting users data');
+        return this.http.get(this._factoryService.getMongodbUrl() + '/users/htn')// + this._factoryService.getNsp())
+                    .map(res => res.json())
+    }
+
+    updateUser = (user) => {
+        console.log('updating user:', user.username);
+        var headers = new Headers({ 'Content-Type': 'application/json' });
+        var options = new RequestOptions({ headers: headers });
+        return this.http.post(this._factoryService.getMongodbUrl() + '/users/update', user, options)
+                    .map(res => res.json())
+    }
+
     isValidEmail = function(email) {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         var valid = re.test(email) ? true : false;

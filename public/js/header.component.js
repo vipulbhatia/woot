@@ -1,4 +1,4 @@
-System.register(["@angular/core", "./factory.service.js", "@angular/router", "./rsms.component.js"], function (exports_1, context_1) {
+System.register(["@angular/core", "./factory.service.js", "@angular/router"], function (exports_1, context_1) {
     "use strict";
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -10,7 +10,7 @@ System.register(["@angular/core", "./factory.service.js", "@angular/router", "./
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
     var __moduleName = context_1 && context_1.id;
-    var core_1, factory_service_js_1, router_1, rsms_component_js_1, HeaderComponent, _a;
+    var core_1, factory_service_js_1, router_1, HeaderComponent, _a;
     return {
         setters: [
             function (core_1_1) {
@@ -21,9 +21,6 @@ System.register(["@angular/core", "./factory.service.js", "@angular/router", "./
             },
             function (router_1_1) {
                 router_1 = router_1_1;
-            },
-            function (rsms_component_js_1_1) {
-                rsms_component_js_1 = rsms_component_js_1_1;
             }
         ],
         execute: function () {
@@ -43,8 +40,7 @@ System.register(["@angular/core", "./factory.service.js", "@angular/router", "./
                 core_1.Component({
                     selector: 'header',
                     templateUrl: 'app/header',
-                    styleUrls: ['css/header.css'],
-                    directives: [rsms_component_js_1.RSMsComponent]
+                    styleUrls: ['css/header.css']
                 }),
                 __metadata("design:paramtypes", [factory_service_js_1.FactoryService, typeof (_a = typeof router_1.Router !== "undefined" && router_1.Router) === "function" && _a || Object])
             ], HeaderComponent);

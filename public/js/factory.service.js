@@ -77,9 +77,9 @@ System.register(["@angular/core", "rxjs/BehaviorSubject"], function (exports_1, 
                         return _this.config.mongodbUrl;
                     };
                     this.authenticated = false;
-                    this.config.serverUrl = 'http://127.0.0.1:8082';
+                    this.config.serverUrl = 'https://localhost:8082';
                     this.config.nsp = '';
-                    this.config.mongodbUrl = 'http://127.0.0.1:8083';
+                    this.config.mongodbUrl = 'https://localhost:8083';
                 }
                 return FactoryService;
             }());

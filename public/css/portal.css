@@ -3,7 +3,8 @@
 }
 
 #side-menu-container {
-	background-color: #2f4050;
+	background-color: #1D1D1D;
+	color: #b4b5b8;
 	padding: 0px;
 }
 
@@ -12,6 +13,7 @@
 	padding: 0px;
 	height: 100%;
 	width: 100%;
+	background-color: #f5f5f5 !important;
 }
 
 .display-table-row {
@@ -30,7 +32,6 @@
 }
 
 #nav-header-container {
-	background-color: #fff;
 	border-bottom: 1px solid #e7eaec;
 }
 

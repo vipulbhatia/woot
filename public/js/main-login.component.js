@@ -1,6 +1,5 @@
-System.register(['@angular/core', './login-form.component.js', './registration-form.component.js'], function(exports_1, context_1) {
+System.register(["@angular/core", "./registration-form.component.js"], function (exports_1, context_1) {
     "use strict";
-    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,32 +9,27 @@ System.register(['@angular/core', './login-form.component.js', './registration-f
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, login_form_component_js_1, registration_form_component_js_1;
-    var MainLoginComponent;
+    var __moduleName = context_1 && context_1.id;
+    var core_1, registration_form_component_js_1, MainLoginComponent, _a, _b;
     return {
-        setters:[
+        setters: [
             function (core_1_1) {
                 core_1 = core_1_1;
             },
-            function (login_form_component_js_1_1) {
-                login_form_component_js_1 = login_form_component_js_1_1;
-            },
             function (registration_form_component_js_1_1) {
                 registration_form_component_js_1 = registration_form_component_js_1_1;
-            }],
-        execute: function() {
+            }
+        ],
+        execute: function () {
             MainLoginComponent = (function () {
                 function MainLoginComponent(vcRef, resolver) {
                     this.vcRef = vcRef;
                     this.resolver = resolver;
                     this.injectComponent = function (cmp) {
-                        var _this = this;
                         if (!document.registrationForm) {
-                            this.resolver.resolveComponent(cmp)
-                                .then(function (factory) {
-                                var injector = core_1.ReflectiveInjector.fromResolvedProviders([], _this.vcRef.parentInjector);
-                                _this.registrationFormRef.createComponent(factory, 0, injector, []);
-                            });
+                            var factory = this.resolver.resolveComponentFactory(cmp);
+                            var injector = core_1.ReflectiveInjector.fromResolvedProviders([], this.vcRef.parentInjector);
+                            var ref = this.registrationFormRef.createComponent(factory, 0, injector, []);
                         }
                     };
                     this.loadRegistrationForm = function () {
@@ -43,23 +37,21 @@ System.register(['@angular/core', './login-form.component.js', './registration-f
                     };
                     this.authenticated = false;
                 }
-                __decorate([
-                    core_1.ViewChild('registrationForm', { read: core_1.ViewContainerRef }), 
-                    __metadata('design:type', Object)
-                ], MainLoginComponent.prototype, "registrationFormRef", void 0);
-                MainLoginComponent = __decorate([
-                    core_1.Component({
-                        selector: 'main',
-                        templateUrl: 'app/main-login',
-                        directives: [login_form_component_js_1.LoginFormComponent]
-                    }), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof core_1.ViewContainerRef !== 'undefined' && core_1.ViewContainerRef) === 'function' && _a) || Object, (typeof (_b = typeof core_1.ComponentResolver !== 'undefined' && core_1.ComponentResolver) === 'function' && _b) || Object])
-                ], MainLoginComponent);
                 return MainLoginComponent;
-                var _a, _b;
             }());
+            __decorate([
+                core_1.ViewChild('registrationForm', { read: core_1.ViewContainerRef }),
+                __metadata("design:type", Object)
+            ], MainLoginComponent.prototype, "registrationFormRef", void 0);
+            MainLoginComponent = __decorate([
+                core_1.Component({
+                    selector: 'main',
+                    templateUrl: 'app/main-login'
+                }),
+                __metadata("design:paramtypes", [typeof (_a = typeof core_1.ViewContainerRef !== "undefined" && core_1.ViewContainerRef) === "function" && _a || Object, typeof (_b = typeof core_1.ComponentFactoryResolver !== "undefined" && core_1.ComponentFactoryResolver) === "function" && _b || Object])
+            ], MainLoginComponent);
             exports_1("MainLoginComponent", MainLoginComponent);
         }
-    }
+    };
 });
 //# sourceMappingURL=main-login.component.js.map

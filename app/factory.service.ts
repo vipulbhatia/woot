@@ -16,9 +16,9 @@ export class FactoryService {
     }
     constructor() {
         this.authenticated = false;
-        this.config.serverUrl = 'http://127.0.0.1:8082';
+        this.config.serverUrl = 'https://localhost:8082';
         this.config.nsp = '';
-        this.config.mongodbUrl = 'http://127.0.0.1:8083';
+        this.config.mongodbUrl = 'https://localhost:8083';
     }
 
     getRoomIdAsObservable = () => {

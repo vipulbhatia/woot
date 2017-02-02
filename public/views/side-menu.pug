@@ -1,5 +1,5 @@
 div#side-menu
-    h1 Side Menu
+    h1 Woot
     ul(#sidemenu="")
         li.link((click)="activate(0)", [class.active]="li[0]")
             a(href="#", [routerLink]="['/portal/search']")
@@ -14,8 +14,12 @@ div#side-menu
                 span.glyphicon.glyphicon-list-alt
                 span Incidents
                 span.label.label-success.pull-right 20
-                ul.collapse.collapseable#collapse-post
-                    li
-                        a(href="#") Open
-                    li
-                        a(href="#") Suspended
+            ul.collapse.collapseable#collapse-post
+                li
+                    a(href="#") Open
+                li
+                    a(href="#") Suspended
+        li.link((click)="activate(3)", [class.active]="li[3]")
+            a(href="#", [routerLink]=['/portal/users'])
+                span.glyphicon.glyphicon-user
+                span Users

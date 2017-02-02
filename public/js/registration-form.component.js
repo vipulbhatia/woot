@@ -1,6 +1,5 @@
-System.register(['@angular/core', './data.service.js'], function(exports_1, context_1) {
+System.register(["@angular/core", "./data.service.js", "rxjs/add/operator/debounceTime", "rxjs/add/operator/distinctUntilChanged"], function (exports_1, context_1) {
     "use strict";
-    var __moduleName = context_1 && context_1.id;
     var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
         var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
         if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,17 +9,22 @@ System.register(['@angular/core', './data.service.js'], function(exports_1, cont
     var __metadata = (this && this.__metadata) || function (k, v) {
         if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
     };
-    var core_1, data_service_js_1;
-    var RegistrationFormComponent;
+    var __moduleName = context_1 && context_1.id;
+    var core_1, data_service_js_1, RegistrationFormComponent;
     return {
-        setters:[
+        setters: [
             function (core_1_1) {
                 core_1 = core_1_1;
             },
             function (data_service_js_1_1) {
                 data_service_js_1 = data_service_js_1_1;
-            }],
-        execute: function() {
+            },
+            function (_1) {
+            },
+            function (_2) {
+            }
+        ],
+        execute: function () {
             RegistrationFormComponent = (function () {
                 function RegistrationFormComponent(_dataService) {
                     var _this = this;
@@ -35,19 +39,22 @@ System.register(['@angular/core', './data.service.js'], function(exports_1, cont
                         .distinctUntilChanged()
                         .subscribe(function (value) { console.log(value); _this._dataService.checkEmail(value); });
                 }
-                RegistrationFormComponent = __decorate([
-                    core_1.Component({
-                        selector: '[registration-form]',
-                        templateUrl: 'app/registration-form',
-                        providers: [data_service_js_1.DataService]
-                    }), 
-                    __metadata('design:paramtypes', [(typeof (_a = typeof data_service_js_1.DataService !== 'undefined' && data_service_js_1.DataService) === 'function' && _a) || Object])
-                ], RegistrationFormComponent);
+                RegistrationFormComponent.prototype.ngAfterViewInit = function () {
+                    $('.selectpicker').selectpicker();
+                };
                 return RegistrationFormComponent;
-                var _a;
             }());
+            RegistrationFormComponent = __decorate([
+                core_1.Component({
+                    selector: '[registration-form]',
+                    templateUrl: 'app/registration-form',
+                    styleUrls: ['css/login-form.css'],
+                    providers: [data_service_js_1.DataService]
+                }),
+                __metadata("design:paramtypes", [data_service_js_1.DataService])
+            ], RegistrationFormComponent);
             exports_1("RegistrationFormComponent", RegistrationFormComponent);
         }
-    }
+    };
 });
 //# sourceMappingURL=registration-form.component.js.map

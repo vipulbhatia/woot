@@ -50,9 +50,9 @@ export class TerminalComponent implements AfterViewInit, OnDestroy {
                         this.term = new hterm.Terminal();
                         //window.term = term;
                         var allTerms = document.getElementsByClassName('terminal');
-                        console.log(allTerms.length);
+                        console.log(allTerms[0]);
                         this.term.decorate(allTerms[allTerms.length-1]);
-
+                        console.log('here');
                         this.term.setCursorPosition(0, 0);
                         this.term.setCursorVisible(true);
                         this.term.prefs_.set('ctrl-c-copy', true);

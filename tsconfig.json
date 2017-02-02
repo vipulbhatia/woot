@@ -23,6 +23,7 @@
     "rewriteTsconfig": true
   },
   "files": [
+    "./app/app.module.ts",
     "./app/auth.service.ts",
     "./app/boot.ts",
     "./app/chart.component.ts",
@@ -30,18 +31,28 @@
     "./app/factory.service.ts",
     "./app/footer.component.ts",
     "./app/header.component.ts",
+    "./app/header.module.ts",
     "./app/info-card.component.ts",
     "./app/login-form.component.ts",
+    "./app/login-form.module.ts",
     "./app/main-login.component.ts",
+    "./app/main-routing.module.ts",
     "./app/main.component.ts",
-    "./app/main.routes.ts",
+    "./app/portal-routing.module.ts",
     "./app/portal.component.ts",
+    "./app/portal.module.ts",
     "./app/registration-form.component.ts",
+    "./app/registration-form.module.ts",
     "./app/rsms.component.ts",
+    "./app/rsms.module.ts",
     "./app/search-card.component.ts",
+    "./app/search-card.module.ts",
     "./app/search.component.ts",
+    "./app/side-menu-routing.module.ts",
     "./app/side-menu.component.ts",
+    "./app/side-menu.module.ts",
     "./app/terminal.component.ts",
-    "./app/terminals.component.ts"
+    "./app/terminals.component.ts",
+    "./app/users.component.ts"
   ]
 }

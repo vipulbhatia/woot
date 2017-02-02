@@ -1,16 +1,32 @@
-h4 Register Here:
-form.form-horizontal(name="registrationForm")
-    div.form-group
-        label.col-sm-2.col-sm-offset-2(for="email") Email:
-        div.col-sm-4
-            input.form-control(type="email", (keyup)="newemailControl.emit($event.target.value)", [(ngModel)]="registerModel.newemail", #newemail="ngModel", name="newemail", pattern="[A-z0-9_\.]+@[A-z0-9]+\.[A-z0-9]{2,}", [ngClass]="{'ng-invalid': !newemail.valid && !newemail.pristine, 'ng-valid': newemail.valid || newemail.pristine}")
-        span.glyphicon([hidden]="newemail.pristine", [ngClass]="{'glyphicon-ok': newemail.valid, 'glyphicon-remove': !newemail.valid}")
-    div.form-group
-        label.col-sm-2.col-sm-offset-2(for="newpassword") New Password:
-        div.col-sm-4
-            input.form-control(type="password", [(ngModel)]="registerModel.newpassword", name="newpassword")
-    div.form-group
-        label.col-sm-2.col-sm-offset-2(for="confirmpassword") Confirm Password:
-        div.col-sm-4
-            input.form-control(type="password", [(ngModel)]="registerModel.confirmpassword", name="confirmpassword")
-            div.alert.alert-danger([hidden]="registerModel.newpassword==registerModel.confirmpassword || confirmpassword.pristine || newpassword.pristine") Passwords do not match
+div.form-container
+    div.row
+        div.panel.panel-primary
+            div.panel-body
+                form(name="registrationForm" #registrationForm="ngForm")
+                    div.form-group
+                        h2 Register
+                    div.form-group
+                        label(for="email") Email:
+                        div
+                            input.form-control(type="email", (keyup)="newemailControl.emit($event.target.value)", [(ngModel)]="registerModel.newemail", #newemail="ngModel", name="newemail", pattern="[A-z0-9_\.]+@[A-z0-9]+\.[A-z0-9]{2,}", [ngClass]="{'ng-invalid': !newemail.valid && !newemail.pristine, 'ng-valid': newemail.valid || newemail.pristine}")
+                    div.form-group
+                        label(for="accounts") Accounts:
+                        div
+                            select.selectpicker(multiple data-actions-box="true")
+                                option Hilton Worldwide
+                                option Corelogic
+                    div.form-group
+                        label(for="newpassword") New Password:
+                        div
+                            input.form-control(type="password", [(ngModel)]="registerModel.newpassword", name="newpassword")
+                    div.form-group
+                        label(for="confirmpassword") Confirm Password:
+                        div
+                            input.form-control(type="password", [(ngModel)]="registerModel.confirmpassword", name="confirmpassword")
+                            div.alert.alert-danger([hidden]="registerModel.newpassword==registerModel.confirmpassword || confirmpassword.pristine || newpassword.pristine") Passwords do not match
+                    div.form-group
+                        button.btn.btn-info.btn-block(type="submit", (click)="_dataService.login(registerModel)", [disabled]="!registrationForm.form.valid || registrationForm.form.pristine") Register
+                    div.form-group
+                        hr
+                    p.form-group Already a member?
+                        a(href="#", [routerLink]="['/login']") Sign In

@@ -89,8 +89,9 @@ System.register(["@angular/core", "./factory.service.js"], function (exports_1, 
                                 _this.term = new hterm.Terminal();
                                 //window.term = term;
                                 var allTerms = document.getElementsByClassName('terminal');
-                                console.log(allTerms.length);
+                                console.log(allTerms[0]);
                                 _this.term.decorate(allTerms[allTerms.length - 1]);
+                                console.log('here');
                                 _this.term.setCursorPosition(0, 0);
                                 _this.term.setCursorVisible(true);
                                 _this.term.prefs_.set('ctrl-c-copy', true);

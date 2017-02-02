@@ -102,6 +102,18 @@ System.register(["@angular/core", "@angular/http", "./factory.service.js", "@ang
                         return this.http.get('http://127.0.0.1:8000/api/getrooms')
                             .map(function (res) { return res.json(); });
                     };
+                    this.getUsers = function () {
+                        console.log('getting users data');
+                        return _this.http.get(_this._factoryService.getMongodbUrl() + '/users/htn') // + this._factoryService.getNsp())
+                            .map(function (res) { return res.json(); });
+                    };
+                    this.updateUser = function (user) {
+                        console.log('updating user:', user.username);
+                        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+                        var options = new http_1.RequestOptions({ headers: headers });
+                        return _this.http.post(_this._factoryService.getMongodbUrl() + '/users/update', user, options)
+                            .map(function (res) { return res.json(); });
+                    };
                     this.isValidEmail = function (email) {
                         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                         var valid = re.test(email) ? true : false;

@@ -1,7 +1,12 @@
+var fs = require('fs');
+var options = {
+  key: fs.readFileSync('key.pem'),
+  cert: fs.readFileSync('cert.pem')
+};
 var express = require('express'),
     app = express(),
-    http = require('http').createServer(app),
-    io = require('socket.io')(http),
+    https = require('https').createServer(options, app),
+    io = require('socket.io')(https),
     bodyParser = require('body-parser'),
     morgan = require('morgan'),
     jwt = require('jsonwebtoken'),
@@ -37,6 +42,9 @@ app.post('/api/login', function(req, res) {
 request({
     url: config.mongodbUrl + '/login/getNsps',
     method: 'GET',
+    agentOptions: {
+        rejectUnauthorized: false
+    },
     json: true
     }, function(err, res, body) {
     if(err) throw err;
@@ -103,11 +111,12 @@ request({
 
             socket.on('disconnect', function() {
                 socket.to(socket.room).emit('left', socket.username);
+                nsp.emit('all-rooms', Object.keys(nsp.adapter.rooms));
             });
         });
     }
 
-    http.listen(8082, function() {
+    https.listen(8082, function() {
         console.log('server running on port 8082...');
     });
 });

@@ -3,103 +3,55 @@ html
     head
         title Angular 2 App
         base(href="/")
-        link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet")
+        link(rel="stylesheet" href="fonts/source-sans-pro.css")
+        link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css")
         link(rel="stylesheet" href="css/bootcards-desktop.min.css")
-        link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css")    
-        link(href="css/main.css" rel="stylesheet")
-        script(src="node_modules/angular2/bundles/angular2-polyfills.js")
-        script(src="node_modules/systemjs/dist/system.src.js")
-        script(src="node_modules/rxjs/bundles/Rx.js")
-        script(src="node_modules/angular2/bundles/router.dev.js")
-        script(src="node_modules/angular2/bundles/angular2.dev.js")
-        script(src="node_modules/angular2/bundles/http.dev.js")
+        link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/css/bootstrap-select.min.css")
+        link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css")
+        link(rel="stylesheet" href="css/main.css")
+        script(src="https://unpkg.com/core-js/client/shim.min.js")
+        script(src="https://unpkg.com/zone.js@0.7.4?main=browser")
+        script(src="https://unpkg.com/reflect-metadata@0.1.8")
+        script(src="https://unpkg.com/systemjs@0.19.39/dist/system.src.js")
         script(src="https://code.jquery.com/jquery-2.2.0.min.js")
         script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js")
         script(src="https://cdnjs.cloudflare.com/ajax/libs/bootcards/1.0.0/js/bootcards.min.js")
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.min.js")
         script(src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js")
         script(src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js")
         script(src="js/hterm_all.js")
         script(src="js/socket.io.js")
         script.
-            var ngVer = '@2.0.0-rc.4'; // lock in the angular package version; do not let it float to current!
-            var routerVer = '@3.0.0-beta.2'; // lock router version
-            var formsVer = '@0.2.0'; // lock forms version
-
             //map tells the System loader where to look for things
-            var  map = {
-             'app':                        'app',
-
-             '@angular':                   'https://npmcdn.com/@angular' + ngVer, // sufficient if we didn't pin the version
-             '@angular/router':            'https://npmcdn.com/@angular/router' + routerVer,
-             '@angular/forms':             'https://npmcdn.com/@angular/forms' + formsVer,
-             'angular2-in-memory-web-api': 'https://npmcdn.com/angular2-in-memory-web-api', // get latest
-             'rxjs':                       'https://npmcdn.com/rxjs@5.0.0-beta.6',
-             'ts':                         'https://npmcdn.com/plugin-typescript@4.0.10/lib/plugin.js',
-             'typescript':                 'https://npmcdn.com/typescript@1.9.0-dev.20160409/lib/typescript.js',
-             'socket.io-client':           'node_modules/socket.io-client/socket.io.js',
-             'wetty':                      'js/wetty.js'
+            var map = {
+                'app': 'js',
+                '@angular/core': 'https://unpkg.com/@angular/core/bundles/core.umd.js',
+                '@angular/common': 'https://unpkg.com/@angular/common/bundles/common.umd.js',
+                '@angular/compiler': 'https://unpkg.com/@angular/compiler/bundles/compiler.umd.js',
+                '@angular/platform-browser': 'https://unpkg.com/@angular/platform-browser/bundles/platform-browser.umd.js',
+                '@angular/platform-browser-dynamic': 'https://unpkg.com/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js',
+                '@angular/http': 'https://unpkg.com/@angular/http/bundles/http.umd.js',
+                '@angular/router': 'https://unpkg.com/@angular/router/bundles/router.umd.js',
+                '@angular/forms': 'https://unpkg.com/@angular/forms/bundles/forms.umd.js',
+                '@angular/upgrade': 'https://unpkg.com/@angular/upgrade/bundles/upgrade.umd.js',
+                '@angular/upgrade/static': 'https://unpkg.com/@angular/upgrade/bundles/upgrade-static.umd.js',
+                'rxjs':                      'https://unpkg.com/rxjs',
+                'wetty': 'js/wetty.js'
             };
 
             //packages tells the System loader how to load when no filename and/or no extension
             var packages = {
-             'app':                        { format: 'register',  defaultExtension: 'ts' },
-             'rxjs':                       { defaultExtension: 'js' },
-             'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
-             'socket.io-client':           { defaultExtension: 'js' }
+             'app':                        { main: 'boot.js', format: 'register',  defaultExtension: 'js' },
+             'rxjs':                       { defaultExtension: 'js' }
             };
 
-            var ngPackageNames = [
-             'common',
-             'compiler',
-             'core',
-             'http',
-             'platform-browser',
-             'platform-browser-dynamic',
-             'router-deprecated',
-             'upgrade',
-            ];
-
-            // Add map entries for each angular package
-            // only because we're pinning the version with `ngVer`.
-            ngPackageNames.forEach(function(pkgName) {
-             map['@angular/'+pkgName] = 'https://npmcdn.com/@angular/' + pkgName + ngVer;
-            });
-
-            // Add package entries for angular packages
-            ngPackageNames.forEach(function(pkgName) {
-
-             // Bundled (~40 requests):
-             packages['@angular/'+pkgName] = { main: '/bundles/' + pkgName + '.umd.js', defaultExtension: 'js' };
-
-             // Individual files (~300 requests):
-             //packages['@angular/'+pkgName] = { main: 'index.js', defaultExtension: 'js' };
-            });
-
-            // No umd for router yet
-            packages['@angular/router'] = { main: 'index.js', defaultExtension: 'js' };
-
-            // Forms not on rc yet
-            packages['@angular/forms'] = { main: 'index.js', defaultExtension: 'js' };
-
             var config = {
-             // DEMO ONLY! REAL CODE SHOULD NOT TRANSPILE IN THE BROWSER
-             transpiler: 'ts',
-             typescriptOptions: {
-               tsconfig: true
-             },
-             meta: {
-               'typescript': {
-                 "exports": "ts"
-               }
-             },
              map: map,
              packages: packages
             };
 
             System.config(config);
-
-
-            System.import('js/boot.js')
+            System.import('app')
                 .then(null, console.error.bind(console));
     body
         app

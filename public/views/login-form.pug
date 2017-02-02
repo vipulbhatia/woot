@@ -1,13 +1,24 @@
-h4 Login:
-form.form-horizontal(name="loginForm", #loginForm="ngForm")
-    div.form-group
-        label.col-sm-2.col-sm-offset-2(for="email") Email:
-        div.col-sm-4
-            input.form-control(type="email", pattern="[A-z0-9_\.]+@[A-z0-9]+\.[A-z0-9]{2,}", [(ngModel)]="loginModel.email", #email="ngModel", name="email", [ngClass]="{'ng-invalid':email.invalid && email.dirty}")
-            div([hidden]="email.value || email.pristine", [ngClass]="{'alert':'true', 'alert-danger':'true'}") Email is required!
-    div.form-group
-        label.col-sm-2.col-sm-offset-2 Password:
-        div.col-sm-4
-            input.form-control(type="password", [(ngModel)]="loginModel.password", name="password")
-    div.form-group
-        button.btn.btn-default.col-sm-offset-4(type="submit", (click)="_dataService.login(loginModel)", [disabled]="!loginForm.form.valid || loginForm.form.pristine") Submit
+div.form-container
+    div.row
+        div.panel.panel-primary
+            div.panel-body
+                form(name="loginForm", #loginForm="ngForm")
+                    div.form-group
+                        h2 Login
+                    div.form-group
+                        label(for="email") Email:
+                        div
+                            input.form-control(type="email", pattern="[A-z0-9_\.]+@[A-z0-9]+\.[A-z0-9]{2,}", [(ngModel)]="loginModel.email", #email="ngModel", name="email", [ngClass]="{'ng-invalid':email.invalid && email.dirty}")
+                            div([hidden]="email.value || email.pristine", [ngClass]="{'alert':'true', 'alert-danger':'true'}") Email is required!
+                    div.form-group
+                        label Password:
+                        div
+                            input.form-control(type="password", [(ngModel)]="loginModel.password", name="password")
+                    div.form-group
+                        button.btn.btn-info.btn-block(type="submit", (click)="_dataService.login(loginModel)", [disabled]="!loginForm.form.valid || loginForm.form.pristine") Sign In
+                    div.form-group.divider
+                        hr.left
+                        small New Here?
+                        hr.right
+                    p.form-group
+                        a.btn.btn-success.btn-block(href="#", [routerLink]="['/register']") Create an account
