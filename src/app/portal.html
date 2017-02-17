@@ -1,0 +1,24 @@
+
+<div class="container-fluid display-table">
+  <div class="row display-table-row">
+    <div class="col-md-2 display-table-cell valign" id="side-menu-container">
+      <!--load side-menu here-->
+      <side-menu></side-menu>
+    </div>
+    <div class="col-md-10 display-table-cell valign">
+      <div class="row" id="nav-header-container">
+        <!--load navigation header here-->
+        <header></header>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+      <div class="row" id="nav-footer-container">
+        <!--load navigation footer here-->
+        <footer></footer>
+      </div>
+    </div>
+  </div>
+</div>

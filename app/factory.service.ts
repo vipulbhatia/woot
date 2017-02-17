@@ -5,9 +5,9 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject'
 
 export class FactoryService {
     private authenticated: boolean;
-    private token;
-    private temp;
-    private username;
+    private token: string;
+    private temp: any;
+    private username: string;
     private roomId = new BehaviorSubject('');
     private config = {
         serverUrl: '',
@@ -37,7 +37,7 @@ export class FactoryService {
         return this.temp;
     }
 
-    pushToTemp = (val) => {
+    pushToTemp = (val: any) => {
         this.temp.a.push(val);
     }
 
@@ -50,7 +50,7 @@ export class FactoryService {
         this.authenticated = bool;
     }
 
-    setToken = (token) => {
+    setToken = (token: string) => {
         this.token = token;
     }
 
@@ -58,7 +58,7 @@ export class FactoryService {
         return this.token;
     }
 
-    setUsername = (username) => {
+    setUsername = (username: string) => {
         this.username = username;
     }
 
@@ -66,7 +66,7 @@ export class FactoryService {
         return this.username;
     }
 
-    setNsp = (nsp) => {
+    setNsp = (nsp: string) => {
         this.config.nsp = nsp;
     }
 

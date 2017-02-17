@@ -1,0 +1,29 @@
+
+<div class="modal fade in" id="rsmsModal">
+  <div class="modal-dialog" style="width:60%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="btn-group pull-left">
+          <button class="btn btn-danger" data-dismiss="modal">Hide</button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <form class="form-inline">
+          <div class="form-group">
+            <div>
+              <input class="form-control" type="text" (keyup)="rsmSearch.emit($event.target.value)"/>
+            </div>
+          </div>
+        </form>
+        <div id="result">
+          <ul>
+            <li *ngFor="let rsm of _dataService._factoryService.temp" (click)="loadTerminal($event.target.innerHTML)">{{rsm}}</li>
+          </ul>
+        </div>
+        <div>
+          <terminals [roomId]="roomId"></terminals>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

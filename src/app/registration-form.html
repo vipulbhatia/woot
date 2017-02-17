@@ -1,0 +1,50 @@
+
+<div class="form-container">
+  <div class="row">
+    <div class="panel panel-primary">
+      <div class="panel-body">
+        <form name="registrationForm" #registrationForm="ngForm">
+          <div class="form-group">
+            <h2>Register</h2>
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <div>
+              <input class="form-control" type="email" (blur)="newemailControl.emit($event.target.value)" [(ngModel)]="registerModel.newemail.value" #newemail="ngModel" name="newemail"/>
+              <div [hidden]="registerModel.newemail.valid || newemail.pristine" [ngClass]="{'alert':'true', 'alert-danger':'true'}">{{registerModel.newemail.error}}</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="accounts">Accounts:</label>
+            <div>
+              <select class="selectpicker" multiple="multiple" data-actions-box="true">
+                <option>Hilton Worldwide</option>
+                <option>Corelogic</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="newpassword">New Password:</label>
+            <div>
+              <input class="form-control" type="password" [(ngModel)]="registerModel.newpassword.value" #newpassword="ngModel" name="newpassword"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="confirmpassword">Confirm Password:</label>
+            <div>
+              <input class="form-control" type="password" [(ngModel)]="registerModel.confirmpassword.value" #confirmpassword="ngModel" name="confirmpassword"/>
+              <div class="alert alert-danger" [hidden]="registerModel.newpassword.value==registerModel.confirmpassword.value || newpassword.pristine || confirmpassword.pristine">Passwords do not match</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-info btn-block" type="submit" (click)="_dataService.register(registerModel)" [disabled]="!registrationForm.form.valid || registrationForm.form.pristine || registrationForm.form.untouched || !registerModel.valid">Register</button>
+          </div>
+          <div class="form-group">
+            <hr/>
+          </div>
+          <p class="form-group">Already a member?<a href="#" [routerLink]="['/login']">Sign In</a></p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

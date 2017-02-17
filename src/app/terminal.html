@@ -1,0 +1,29 @@
+
+<!--
+input(type="text", #message="")
+input(type="button", value="send", (click)="send()")
+br
+div(style="display:table")
+	div(style="display:table-row")
+		textarea(style="display:table-cell;width:500px;height:500px", #chat="")
+		div(class="terminal", style="display:table-cell;width:800px;height:500px")
+
+-->
+<div class="row">
+  <div class="col-md-3">
+    <textarea class="chat" #chat=""></textarea>
+  </div>
+  <div class="col-md-9">
+    <div class="terminal"></div>
+  </div>
+</div>
+<div class="row">
+  <form>
+    <div class="col-md-10 form-group">
+      <input type="text" #message="" style="width:100%;"/>
+    </div>
+    <div class="col-md-2 btn-group">
+      <button class="btn btn-primary" (click)="send()">Send</button>
+    </div>
+  </form>
+</div>

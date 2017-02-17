@@ -1,12 +1,11 @@
-import {Component} from '@angular/core'
-import {FactoryService} from './factory.service.js'
-import {Router} from '@angular/router'
-import {RSMsModule} from './rsms.component.js'
+import {Component} from '@angular/core';
+import {FactoryService} from './factory.service.js';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'header',
-    templateUrl: 'app/header',
-    styleUrls: ['css/header.css']
+    templateUrl: '../public/html/header.html',
+    styleUrls: ['../public/css/header.css']
 })
 
 export class HeaderComponent {

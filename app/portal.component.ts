@@ -2,8 +2,8 @@ import {Component} from '@angular/core'
 
 @Component({
     selector: 'main',
-    templateUrl: 'app/portal',
-    styleUrls: ['css/portal.css']
+    templateUrl: '../public/html/portal.html',
+    styleUrls: ['../public/css/portal.css']
 })
 
 export class PortalComponent {

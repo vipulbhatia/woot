@@ -1,0 +1,9 @@
+
+<ul class="nav nav-pills">
+  <li *ngFor="let terminal of terminals"><a href="#{{terminal}}" data-toggle="pill">{{terminal}}<span><i class="glyphicon glyphicon-remove tab-close" (click)="removeRoom(terminal)"></i></span></a></li>
+</ul>
+<div class="tab-content">
+  <div class="tab-pane fade in" *ngFor="let terminal of terminals" id="{{terminal}}">
+    <terminal [roomId]="roomId" (remove)="removeRoom($event)"></terminal>
+  </div>
+</div>

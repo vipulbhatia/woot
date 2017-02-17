@@ -2,7 +2,7 @@ import {Component, Input, ViewChild, ElementRef, AfterViewInit, OnChanges, OnIni
 
 @Component({
     selector: 'info-card',
-    templateUrl: 'app/info-card'
+    templateUrl: '../public/html/info-card.html'
     /*template: `
         <div class="panel panel-default">
             <div class="panel-heading clearfix">
@@ -26,10 +26,10 @@ import {Component, Input, ViewChild, ElementRef, AfterViewInit, OnChanges, OnIni
 })
 
 export class InfoCardComponent implements OnInit {
-    @Input('data') data;
-    @Input('type') type;
-    private editable;
-    private types;
+    @Input('data') data: any;
+    @Input('type') type: any;
+    public editable: any;
+    public types: any;
     constructor() {
         this.editable = false;
         this.types = {

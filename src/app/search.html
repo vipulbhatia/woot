@@ -1,0 +1,88 @@
+
+<div class="container" *ngIf="!formInline">
+  <h3>Find Device</h3>
+  <form class="form-horizontal">
+    <div class="form-group">
+      <label class="col-md-2 col-md-offset-2" for="ci">CI Name:</label>
+      <div class="col-md-4">
+        <input class="form-control" type="text" name="ci" [(ngModel)]="ci"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-md-2 col-md-offset-2" for="account">Account:</label>
+      <div class="col-md-2">
+        <select class="form-control" name="account">
+          <option value="all">select account</option>
+          <option *ngFor="let account of accounts" [value]="account">{{account}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-md-2 col-md-offset-2" for="tool">Tool:</label>
+      <div class="col-md-2">
+        <select class="form-control" name="account">
+          <option value="all">select tool</option>
+          <option *ngFor="let tool of tools" [value]="tool">{{tool}}</option>
+        </select>
+      </div>
+    </div>
+    <button class="col-md-offset-4 btn btn-default" (click)="search()">search</button>
+  </form>
+</div>
+<div class="container center_div" *ngIf="formInline">
+  <form class="form-inline">
+    <div class="form-group">
+      <label for="ci">CI Name:</label>
+      <input class="form-control" type="text" name="ci" [(ngModel)]="ci"/>
+    </div>
+    <div class="form-group">
+      <label for="account">Account:</label>
+      <select class="form-control" name="account">
+        <option value="all">select account</option>
+        <option *ngFor="let account of accounts" [value]="account">{{account}}</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="tool">Tool:</label>
+      <select class="form-control" name="account">
+        <option value="all">select tool</option>
+        <option *ngFor="let tool of tools" [value]="tool">{{tool}}</option>
+      </select>
+    </div>
+    <button class="btn btn-default glyphicon glyphicon-search" (click)="search()"></button>
+  </form>
+</div>
+<!--remove this-->
+<!--chart([type]="charts[0].type", [title]="charts[0].title", [chartData]="charts[0].chartData", [chartId]="charts[0].chartId", #{{charts[0].chartId}}="")-->
+<!--navigator: tabs for switching b/w result and server info-->
+<ul class="breadcrumb">
+  <li [class.active]="show"><a href="#results" data-toggle="pill">results</a></li>
+  <li [class.active]="!show"><a href="#serverInfo" data-toggle="pill">{{serverName}}</a></li>
+</ul>
+<div class="tab-content">
+  <div class="clearfix table-responsive tab-pane" id="results" [class.active]="show">
+    <h3>results</h3>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ESM Name</th>
+          <th>Tool</th>
+          <th>Account</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let result of temp">
+          <td>{{result.esm_name}}</td>
+          <td (click)="getMonitoringData(result)">{{result.accounted_by}}</td>
+          <td>{{result.account}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <ul class="pagination">
+      <li *ngFor="let page of pages; let i=index" [class.active]="page" (click)="selectPage(i)"><a>{{i}}</a></li>
+    </ul>
+  </div>
+  <div class="clearfix tab-pane" id="serverInfo" [class.active]="!show">
+    <!--info-card(*ngIf="!show", [monitoringData]="monitoringData")-->
+  </div>
+</div>

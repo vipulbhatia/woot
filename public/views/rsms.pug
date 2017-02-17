@@ -11,7 +11,7 @@ div#rsmsModal.modal.fade.in
                             input.form-control(type="text", (keyup)="rsmSearch.emit($event.target.value)")
                 div#result
                     ul
-                        li(*ngFor="let rsm of _dataService.temp", (click)="loadTerminal($event.target.innerHTML)")
+                        li(*ngFor="let rsm of _dataService._factoryService.temp", (click)="loadTerminal($event.target.innerHTML)")
                             |{{rsm}}
 
                 div

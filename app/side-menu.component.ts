@@ -1,19 +1,18 @@
-import {Component, ViewChild} from '@angular/core'
-import {RouteConfig} from '@angular/router'
+import {Component, ViewChild} from '@angular/core';
 
 @Component({
     selector: 'side-menu',
-    templateUrl: 'app/side-menu',
-    styleUrls: ['css/side-menu.css']
+    templateUrl: '../public/html/side-menu.html',
+    styleUrls: ['../public/css/side-menu.css']
 })
 
 export class SideMenuComponent {
-    @ViewChild('sidemenu') sidemenu;
-    private li;
+    @ViewChild('sidemenu') sidemenu: ViewChild;
+    public li: any;
     constructor() {
         this.li = [false, false, false, false];
     }
-    activate = function(ele) {
+    activate = function(ele: any) {
         console.log('activate:', ele);
         for(var i in this.li) {
             if(i == ele) this.li[i] = true;

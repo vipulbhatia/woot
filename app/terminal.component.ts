@@ -1,23 +1,26 @@
-import {Component, Input, ViewChild, ElementRef, AfterViewInit, string, EventEmitter, Output, OnDestroy} from '@angular/core'
+import {Component, Input, ViewChild, ElementRef, AfterViewInit, EventEmitter, Output, OnDestroy} from '@angular/core'
 import {FactoryService} from './factory.service.js';
 //import * as IO from 'socket.io-client'
 //import * as wetty from 'wetty'
 //import * as hterm_all from 'hterm_all'
+declare var io: any;
+declare var hterm: any;
+declare var lib: any;
 
 @Component({
     selector: 'terminal',
-    templateUrl: 'app/terminal'
+    templateUrl: '../public/html/terminal.html'
 })
 
 export class TerminalComponent implements AfterViewInit, OnDestroy {
-    @Input('roomId') roomId;
+    @Input('roomId') roomId: any;
     @Output() remove = new EventEmitter();
-    @ViewChild('message') message: ElementRef;
+    @ViewChild('message') message: any;
     @ViewChild('chat') chat: ElementRef;
-    private active;
-    private term;
-    private tty;
-    private buf;
+    private active: any;
+    private term: any;
+    private tty: any;
+    private buf: any;
     constructor(public _factoryService: FactoryService) {
         this.message = "";
         this.active = false;
@@ -75,7 +78,7 @@ export class TerminalComponent implements AfterViewInit, OnDestroy {
                 }
             });
 
-            this.tty.on('tty', (data) => {
+            this.tty.on('tty', (data: any) => {
                 if(data.sender != '') {
                     if (!this.term) {
                         this.buf += data.message;
@@ -85,12 +88,12 @@ export class TerminalComponent implements AfterViewInit, OnDestroy {
                 }
             });
 
-            this.tty.on('chat', (data) => {
+            this.tty.on('chat', (data: any) => {
                 this.chat.nativeElement.value += '\n' + data.sender + ': ' + data.message;
             });
 
-            ['joined', 'left'].forEach((val) => {
-                this.tty.on(val, (data) => {
+            ['joined', 'left'].forEach((val: any) => {
+                this.tty.on(val, (data: any) => {
                     this.chat.nativeElement.value += '\n' + data + ' ' + val;
                 });
             });
@@ -115,8 +118,8 @@ export class TerminalComponent implements AfterViewInit, OnDestroy {
         return this.roomId;
     }
 
-    Wetty = (argv) => {
-        var that = {};
+    Wetty = (argv: any) => {
+        var that: any = {};
         that.argv_ = argv;
         that.io_ = null;
         that.pid_ = -1;
@@ -129,11 +132,11 @@ export class TerminalComponent implements AfterViewInit, OnDestroy {
             that.io_.onTerminalResize = that.onTerminalResize.bind(that);
         }
 
-        that.sendString_ = (str) => {
+        that.sendString_ = (str: any) => {
             this.tty.emit('message', str);
         };
 
-        that.onTerminalResize = (col, row) => {
+        that.onTerminalResize = (col: any, row: any) => {
             this.tty.emit('resize', { col: col, row: row });
         };
         return that;

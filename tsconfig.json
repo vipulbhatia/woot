@@ -11,6 +11,7 @@
     "outDir": "./public/js"
   },
   "filesGlob": [
+    "./aot/app/*.ts",
     "./app/*.ts",
     "!./node_modules/**/*.ts"
   ],
@@ -25,6 +26,7 @@
   "files": [
     "./app/app.module.ts",
     "./app/auth.service.ts",
+    "./app/boot-jit.ts",
     "./app/boot.ts",
     "./app/chart.component.ts",
     "./app/data.service.ts",

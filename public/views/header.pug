@@ -3,7 +3,7 @@ div#nav-header.clearfix
     div.col-md-5
     div.col.md-7
         ul.pull-right
-            li#welcome Welcome to administration area
+            li#welcome Welcome {{_factoryService.getUsername()}},
             li.fixed-width(data-toggle="modal", data-target="#rsmsModal")
                 a
                     span.glyphicon.glyphicon-modal-window

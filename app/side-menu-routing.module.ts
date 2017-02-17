@@ -15,7 +15,7 @@ const sideMenuRoutes = [
 
 @NgModule({
     imports: [RouterModule.forChild(sideMenuRoutes)],
-    export: [RouterModule]
+    exports: [RouterModule]
 })
 
 export class SideMenuRoutingModule {

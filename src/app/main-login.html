@@ -1,0 +1,11 @@
+
+<div class="container">
+  <ul class="nav nav-pills col-sm-offset-5">
+    <li class="active"><a href="#login" data-toggle="pill">Login</a></li>
+    <li><a href="#register" data-toggle="pill" (click)="loadRegistrationForm()">Register</a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane fade in active" id="login" login-form="login-form"></div>
+    <div class="tab-pane" id="register"><span #registrationForm=""></span></div>
+  </div>
+</div>

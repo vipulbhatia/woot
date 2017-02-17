@@ -6,19 +6,19 @@ declare var $: any
 
 @Component({
     selector: '[registration-form]',
-    templateUrl: 'app/registration-form',
-    styleUrls: ['css/login-form.css'],
+    templateUrl: '../public/html/registration-form.html',
+    styleUrls: ['../public/css/login-form.css'],
     providers: [DataService]
 })
 
 export class RegistrationFormComponent implements AfterViewInit {
-    registerModel = {
+    registerModel: any = {
         newemail: null,
         newpassword: null,
         confirmpassword: null
     }
     newemailControl = new EventEmitter();
-    constructor(private _dataService: DataService) {
+    constructor(public _dataService: DataService) {
         this.newemailControl.debounceTime(400)
         .distinctUntilChanged()
         .subscribe((value) => {console.log(value);this._dataService.checkEmail(value)});

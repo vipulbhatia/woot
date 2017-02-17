@@ -1,0 +1,53 @@
+html, body, main {
+	font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	height: 100%;
+    padding-top: 0px;
+	background-color:#34515E;
+}
+
+.ng-valid {
+  /*border-left: 5px solid #42A948; /* green */
+}
+
+.ng-invalid {
+  /*border-left: 5px solid #a94442; /* red */
+}
+
+.glyphicon-ok {
+    color: #42A948;
+}
+
+.glyphicon-remove {
+        color: #a94442;
+}
+
+.tab-close {
+	right: -11px;
+	top: -6px;
+}
+
+.form-inline > * {
+   margin:5px 3px;
+}
+
+.center_div {
+    margin: 0 auto;
+    width: 80%;
+}
+
+.terminal, .chat {
+	height: 500px;
+}
+
+.chat {
+	width: 100%;
+}
+
+#editConfigModal table a {
+	color: black;
+	text-decoration: none;
+}
+
+#editConfigModal .collapseable {
+	border-left: 4px solid #1ab394;
+}

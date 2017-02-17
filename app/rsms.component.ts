@@ -1,25 +1,23 @@
 import {Component, EventEmitter, Directive, ContentChildren} from '@angular/core'
-import {TerminalsComponent} from './terminals.component.js'
 import {DataService} from './data.service.js'
 
 @Component({
     selector: 'rsms',
-    templateUrl: 'app/rsms',
-    providers: [DataService],
-    directives: [TerminalsComponent]
+    templateUrl: '../public/html/rsms.html',
+    providers: [DataService]
 })
 
 export class RSMsComponent {
     //private rsms = [];
     //private temp = [];
-    private roomId;
-    private rsmSearch = new EventEmitter();
-    private socket;
+    public roomId: any;
+    public rsmSearch = new EventEmitter();
+    public socket: any;
     constructor(public _dataService: DataService) {
         this._dataService._factoryService.getRoomIdAsObservable()
-        .distinctUntilChanged()    
+        .distinctUntilChanged()
         .subscribe(
-            val => {
+            (val: any) => {
                 console.log('rsms component got:', val);
                 if(val != '' && val != undefined) this.loadTerminal(val);
             }
@@ -38,7 +36,7 @@ export class RSMsComponent {
         )
     }
 
-    loadTerminal = function(roomId) {
+    loadTerminal = function(roomId: any) {
         console.log('joining room:', roomId);
         this.roomId = roomId;
     }

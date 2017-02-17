@@ -8,7 +8,8 @@ div.form-container
                     div.form-group
                         label(for="email") Email:
                         div
-                            input.form-control(type="email", (keyup)="newemailControl.emit($event.target.value)", [(ngModel)]="registerModel.newemail", #newemail="ngModel", name="newemail", pattern="[A-z0-9_\.]+@[A-z0-9]+\.[A-z0-9]{2,}", [ngClass]="{'ng-invalid': !newemail.valid && !newemail.pristine, 'ng-valid': newemail.valid || newemail.pristine}")
+                            input.form-control(type="email", (blur)="newemailControl.emit($event.target.value)", [(ngModel)]="registerModel.newemail.value", #newemail="ngModel", name="newemail")
+                            div([hidden]="registerModel.newemail.valid || newemail.pristine", [ngClass]="{'alert':'true', 'alert-danger':'true'}") {{registerModel.newemail.error}}
                     div.form-group
                         label(for="accounts") Accounts:
                         div
@@ -18,14 +19,14 @@ div.form-container
                     div.form-group
                         label(for="newpassword") New Password:
                         div
-                            input.form-control(type="password", [(ngModel)]="registerModel.newpassword", name="newpassword")
+                            input.form-control(type="password", [(ngModel)]="registerModel.newpassword.value", #newpassword="ngModel", name="newpassword")
                     div.form-group
                         label(for="confirmpassword") Confirm Password:
                         div
-                            input.form-control(type="password", [(ngModel)]="registerModel.confirmpassword", name="confirmpassword")
-                            div.alert.alert-danger([hidden]="registerModel.newpassword==registerModel.confirmpassword || confirmpassword.pristine || newpassword.pristine") Passwords do not match
+                            input.form-control(type="password", [(ngModel)]="registerModel.confirmpassword.value", #confirmpassword="ngModel", name="confirmpassword")
+                            div.alert.alert-danger([hidden]="registerModel.newpassword.value==registerModel.confirmpassword.value || newpassword.pristine || confirmpassword.pristine") Passwords do not match
                     div.form-group
-                        button.btn.btn-info.btn-block(type="submit", (click)="_dataService.login(registerModel)", [disabled]="!registrationForm.form.valid || registrationForm.form.pristine") Register
+                        button.btn.btn-info.btn-block(type="submit", (click)="_dataService.register(registerModel)", [disabled]="!registrationForm.form.valid || registrationForm.form.pristine || registrationForm.form.untouched || !registerModel.valid") Register
                     div.form-group
                         hr
                     p.form-group Already a member?

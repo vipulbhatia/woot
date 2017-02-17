@@ -1,0 +1,59 @@
+
+<div class="panel panel-default">
+  <div class="panel-heading clearfix">
+    <div class="panel-title pull-left">{{data.esm_name}}</div>
+    <div class="pull-right" *ngIf="types.configurable"><a class="btn btn-primary" (click)="makeEditable()"><i class="glyphicon glyphicon-pencil"></i><span>Edit</span></a></div>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead *ngIf="types.configurable">
+        <tr class="active">
+          <th>Parameter Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let config of data.config;let i=index">
+          <td><a data-toggle="collapse" [attr.data-target]="'#'+i">{{config.instance_name}}</a>
+            <div class="collapse collapseable" [attr.id]="i">
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <tbody *ngIf="config.param_thresh">
+                    <tr *ngFor="let param of config.param_thresh">
+                      <td>{{param.parameter_name}}</td>
+                      <td *ngIf="!editable">{{param.sev3}}</td>
+                      <td *ngIf="!editable">{{param.sev4}}</td>
+                      <td *ngIf="editable">
+                        <input type="text" [attr.value]="param.sev3"/>
+                      </td>
+                      <td *ngIf="editable">
+                        <input type="text" [attr.value]="param.sev4"/>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tbody *ngIf="types.information">
+        <tr>
+          <td>ESM Name</td>
+          <td>{{data.esm_name}}</td>
+        </tr>
+        <tr>
+          <td>Account</td>
+          <td>{{data.account}}</td>
+        </tr>
+        <tr>
+          <td>IP Address</td>
+          <td>{{data.data.MLM.ip}}</td>
+        </tr>
+        <tr>
+          <td>Cost</td>
+          <td>{{data.cost}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

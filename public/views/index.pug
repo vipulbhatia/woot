@@ -11,7 +11,6 @@ html
         link(rel="stylesheet" href="css/main.css")
         script(src="https://unpkg.com/core-js/client/shim.min.js")
         script(src="https://unpkg.com/zone.js@0.7.4?main=browser")
-        script(src="https://unpkg.com/reflect-metadata@0.1.8")
         script(src="https://unpkg.com/systemjs@0.19.39/dist/system.src.js")
         script(src="https://code.jquery.com/jquery-2.2.0.min.js")
         script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js")
@@ -21,37 +20,6 @@ html
         script(src="https://cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js")
         script(src="js/hterm_all.js")
         script(src="js/socket.io.js")
-        script.
-            //map tells the System loader where to look for things
-            var map = {
-                'app': 'js',
-                '@angular/core': 'https://unpkg.com/@angular/core/bundles/core.umd.js',
-                '@angular/common': 'https://unpkg.com/@angular/common/bundles/common.umd.js',
-                '@angular/compiler': 'https://unpkg.com/@angular/compiler/bundles/compiler.umd.js',
-                '@angular/platform-browser': 'https://unpkg.com/@angular/platform-browser/bundles/platform-browser.umd.js',
-                '@angular/platform-browser-dynamic': 'https://unpkg.com/@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js',
-                '@angular/http': 'https://unpkg.com/@angular/http/bundles/http.umd.js',
-                '@angular/router': 'https://unpkg.com/@angular/router/bundles/router.umd.js',
-                '@angular/forms': 'https://unpkg.com/@angular/forms/bundles/forms.umd.js',
-                '@angular/upgrade': 'https://unpkg.com/@angular/upgrade/bundles/upgrade.umd.js',
-                '@angular/upgrade/static': 'https://unpkg.com/@angular/upgrade/bundles/upgrade-static.umd.js',
-                'rxjs':                      'https://unpkg.com/rxjs',
-                'wetty': 'js/wetty.js'
-            };
-
-            //packages tells the System loader how to load when no filename and/or no extension
-            var packages = {
-             'app':                        { main: 'boot.js', format: 'register',  defaultExtension: 'js' },
-             'rxjs':                       { defaultExtension: 'js' }
-            };
-
-            var config = {
-             map: map,
-             packages: packages
-            };
-
-            System.config(config);
-            System.import('app')
-                .then(null, console.error.bind(console));
     body
         app
+    script(src="js/build.js")

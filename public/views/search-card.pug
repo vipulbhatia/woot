@@ -25,6 +25,12 @@ div.container.bootcards-container(*ngIf="!formInline")
                                 p.list-group-item-text
                                     a(data-toggle="modal", data-target="#editConfigModal", (click)="getMonitoringData(i)") config&nbsp;
                                     a(data-toggle="modal", data-target="#rsmsModal", (click)="_dataService._factoryService.getRoomIdAsEmitter().next(i.data.MLM.originating_source)") connect
+                div.panel-body
+                    div.btn-group.pull-left
+                        button.btn.btn-info((click)="getPrev(ci)") Prev
+                    div.btn-group.pull-right
+                        button.btn.btn-info((click)="getNext(ci)") Next
+
         div.col-sm-6
             info-card(*ngIf="serverInfo", [data]="serverInfo", [type]="'information'")
         div#editConfigModal.modal.fade.in
@@ -37,4 +43,4 @@ div.container.bootcards-container(*ngIf="!formInline")
                             button.btn.btn-success Save
                         h3.modal-title Edit Configuration
                     div.modal-body
-                        //info-card(*ngIf="monitoringData", [data]="monitoringData", [type]="'configurable'")
+                        info-card(*ngIf="monitoringData", [data]="monitoringData", [type]="'configurable'")

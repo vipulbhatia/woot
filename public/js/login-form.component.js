@@ -42,8 +42,8 @@ System.register(["@angular/core", "./data.service.js"], function (exports_1, con
             LoginFormComponent = __decorate([
                 core_1.Component({
                     selector: '[login-form]',
-                    templateUrl: 'app/login-form',
-                    styleUrls: ['css/login-form.css'],
+                    templateUrl: '../public/html/login-form.html',
+                    styleUrls: ['../public/css/login-form.css'],
                     providers: [data_service_js_1.DataService]
                 }),
                 __metadata("design:paramtypes", [data_service_js_1.DataService])

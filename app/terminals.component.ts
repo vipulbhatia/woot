@@ -1,22 +1,21 @@
-import {Component, Directive, Input, OnChanges, ComponentResolver, ViewContainerRef, ReflectiveInjector, AfterContentInit} from '@angular/core'
+import {Component, Directive, Input, OnChanges, ViewContainerRef, ReflectiveInjector} from '@angular/core'
 import {TerminalComponent} from './terminal.component.js'
 
 @Component({
     selector: 'terminals',
-    templateUrl: 'app/terminals',
-    directives: [TerminalComponent]
+    templateUrl: '../public/html/terminals.html'
 })
 
-export class TerminalsComponent implements OnChanges, AfterContentInit {
-    @Input('roomId') roomId;
-    private terminals;
-    private close;
+export class TerminalsComponent implements OnChanges {
+    @Input('roomId') roomId: any;
+    public terminals: any;
+    public close: any;
     constructor() {
         this.terminals = [];
         this.close = false;
     }
 
-    ngOnChanges(value) {
+    ngOnChanges(value: any) {
         console.log(value);
         if(value.roomId.currentValue != undefined && value.roomId.currentValue != '') {
             var currentValue = value.roomId.currentValue;
@@ -29,7 +28,7 @@ export class TerminalsComponent implements OnChanges, AfterContentInit {
         }
     }
 
-    removeRoom = (id) => {
+    removeRoom = (id: any) => {
         console.log('remove called:', id);
         var index = this.terminals.indexOf(id);
         if(index > -1) {

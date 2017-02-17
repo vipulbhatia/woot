@@ -1,0 +1,70 @@
+
+<div id="users">
+  <div class="container">
+    <div class="row">
+      <form class="form-inline">
+        <div class="form-group">
+          <div class="form-checkbox">
+            <input class="form-control" type="checkbox"/><span class="check"><i class="glyphicon glyphicon-ok"></i></span>
+          </div>
+        </div>
+        <div class="form-group">
+          <select class="form-control">
+            <option>Bulk Action</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-info">Go</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-hover table-users">
+      <thead>
+        <tr>
+          <td class="size-60"></td>
+          <td>Name</td>
+          <td>Account</td>
+          <td>Role</td>
+          <td>Status</td>
+          <td>Action</td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users">
+          <td>
+            <div class="form-checkbox">
+              <input class="form-control" type="checkbox"/><span class="check"><i class="glyphicon glyphicon-ok"></i></span>
+            </div>
+          </td>
+          <td><strong>{{user.username}}</strong></td>
+          <td>{{user.nsp}}</td>
+          <td><span class="badge" *ngIf="!user.edited">{{user.role}}</span>
+            <select class="form-control" *ngIf="user.edited" (change)="updateUserRole(user, $event.target.value)">
+              <option *ngFor="let role of roles" [value]="role" [selected]="user.role==role">{{role}}</option>
+            </select>
+          </td>
+          <td><span class="label" *ngIf="!user.edited" [ngClass]="user.status=='active' ? 'label-success' : (user.status=='pending' ? 'label-warning' : 'label-danger')">{{user.status}}</span>
+            <select class="form-control" *ngIf="user.edited" (change)="updateUserStatus(user, $event.target.value)">
+              <option *ngFor="let status of statuses" [value]="status" [selected]="user.status==status">{{status}}</option>
+            </select>
+          </td>
+          <td>
+            <div class="dropdown">
+              <button class="btn btn-default dropdown-toggle" id="users-action-menu" data-toggle="dropdown"><span class="caret"></span></button>
+              <ul class="dropdown-menu" aria-labelledby="users-action-menu">
+                <li><a (click)="editUser(user)">edit</a></li>
+                <li><a>delete</a></li>
+              </ul>
+            </div>
+          </td>
+          <td>
+            <button class="btn btn-info" [disabled]="!user.edited" (click)="updateUser(user)">save</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

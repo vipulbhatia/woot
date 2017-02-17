@@ -1,30 +1,27 @@
 import {Component, EventEmitter} from '@angular/core'
 import {DataService} from './data.service.js'
-import {InfoCardComponent} from './info-card.component.js'
-import {ChartComponent} from './chart.component.js'
 
 @Component({
     selector: 'search',
-    templateUrl: 'app/search-card',
-    providers: [DataService],
-    directives: [InfoCardComponent, ChartComponent]
+    templateUrl: '../public/html/search-card.html',
+    providers: [DataService]
 })
 
 export class SearchCardComponent {
-    charts = [];
-    accounts = [];
-    results = [];
-    temp = [];
-    pages = [];
-    noofresults = 50;
-    currpage = 0;
-    monitoringData;
-    serverInfo;
-    serverName = '';
-    monitoringDataKeys;
+    charts: any = [];
+    accounts: any = [];
+    results: any = [];
+    temp: any = [];
+    pages: any = [];
+    noofresults: any = 50;
+    currpage: any = 0;
+    monitoringData: any;
+    serverInfo: any;
+    serverName: any = '';
+    monitoringDataKeys: any;
     show = true;
     formInline = false;
-    chartData = [];
+    chartData: any = [];
     ciSearchControl = new EventEmitter();
     constructor(public _dataService: DataService) {
         this.temp = [
@@ -82,7 +79,7 @@ export class SearchCardComponent {
                     //var ciList = val.split(/\s+|,|\n|\r/);
                     if(val != '') this._dataService.search(val)
                         .subscribe(
-                            data => {
+                            (data: any) => {
                                 console.log(data);
                                 console.log(data.results[0]);
                                 this.results = data.results;
@@ -95,7 +92,7 @@ export class SearchCardComponent {
                                 //this.show = true;
                                 //this.formInline = false;
                             },
-                            err => console.error('error: ', err),
+                            (err: any) => console.error('error: ', err),
                             () => console.log('finished searching...')
                         )
                 }
@@ -111,13 +108,13 @@ export class SearchCardComponent {
 
         this._dataService.getAccounts()
             .subscribe(
-                data => this.accounts = data.results,
-                err => console.error(err),
+                (data: any) => this.accounts = data.results,
+                (err: any) => console.error(err),
                 () => console.log('finished getting accounts...')
             );
     }
 
-    selectPage = function(page) {
+    selectPage = function(page: any) {
         for(var i=0; i<this.pages.length; i++) {
             this.pages[i] = (i == page) ? true : false;
         }
@@ -126,29 +123,29 @@ export class SearchCardComponent {
         this.temp = this.results.slice(page*this.noofresults, page*this.noofresults+this.noofresults);
     }
 
-    getMonitoringData = function(result) {
+    getMonitoringData = function(result: any) {
         console.log('getting monitoring data:');
         this._dataService.getMonitoringData(result.esm_name, result.accounted_by)
             .subscribe(
-                data => {
+                (data: any) => {
                     this.monitoringData = data.results[0];//this._dataService.jsonToArray(data.results[0]);
                     this.serverName = result.esm_name;
                     this.show = false;
                     //this.formInline = true;
                 },
-                err => console.error(err),
+                (err: any) => console.error(err),
                 () => console.log('finished getting monitoring data...')
             )
     }
 
-    showServerInfo = (data) => {
+    showServerInfo = (data: any) => {
         this.serverInfo = data;
     }
 
     search = function() {
         this._dataService.search(this.ci)
             .subscribe(
-                data => {
+                (data: any) => {
                     console.log(data);
                     console.log(data.results[0]);
                     this.results = data.results;
@@ -161,7 +158,7 @@ export class SearchCardComponent {
                     //this.show = true;
                     //this.formInline = false;
                 },
-                err => console.error('error: ', err),
+                (err: any) => console.error('error: ', err),
                 () => console.log('finished searching...')
             )
     }
