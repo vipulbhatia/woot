@@ -27,6 +27,20 @@ app.get(/^\/(?!api)/, (req, res) => {
     res.sendFile(__dirname + '/dist/index.html');
 });
 
+app.use(/^\/api/, (req, res) => {
+    console.log('got headers:', req.headers);
+    request({
+        url: config.mongodbUrl + req.url.replace('/api', ''),
+        method: req.method,
+        headers: req.headers,
+        body: req.body,
+        json: true,
+        agentOptions: {
+            rejectUnauthorized: false
+        }
+    }).pipe(res);
+});
+
 //socketio logic
 request({
     url: config.mongodbUrl + '/login/getNsps',

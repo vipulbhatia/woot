@@ -1,0 +1,19 @@
+.modal-dialog {
+    width: 60%;
+}
+.search-result {
+    font-size: .80em; /* 12/16 */
+    overflow: scroll;
+    height: 130px;
+    max-height: 130px;
+}
+
+.multi-column {
+    width: 100%; /* 650/960 */
+    max-width: 100%;
+    text-align: left;
+    margin: 0px auto; /*auto centers the container */
+    -moz-column-width: 15.5em; /* Firefox */
+    -webkit-column-width: 15.5em; /* webkit, Safari, Chrome */
+    column-width: 15.5em;
+}

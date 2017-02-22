@@ -14,8 +14,7 @@ div.row
 		div.terminal
 
 div.row
-	form
-		div.col-md-10.form-group
-			input(type="text", #message="", style="width:100%")
-		div.col-md-2.btn-group
-			button.btn.btn-primary((click)="send()") Send
+	div.col-md-10.form-group
+		input(type="text", #message="", style="width:100%", (keyup.enter)="send()")
+	div.col-md-2.btn-group
+		button.btn.btn-primary((click)="send()") Send

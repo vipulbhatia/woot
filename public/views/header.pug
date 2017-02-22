@@ -3,7 +3,7 @@ div#nav-header.clearfix
     div.col-md-5
     div.col.md-7
         ul.pull-right
-            li#welcome Welcome {{_factoryService.getUsername()}},
+            li#welcome Welcome {{_dataService._factoryService.getUsername()}},
             li.fixed-width(data-toggle="modal", data-target="#rsmsModal")
                 a
                     span.glyphicon.glyphicon-modal-window
@@ -15,7 +15,7 @@ div#nav-header.clearfix
                 a
                     span.glyphicon.glyphicon-envelope(href="#")
                     span.label.label-message 3
-            li((click)="logout()")
+            li((click)="_dataService.logout()")
                 a.logout
                     span.glyphicon.glyphicon-log-out(href="#")
                     span logout

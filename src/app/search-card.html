@@ -1,19 +1,20 @@
 
-<div class="container bootcards-container" *ngIf="!formInline">
+<div class="container expand">
   <div class="row">
+    <form>
+      <div class="form-group">
+        <input class="form-control search-bar-full" type="text" name="ci" placeholder="search..." [(ngModel)]="ci" (keyup)="ciSearchControl.emit($event.target.value)"/><i class="fa fa-search"></i>
+      </div>
+    </form>
+  </div>
+  <div class="row">
+    <div class="vcenter" *ngIf="show">
+      <h2>Start typing in the search bar above and let the magic happen!</h2>
+    </div>
+  </div>
+  <div class="bootcards-container" *ngIf="!show">
     <div class="col-sm-6 bootcards-list">
       <div class="panel panel-default">
-        <div class="panel-body">
-          <form>
-            <div class="row">
-              <div class="col-xs-9">
-                <div class="form-group">
-                  <input class="form-control" type="text" name="ci" placeholder="search..." [(ngModel)]="ci" (keyup)="ciSearchControl.emit($event.target.value)"/><i class="fa fa-search"></i>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
         <div class="list-group"><a class="list-group-item" *ngFor="let i of temp" (click)="showServerInfo(i)">
             <div class="row">
               <div class="col-sm-4"><i class="fa fa-3x fa-building-o pull-left"></i>

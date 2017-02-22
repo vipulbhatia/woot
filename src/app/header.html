@@ -4,11 +4,11 @@
   <div class="col-md-5"></div>
   <div class="col md-7">
     <ul class="pull-right">
-      <li id="welcome">Welcome {{_factoryService.getUsername()}},</li>
+      <li id="welcome">Welcome {{_dataService._factoryService.getUsername()}},</li>
       <li class="fixed-width" data-toggle="modal" data-target="#rsmsModal"><a><span class="glyphicon glyphicon-modal-window"></span></a></li>
       <li class="fixed-width"><a><span class="glyphicon glyphicon-bell" href="#"></span><span class="label label-warning">3</span></a></li>
       <li class="fixed-width"><a><span class="glyphicon glyphicon-envelope" href="#"></span><span class="label label-message">3</span></a></li>
-      <li (click)="logout()"><a class="logout"><span class="glyphicon glyphicon-log-out" href="#"></span><span>logout</span></a></li>
+      <li (click)="_dataService.logout()"><a class="logout"><span class="glyphicon glyphicon-log-out" href="#"></span><span>logout</span></a></li>
     </ul>
   </div>
 </div>

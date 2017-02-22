@@ -99,7 +99,7 @@ export class TerminalComponent implements AfterViewInit, OnDestroy {
             });
     }
 
-    send = function() {
+    send = () => {
         console.log(this.message.nativeElement.value);
         this.chat.nativeElement.value += '\nYou: ' + this.message.nativeElement.value;
         this.tty.emit('chat', this.message.nativeElement.value);

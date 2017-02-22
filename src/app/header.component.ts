@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {FactoryService} from './factory.service';
+import {DataService} from './data.service';
 import {Router} from '@angular/router';
 
 @Component({
@@ -9,11 +9,5 @@ import {Router} from '@angular/router';
 })
 
 export class HeaderComponent {
-    constructor(private _factoryService: FactoryService, private router: Router) { }
-
-    logout = function() {
-        console.log('logout called:');
-        this._factoryService.setAuthenicated(false);
-        this.router.navigate(['/login']);
-    }
+    constructor(private _dataService: DataService, private router: Router) { }
 }

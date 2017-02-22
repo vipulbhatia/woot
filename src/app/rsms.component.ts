@@ -3,13 +3,15 @@ import {DataService} from './data.service'
 
 @Component({
     selector: 'rsms',
-    templateUrl: './rsms.html'
+    templateUrl: './rsms.html',
+    styleUrls: ['./rsms.css']
 })
 
 export class RSMsComponent {
     public rsms = [];
     public roomId: any;
     public rsmSearch = new EventEmitter();
+    public myRsmSearch = new EventEmitter();
     public socket: any;
     constructor(public _dataService: DataService) {
         console.log('rsms component:', this._dataService.temp);
@@ -24,15 +26,18 @@ export class RSMsComponent {
         this.rsmSearch.distinctUntilChanged()
         .subscribe(
             (value: any) => {
+                console.log('filtering...', value);
                 this._dataService._factoryService.temp = [];
-                var exp = new RegExp(value, 'i');
-                for(var r in this._dataService._factoryService.rsms) {
-                    if(exp.test(this._dataService._factoryService.rsms[r])) {
-                        this._dataService._factoryService.temp.push(this._dataService._factoryService.rsms[r].replace(/^room-/, ''));
-                    }
-                }
+                this._dataService._factoryService.temp = this.filterList(value, this._dataService._factoryService.rsms);
             }
         )
+        this.myRsmSearch.distinctUntilChanged()
+            .subscribe(
+                (value: any) => {
+                    console.log('filtering my rsm list', value);
+                    this._dataService._factoryService.myTemp = this.filterList(value, this._dataService._factoryService.myRsmList);
+                }
+            )
     }
 
     loadTerminal = (roomId: any) => {
@@ -40,4 +45,14 @@ export class RSMsComponent {
         this.roomId = roomId;
     }
 
+    filterList = (value: any, list: any) => {
+        var temp = [];
+        var exp = new RegExp(value, 'i');
+        for(var r in list) {
+            if(exp.test(list[r])) {
+                temp.push(list[r]);
+            }
+        }
+        return temp;
+    }
 }

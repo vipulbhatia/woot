@@ -1,18 +1,30 @@
 div#rsmsModal.modal.fade.in
-    div.modal-dialog(style="width:60%")
+    div.modal-dialog
         div.modal-content
             div.modal-header
                 div.btn-group.pull-left
                     button.btn.btn-danger(data-dismiss="modal") Hide
             div.modal-body
-                form.form-inline
-                    div.form-group
-                        div
-                            input.form-control(type="text", (keyup)="rsmSearch.emit($event.target.value)")
-                div#result
-                    ul
-                        li(*ngFor="let rsm of _dataService._factoryService.temp", (click)="loadTerminal($event.target.innerHTML)")
-                            |{{rsm}}
+                div.container-fluid
+                    div.row
+                        div.col-md-3
+                            form.form
+                                div.form-group
+                                    div
+                                        input.form-control(type="text", (keyup)="myRsmSearch.emit($event.target.value)", placeholder="my rsm list")
+                            div.search-result
+                                ul
+                                    li(*ngFor="let myrsm of _dataService._factoryService.myTemp", (click)="loadTerminal($event.target.innerHTML)")
+                                        |{{myrsm}}
+                        div.col-md-9
+                            form.form
+                                div.form-group
+                                    div
+                                        input.form-control(type="text", (keyup)="rsmSearch.emit($event.target.value)", placeholder="global rsm list")
+                            div.search-result.multi-column
+                                ul
+                                    li(*ngFor="let rsm of _dataService._factoryService.temp", (click)="loadTerminal($event.target.innerHTML)")
+                                        |{{rsm}}
 
                 div
                   terminals([roomId]="roomId")

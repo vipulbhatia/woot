@@ -18,12 +18,10 @@ div(style="display:table")
   </div>
 </div>
 <div class="row">
-  <form>
-    <div class="col-md-10 form-group">
-      <input type="text" #message="" style="width:100%;"/>
-    </div>
-    <div class="col-md-2 btn-group">
-      <button class="btn btn-primary" (click)="send()">Send</button>
-    </div>
-  </form>
+  <div class="col-md-10 form-group">
+    <input type="text" #message="" style="width:100%;" (keyup.enter)="send()"/>
+  </div>
+  <div class="col-md-2 btn-group">
+    <button class="btn btn-primary" (click)="send()">Send</button>
+  </div>
 </div>

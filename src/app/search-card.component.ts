@@ -4,7 +4,7 @@ import {DataService} from './data.service'
 @Component({
     selector: 'search',
     templateUrl: './search-card.html',
-    providers: [DataService]
+    styles: ['.search-bar-full { margin-top: 10px; }']
 })
 
 export class SearchCardComponent {
@@ -20,13 +20,13 @@ export class SearchCardComponent {
     serverInfo: any;
     serverName: any = '';
     monitoringDataKeys: any;
-    show = true;
+    show: boolean = true;
     formInline = false;
     chartData: any = [];
     ciSearchControl = new EventEmitter();
     constructor(public _dataService: DataService) {
         this.noofresults = this._dataService._factoryService.noofresults;
-        this.temp = [
+        /*this.temp = [
             {
                 esm_name: 'TESTCI',
                 account: 'HTN',
@@ -73,7 +73,7 @@ export class SearchCardComponent {
                     ]
                 }
             ]
-        }
+        }*/
         this.ciSearchControl.debounceTime(400)
             .distinctUntilChanged()
             .subscribe(
@@ -83,12 +83,16 @@ export class SearchCardComponent {
                         .subscribe(
                             (data: any) => {
                                 console.log(data);
-                                console.log(data.results[data.results.length - 1]._id);
-                                this._dataService._factoryService.lastSearchCI = data.results[data.results.length - 1]._id;
-                                this.results = data.results;
-                                this.temp = data.results;
-                                this.currpage = 0;
-                                this.totalPages = 0;
+                                this.results = this.temp = [];
+                                if(data.results.length >= 1) {
+                                    console.log(data.results[data.results.length - 1]._id);
+                                    this._dataService._factoryService.lastSearchCI = data.results[data.results.length - 1]._id;
+                                    this.results = data.results;
+                                    this.temp = data.results;
+                                    this.currpage = 0;
+                                    this.totalPages = 0;
+                                    this.show = false;
+                                }
                             },
                             (err: any) => console.error('error: ', err),
                             () => console.log('finished searching...')
@@ -104,12 +108,13 @@ export class SearchCardComponent {
       ];
         this.charts.push({chartId: 'search-chart-1', title: 'Donut 1', type: 'Donut', chartData: this.chartData});
 
-        this._dataService.getAccounts()
+        /*this._dataService.getAccounts()
             .subscribe(
                 (data: any) => this.accounts = data.results,
                 (err: any) => console.error(err),
                 () => console.log('finished getting accounts...')
             );
+            */
     }
 
     selectPage = function(page: any) {
@@ -128,7 +133,7 @@ export class SearchCardComponent {
                 (data: any) => {
                     this.monitoringData = data.results[0];//this._dataService.jsonToArray(data.results[0]);
                     this.serverName = result.esm_name;
-                    this.show = false;
+                    //this.show = false;
                     //this.formInline = true;
                 },
                 (err: any) => console.error(err),

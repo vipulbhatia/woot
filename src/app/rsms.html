@@ -1,6 +1,6 @@
 
 <div class="modal fade in" id="rsmsModal">
-  <div class="modal-dialog" style="width:60%;">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <div class="btn-group pull-left">
@@ -8,17 +8,37 @@
         </div>
       </div>
       <div class="modal-body">
-        <form class="form-inline">
-          <div class="form-group">
-            <div>
-              <input class="form-control" type="text" (keyup)="rsmSearch.emit($event.target.value)"/>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-3">
+              <form class="form">
+                <div class="form-group">
+                  <div>
+                    <input class="form-control" type="text" (keyup)="myRsmSearch.emit($event.target.value)" placeholder="my rsm list"/>
+                  </div>
+                </div>
+              </form>
+              <div class="search-result">
+                <ul>
+                  <li *ngFor="let myrsm of _dataService._factoryService.myTemp" (click)="loadTerminal($event.target.innerHTML)">{{myrsm}}</li>
+                </ul>
+              </div>
+            </div>
+            <div class="col-md-9">
+              <form class="form">
+                <div class="form-group">
+                  <div>
+                    <input class="form-control" type="text" (keyup)="rsmSearch.emit($event.target.value)" placeholder="global rsm list"/>
+                  </div>
+                </div>
+              </form>
+              <div class="search-result multi-column">
+                <ul>
+                  <li *ngFor="let rsm of _dataService._factoryService.temp" (click)="loadTerminal($event.target.innerHTML)">{{rsm}}</li>
+                </ul>
+              </div>
             </div>
           </div>
-        </form>
-        <div id="result">
-          <ul>
-            <li *ngFor="let rsm of _dataService._factoryService.temp" (click)="loadTerminal($event.target.innerHTML)">{{rsm}}</li>
-          </ul>
         </div>
         <div>
           <terminals [roomId]="roomId"></terminals>
