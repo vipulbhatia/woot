@@ -17,8 +17,10 @@ export class UsersComponent implements OnInit {
     ngOnInit() {
         this._dataService.getUsers()
             .subscribe((data: any) => {
-                this.users = data.results;
-            })
+                        this.users = data.results;
+                        },
+                        (err: any) => console.error(err)
+            )
     }
     editUser = (user: any) => {
         user.edited = true;
@@ -37,6 +39,10 @@ export class UsersComponent implements OnInit {
                                     console.log(data);
                                     user.edited = false;
                                 },
-                        (err: any) => console.error(err))
+                        (err: any) => {
+                            console.error(err);
+                            alert(err._body);
+                        }
+                    )
     }
 }

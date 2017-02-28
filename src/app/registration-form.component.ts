@@ -1,14 +1,11 @@
 import {Component, EventEmitter, AfterViewInit, DoCheck} from '@angular/core'
 import {DataService} from './data.service'
-import 'rxjs/add/operator/debounceTime';
-import 'rxjs/add/operator/distinctUntilChanged';
 declare var $: any
 
 @Component({
     selector: '[registration-form]',
     templateUrl: './registration-form.html',
-    styleUrls: ['./login-form.css'],
-    providers: [DataService]
+    styleUrls: ['./login-form.css']
 })
 
 export class RegistrationFormComponent implements AfterViewInit, DoCheck {
@@ -57,6 +54,5 @@ export class RegistrationFormComponent implements AfterViewInit, DoCheck {
         } else {
             this.registerModel.valid = false;
         }
-        console.log('valid:', this.registerModel.valid);
     }
 }

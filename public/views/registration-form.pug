@@ -31,3 +31,4 @@ div.form-container
                         hr
                     p.form-group Already a member?
                         a(href="#", [routerLink]="['/login']") Sign In
+                    div([hidden]="!_dataService._factoryService.registrationError", [ngClass]="{'alert':'true', 'alert-danger':'true'}") {{_dataService._factoryService.registrationError}}    

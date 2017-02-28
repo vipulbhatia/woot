@@ -1,5 +1,5 @@
 
-<div class="panel panel-default">
+<div class="panel panel-default fix-height">
   <div class="panel-heading clearfix">
     <div class="panel-title pull-left">{{data.esm_name}}</div>
     <div class="pull-right" *ngIf="types.configurable"><a class="btn btn-primary" (click)="makeEditable()"><i class="glyphicon glyphicon-pencil"></i><span>Edit</span></a></div>
@@ -56,16 +56,4 @@
       </tbody>
     </table>
   </div>
-</div>
-<div class="panel-panel-default">
-  <div class="panel-heading clearfix"></div>
-  <iframe [src]="srcUrlAlertCount" height="100%" width="100%"></iframe>
-</div>
-<div class="panel-panel-default">
-  <div class="panel-heading clearfix"></div>
-  <iframe [src]="srcUrlSeverityCount" height="100%" width="100%"></iframe>
-</div>
-<div class="panel-panel-default">
-  <div class="panel-heading clearfix"></div>
-  <iframe [src]="srcUrlAssignedIncidents" height="100%" width="100%"></iframe>
 </div>

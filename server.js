@@ -28,7 +28,6 @@ app.get(/^\/(?!api)/, (req, res) => {
 });
 
 app.use(/^\/api/, (req, res) => {
-    console.log('got headers:', req.headers);
     request({
         url: config.mongodbUrl + req.url.replace('/api', ''),
         method: req.method,

@@ -2,13 +2,13 @@ div.container.expand
     div.row
         form
             div.form-group
-                input.form-control.search-bar-full(type="text", name="ci", placeholder="search...", [(ngModel)]="ci", (keyup)="ciSearchControl.emit($event.target.value)")
+                input.form-control.search-bar-full(type="text", name="ci", placeholder="search...", [(ngModel)]="ci", (keyup)="ciSearchControl.emit($event.target.value)", autocomplete="off", autofocus)
                 i.fa.fa-search
-    div.row
-        div.vcenter(*ngIf="show")
-            h2 Start typing in the search bar above and let the magic happen!
+    div.vcenter(*ngIf="show")
+        h3 Start typing in the search bar above and let the magic happen!
     div.bootcards-container(*ngIf="!show")
-            div.col-sm-6.bootcards-list
+        div.col-sm-6
+            div.bootcards-list.fix-height
                 div.panel.panel-default
                     div.list-group
                         a.list-group-item(*ngFor="let i of temp", (click)="showServerInfo(i)")
@@ -30,17 +30,28 @@ div.container.expand
                             button.btn.btn-info((click)="getPrev(ci)") Prev
                         div.btn-group.pull-right
                             button.btn.btn-info((click)="getNext(ci)") Next
+            div.panel-panel-default.fix-height
+                div.panel-heading.clearfix
+                kibana-visual([type]="'assigned-incidents'", [esm_name]="serverName")
+                            
+        div.col-sm-6
+            //info-card(*ngIf="serverInfo", [data]="serverInfo", [type]="'information'")
+            
+            div.fix-height
+                kibana-visual([type]="'severity-count'", [esm_name]="serverName")
+            
+            div.panel-heading.clearfix
+            div.fix-height
+                kibana-visual([type]="'incidents-by-severity'", [esm_name]="serverName")
 
-            div.col-sm-6
-                info-card(*ngIf="serverInfo", [data]="serverInfo", [type]="'information'")
-            div#editConfigModal.modal.fade.in
-                div.modal-dialog
-                    div.modal-content
-                        div.modal-header
-                            div.btn-group.pull-left
-                                button.btn.btn-danger(data-dismiss="modal") Hide
-                            div.btn-group.pull-right
-                                button.btn.btn-success Save
-                            h3.modal-title Edit Configuration
-                        div.modal-body
-                            info-card(*ngIf="monitoringData", [data]="monitoringData", [type]="'configurable'")
+        div#editConfigModal.modal.fade.in
+            div.modal-dialog
+                div.modal-content
+                    div.modal-header
+                        div.btn-group.pull-left
+                            button.btn.btn-danger(data-dismiss="modal") Hide
+                        div.btn-group.pull-right
+                            button.btn.btn-success Save
+                        h3.modal-title Edit Configuration
+                    div.modal-body
+                        info-card(*ngIf="monitoringData", [data]="monitoringData", [type]="'configurable'")

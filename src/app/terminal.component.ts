@@ -24,7 +24,7 @@ export class TerminalComponent implements AfterViewInit, OnDestroy {
     constructor(public _factoryService: FactoryService) {
         this.message = "";
         this.active = false;
-        this.tty = io.connect(this._factoryService.getServerUrl() + '/' + this._factoryService.getNsp());
+        this.tty = io.connect('/' + this._factoryService.getNsp());
         this.buf = '';
     }
 
@@ -76,6 +76,14 @@ export class TerminalComponent implements AfterViewInit, OnDestroy {
                         }
                     });
                 }
+            });
+
+            this.tty.on('error', (err: any) => {
+                console.error('socketio tty:', err);
+            });
+
+            this.tty.on('disconnect', () => {
+                console.log('socketio tty disconnected...');
             });
 
             this.tty.on('tty', (data: any) => {

@@ -1,4 +1,4 @@
-div.panel.panel-default
+div.panel.panel-default.fix-height
     div.panel-heading.clearfix
         div.panel-title.pull-left
             |{{data.esm_name}}
@@ -48,15 +48,3 @@ div.panel.panel-default
                     td Cost
                     td
                         |{{data.cost}}
-
-div.panel-panel-default
-    div.panel-heading.clearfix
-    iframe([src]="srcUrlAlertCount" height="100%" width="100%")
-
-div.panel-panel-default
-    div.panel-heading.clearfix
-    iframe([src]="srcUrlSeverityCount" height="100%" width="100%")
-
-div.panel-panel-default
-    div.panel-heading.clearfix
-    iframe([src]="srcUrlAssignedIncidents" height="100%" width="100%")

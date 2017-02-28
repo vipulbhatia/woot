@@ -22,3 +22,4 @@ div.form-container
                         hr.right
                     p.form-group
                         a.btn.btn-success.btn-block(href="#", [routerLink]="['/register']") Create an account
+                    div([hidden]="!_dataService._factoryService.loginError", [ngClass]="{'alert':'true', 'alert-danger':'true'}") {{_dataService._factoryService.loginError}}

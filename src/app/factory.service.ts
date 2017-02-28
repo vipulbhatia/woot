@@ -20,7 +20,9 @@ export class FactoryService {
         API_BASEURL: '/api'
     }
     public lastSearchCI = '';
-    public noofresults = 10;
+    public noofresults = 5;
+    public loginError: string;
+    public registrationError: string;
     constructor() {
         this.authenticated = false;
         this.config.serverUrl = environment.serverUrl;

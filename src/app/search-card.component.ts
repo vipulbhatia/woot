@@ -1,5 +1,6 @@
 import {Component, EventEmitter} from '@angular/core'
 import {DataService} from './data.service'
+import { DomSanitizer} from '@angular/platform-browser';
 
 @Component({
     selector: 'search',
@@ -17,14 +18,17 @@ export class SearchCardComponent {
     currpage: any = 0;
     totalPages: any = 0;
     monitoringData: any;
-    serverInfo: any;
+    serverInfo: any = {};
     serverName: any = '';
     monitoringDataKeys: any;
     show: boolean = true;
     formInline = false;
     chartData: any = [];
     ciSearchControl = new EventEmitter();
-    constructor(public _dataService: DataService) {
+    public srcUrlSeverityCount: any;
+    public srcUrlIncidentsBySeverity: any;
+    public srcUrlAssignedIncidents: any;
+    constructor(public _dataService: DataService, private sanitizer: DomSanitizer) {
         this.noofresults = this._dataService._factoryService.noofresults;
         /*this.temp = [
             {
@@ -143,6 +147,7 @@ export class SearchCardComponent {
 
     showServerInfo = (data: any) => {
         this.serverInfo = data;
+        this.serverName = data.esm_name;
     }
 
     search = function() {

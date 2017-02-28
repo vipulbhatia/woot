@@ -28,6 +28,7 @@
             <hr class="right"/>
           </div>
           <p class="form-group"><a class="btn btn-success btn-block" href="#" [routerLink]="['/register']">Create an account</a></p>
+          <div [hidden]="!_dataService._factoryService.loginError" [ngClass]="{'alert':'true', 'alert-danger':'true'}">{{_dataService._factoryService.loginError}}</div>
         </form>
       </div>
     </div>

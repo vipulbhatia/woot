@@ -1,5 +1,7 @@
 div#users
-    div.container
+    div.top-buffer
+        h2 User Management
+    div.container.top-buffer
         div.row
             form.form-inline
                 div.form-group
@@ -8,8 +10,14 @@ div#users
                         span.check
                             i.glyphicon.glyphicon-ok
                 div.form-group
-                    select.form-control
-                        option Bulk Action
+                    div.dropdown
+                        button.btn.btn-default.dropdown-toggle#users-action-menu(data-toggle="dropdown") Action 
+                            span.caret
+                        ul.dropdown-menu(aria-labelledby="users-action-menu")
+                            li
+                                a((click)="editUser(user)") edit
+                            li
+                                a delete
                 div.form-group
                     button.btn.btn-info Go
     div.table-responsive
@@ -21,6 +29,7 @@ div#users
                     td Account
                     td Role
                     td Status
+                    td Created On
                     td Action
                     td
             tbody
@@ -41,14 +50,15 @@ div#users
                         span.label(*ngIf="!user.edited", [ngClass]="user.status=='active' ? 'label-success' : (user.status=='pending' ? 'label-warning' : 'label-danger')") {{user.status}}
                         select.form-control(*ngIf="user.edited", (change)="updateUserStatus(user, $event.target.value)")
                             option(*ngFor="let status of statuses", [value]="status", [selected]="user.status==status") {{status}}
+                    td {{user.created_on}}
                     td
                         div.dropdown
                             button.btn.btn-default.dropdown-toggle#users-action-menu(data-toggle="dropdown")
                                 span.caret
-                            ul.dropdown-menu(aria-labelledby="users-action-menu")
+                            ul.dropdown-menu.dropdown-menu-right(aria-labelledby="users-action-menu")
                                 li
                                     a((click)="editUser(user)") edit
                                 li
                                     a delete
                     td
-                        button.btn.btn-info([disabled]="!user.edited", (click)="updateUser(user)") save
+                        button.btn.btn-info([disabled]="!user.edited", (click)="updateUser(user)") save            

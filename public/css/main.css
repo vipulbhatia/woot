@@ -53,12 +53,21 @@ html, body, main {
 }
 
 .vcenter {
-    display: inline-block;
-    vertical-align: middle;
-    float: none;
+	height: 100%;
+	display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .expand {
 	height: 100%;
 	width: 100%;
+}
+
+.fix-height {
+	height: 39vh;
+}
+
+.top-buffer {
+	margin-top: 20px;
 }

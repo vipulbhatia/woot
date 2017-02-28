@@ -4,7 +4,9 @@ import { MainComponent }            from './main.component';
 import { DataService } from './data.service'
 import { FactoryService } from './factory.service'
 import { MainRoutingModule }        from './main-routing.module';
-import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/debounceTime'
+import 'rxjs/add/operator/distinctUntilChanged'
 
 @NgModule({
   imports: [

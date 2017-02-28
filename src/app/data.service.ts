@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core'
+import {Injectable, OnDestroy} from '@angular/core'
 import {Http, Headers, Response, RequestOptions} from '@angular/http'
 import {FactoryService} from './factory.service'
 import {Router} from '@angular/router'
@@ -6,7 +6,7 @@ declare var io: any;
 
 @Injectable()
 
-export class DataService {
+export class DataService implements OnDestroy {
     private host: String;
     public rsms: any;
     public temp: any;
@@ -18,6 +18,10 @@ export class DataService {
         this.temp = [];
         this.headers.append('Content-Type', 'application/json');
         this.isAuthenticated();
+    }
+
+    ngOnDestroy() {
+        if(this.socket) this.socket.disconnect();
     }
 
     jsonToArray = function(json: any) {
@@ -58,6 +62,14 @@ export class DataService {
             console.log('temp values', this._factoryService.temp);
         });
 
+        this.socket.on('error', (err: any) => {
+            console.error('socketio error:', err);
+        });
+
+        this.socket.on('disconnect', () => {
+            console.log('socketio disconnected...');
+        });
+
         /*this.socket.on('message', (data: any) => {
             data = JSON.parse(data);
             if(data.sender != '') {
@@ -78,7 +90,7 @@ export class DataService {
     isAuthenticated = () => {
         console.log('checking auth status...');
         if(this._factoryService.getToken()) {
-            this.headers.append('Authorization', this._factoryService.getToken());
+            this.headers.set('Authorization', this._factoryService.getToken());
             this.http.get(this._factoryService.config.API_BASEURL + '/login', {headers: this.headers})
                 .map((res: any) => res.json())
                 .subscribe(
@@ -98,6 +110,9 @@ export class DataService {
         this._factoryService.setToken(data.token);
         this._factoryService.setUsername(data.username);
         this._factoryService.setNsp(data.nsp);
+        console.log('this is token', this._factoryService.getToken(), this.headers);
+        this.headers.set('Authorization', this._factoryService.getToken());
+        this.loadSocketio();
         console.log('loaded settings...', this._factoryService.getUsername());
         this.router.navigate(['/portal/']);
     }
@@ -105,16 +120,16 @@ export class DataService {
     login = (bodyq: any) => {
         console.log('login called');
         var body: any = JSON.stringify({email:bodyq.email});
-        this.http.post(this._factoryService.config.API_BASEURL + '/login', JSON.stringify({email:bodyq.email, password:bodyq.password}), {headers: this.headers})
+        return this.http.post(this._factoryService.config.API_BASEURL + '/login', JSON.stringify({email:bodyq.email, password:bodyq.password}), {headers: this.headers})
             .map((res: any) => res.json())
             .subscribe(
                 (data: any) => {
                     console.log('authenticated successfully...');
                     this.loadProfile(data);
-                    this.loadSocketio();
                 },
                 (err: any) => {
                     console.error(err);
+                    this._factoryService.loginError = err._body;
                 }
             )
     }
@@ -128,10 +143,14 @@ export class DataService {
 
     register = (registerModel: any) => {
         console.log('registering user');
-        this.http.post(this._factoryService.config.API_BASEURL + '/users/register', {registerModel: registerModel}, {headers: this.headers})
+        this.http.post(this._factoryService.config.API_BASEURL + '/users/register', JSON.stringify({registerModel: registerModel}), {headers: this.headers})
             .map((res: any) => res.json())
             .subscribe(
-                (data: any) => {}
+                (data: any) => {console.log(data);},
+                (err: any) => {
+                    console.log(err);
+                    this._factoryService.registrationError = err._body;
+                }
             )
     }
 
@@ -190,7 +209,7 @@ export class DataService {
 
     updateUser = (user: any) => {
         console.log('updating user:', user.username);
-        return this.http.post(this._factoryService.config.API_BASEURL + '/users/update', user, {headers: this.headers})
+        return this.http.post(this._factoryService.config.API_BASEURL + '/users/update', JSON.stringify(user), {headers: this.headers})
                     .map((res: any) => res.json())
     }
 
