@@ -33,6 +33,7 @@
 
 #nav-header .logout:hover {
 	color: #676a6c;
+	cursor: pointer;
 }
 
 #nav-header #welcome {

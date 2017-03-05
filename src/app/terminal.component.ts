@@ -58,7 +58,7 @@ export class TerminalComponent implements AfterViewInit, OnDestroy {
                         console.log('here');
                         this.term.setCursorPosition(0, 0);
                         this.term.setCursorVisible(true);
-                        this.term.prefs_.set('ctrl-c-copy', true);
+                        this.term.prefs_.set('ctrl-c-copy', false);
                         this.term.prefs_.set('ctrl-v-paste', true);
                         this.term.prefs_.set('use-default-window-copy', true);
 

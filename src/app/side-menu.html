@@ -3,13 +3,22 @@
   <h1>Woot</h1>
   <ul #sidemenu="">
     <li class="link" (click)="activate(0)" [class.active]="li[0]"><a href="#" [routerLink]="['/portal/search']"><span class="glyphicon glyphicon-search"></span><span>Search</span></a></li>
-    <li class="link" (click)="activate(1)" [class.active]="li[1]"><a href="#" [routerLink]="[&quot;/portal/rsms&quot;]"><span class="glyphicon glyphicon-list-alt"></span><span>RSMs</span></a></li>
-    <li class="link" (click)="activate(2)" [class.active]="li[2]"><a data-target="#collapse-post" data-toggle="collapse"><span class="glyphicon glyphicon-list-alt"></span><span>Incidents</span><span class="label label-success pull-right">20</span></a>
-      <ul class="collapse collapseable" id="collapse-post">
-        <li><a href="#">Open</a></li>
-        <li><a href="#">Suspended</a></li>
-      </ul>
-    </li>
+    <!--li.link((click)="activate(1)", [class.active]="li[1]")
+    a(href="#", [routerLink]=['/portal/rsms'])
+        span.glyphicon.glyphicon-list-alt
+        span RSMs
+    -->
+    <!--li.link((click)="activate(2)", [class.active]="li[2]")
+    a(data-target="#collapse-post", data-toggle="collapse")
+        span.glyphicon.glyphicon-list-alt
+        span Incidents
+        span.label.label-success.pull-right 20
+    ul.collapse.collapseable#collapse-post
+        li
+            a(href="#") Open
+        li
+            a(href="#") Suspended
+    -->
     <li class="link" (click)="activate(3)" [class.active]="li[3]"><a href="#" [routerLink]="[&quot;/portal/users&quot;]"><span class="glyphicon glyphicon-user"></span><span>Users</span></a></li>
   </ul>
 </div>

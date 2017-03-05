@@ -17,7 +17,7 @@
           <div class="form-group">
             <label for="accounts">Accounts:</label>
             <div>
-              <select class="selectpicker" multiple="multiple" data-actions-box="true">
+              <select class="form-control">
                 <option>Hilton Worldwide</option>
                 <option>Corelogic</option>
               </select>
@@ -43,7 +43,7 @@
             <hr/>
           </div>
           <p class="form-group">Already a member?<a href="#" [routerLink]="['/login']">Sign In</a></p>
-          <div [hidden]="!_dataService._factoryService.registrationError" [ngClass]="{'alert':'true', 'alert-danger':'true'}">{{_dataService._factoryService.registrationError}}    </div>
+          <div [hidden]="!_dataService._factoryService.registrationError" [ngClass]="{'alert':'true', 'alert-danger':'true'}">{{_dataService._factoryService.registrationError}}</div>
         </form>
       </div>
     </div>

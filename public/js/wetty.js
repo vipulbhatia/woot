@@ -41,7 +41,7 @@ tty.on('connect', function() {
 
         term.setCursorPosition(0, 0);
         term.setCursorVisible(true);
-        term.prefs_.set('ctrl-c-copy', true);
+        term.prefs_.set('ctrl-c-copy', false);
         term.prefs_.set('ctrl-v-paste', true);
         term.prefs_.set('use-default-window-copy', true);
 

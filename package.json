@@ -11,7 +11,7 @@
     "e2e": "protractor",
     "build": "pug public/views -o src/app --pretty",
     "serve": "npm run build && ng build && node server.js",
-    "serve:prod": "npm run build && ng build --prod --aot && node server.js"
+    "serve:prod": "npm run build && ng build --prod --aot && node server.js --prod"
   },
   "private": true,
   "dependencies": {
@@ -27,6 +27,8 @@
     "angular2-localstorage": "^0.4.0",
     "core-js": "^2.4.1",
     "rxjs": "^5.0.1",
+    "socket.io-redis": "^4.0.0",
+    "sticky-session": "^1.1.2",
     "ts-helpers": "^1.1.1",
     "zone.js": "^0.7.2"
   },

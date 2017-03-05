@@ -1,6 +1,5 @@
-import {Component, EventEmitter, AfterViewInit, DoCheck} from '@angular/core'
+import {Component, EventEmitter, DoCheck} from '@angular/core'
 import {DataService} from './data.service'
-declare var $: any
 
 @Component({
     selector: '[registration-form]',
@@ -8,7 +7,7 @@ declare var $: any
     styleUrls: ['./login-form.css']
 })
 
-export class RegistrationFormComponent implements AfterViewInit, DoCheck {
+export class RegistrationFormComponent implements DoCheck {
     registerModel: any = {
         newemail: {
             value: '',
@@ -42,10 +41,6 @@ export class RegistrationFormComponent implements AfterViewInit, DoCheck {
                 this.registerModel.newemail.error = 'Invalid email address!';
             }
         });
-    }
-
-    ngAfterViewInit() {
-        $('.selectpicker').selectpicker();
     }
 
     ngDoCheck() {
